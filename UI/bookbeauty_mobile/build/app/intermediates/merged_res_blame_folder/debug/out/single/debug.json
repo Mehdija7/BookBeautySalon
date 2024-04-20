@@ -20,10 +20,6 @@
         "source": "com.example.book_beauty.app-main-5:/mipmap-xhdpi/ic_launcher.png"
     },
     {
-        "merged": "com.example.book_beauty.app-merged_res-11:/drawable_launch_background.xml.flat",
-        "source": "com.example.book_beauty.app-main-5:/drawable/launch_background.xml"
-    },
-    {
         "merged": "com.example.book_beauty.app-merged_res-11:/drawable-v21_launch_background.xml.flat",
         "source": "com.example.book_beauty.app-main-5:/drawable-v21/launch_background.xml"
     }

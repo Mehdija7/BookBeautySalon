@@ -142,7 +142,9 @@ class _ReservationScreenState extends State<ReservationScreen> {
                     ? 'Niste odabrali datum'
                     : formater.format(_selectedDate!)),
                 IconButton(
-                  onPressed: _presentDatePicker,
+                  onPressed: () {
+                    _presentDatePicker();
+                  },
                   icon: const Icon(Icons.calendar_month),
                 ),
               ],
