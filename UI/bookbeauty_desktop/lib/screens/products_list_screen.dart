@@ -1,6 +1,6 @@
 import 'package:bookbeauty_desktop/screens/product_detail_screen.dart';
-import 'package:bookbeauty_desktop/widgets/product_grid.dart';
-import 'package:bookbeauty_desktop/widgets/product_searchbox.dart';
+import '../widgets/product/product_grid.dart';
+import '../widgets/product/product_searchbox.dart';
 import 'package:flutter/material.dart';
 
 class ProductsListScreen extends StatefulWidget {

@@ -1,6 +1,6 @@
 import 'package:bookbeauty_desktop/models/service.dart';
-import 'package:bookbeauty_desktop/widgets/new_service.dart';
-import 'package:bookbeauty_desktop/widgets/services_list.dart';
+import '../widgets/service/new_service.dart';
+import '../widgets/service/services_list.dart';
 import 'package:flutter/material.dart';
 
 class ServicesScreen extends StatefulWidget {

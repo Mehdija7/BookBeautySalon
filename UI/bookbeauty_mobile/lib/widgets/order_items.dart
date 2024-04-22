@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
 import 'order_item.dart';
-import 'payment_methods.dart';
 
 class OrderItems extends StatelessWidget {
   const OrderItems({super.key});

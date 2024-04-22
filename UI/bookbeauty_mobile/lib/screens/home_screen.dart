@@ -2,6 +2,7 @@ import 'package:book_beauty/screens/appointment_screen.dart';
 import 'package:book_beauty/screens/products_screen.dart';
 import 'package:book_beauty/screens/profile_screen.dart';
 import 'package:book_beauty/screens/start_screen.dart';
+import 'package:book_beauty/widgets/maindrawer.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -13,10 +14,24 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
+  int _selectedPageIndex = 0;
+  String maintitle = 'Pocetna';
+
+  void _setScreen(String title, int index) {
+    setState(() {
+      maintitle = title;
+      _selectedPageIndex = index;
+    });
+  }
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        key: _scaffoldKey,
+        automaticallyImplyLeading: false,
         backgroundColor: const Color.fromARGB(255, 238, 238, 238),
         title: Text(
           'Book Beauty',
@@ -27,6 +42,17 @@ class _HomeScreenState extends State<HomeScreen> {
               fontStyle: FontStyle.italic),
         ),
         centerTitle: true,
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: Icon(Icons.menu),
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
+          ),
+        ),
+      ),
+      drawer: MainDrawer(
+        goToScreen: _setScreen,
       ),
       body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: createBottombar(context),
@@ -35,7 +61,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final _widgetOptions = [
     const StartScreen(),
-    const ProductsScreen(),
+    const ProductsScreen(
+      favoritesOnly: false,
+    ),
     const AppointmentScreen(),
     const ProfileScreen()
   ];
@@ -92,5 +120,10 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
     );
+  }
+
+  void _openDrawer(BuildContext context) {
+    Scaffold.of(context)
+        .openDrawer(); // Access ScaffoldState using Scaffold.of()
   }
 }

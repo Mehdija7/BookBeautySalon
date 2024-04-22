@@ -1,4 +1,4 @@
-import 'package:bookbeauty_desktop/widgets/product_text.dart';
+import 'package:bookbeauty_desktop/widgets/product/product_text.dart';
 import 'package:flutter/material.dart';
 
 class ProductGridItem extends StatelessWidget {

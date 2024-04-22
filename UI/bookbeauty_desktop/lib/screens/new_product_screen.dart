@@ -1,7 +1,7 @@
-import 'package:bookbeauty_desktop/widgets/main_title.dart';
+import '../widgets/shared/main_title.dart';
 import 'package:flutter/material.dart';
-import '../widgets/dropdown.dart' as categoriesmenu;
-import '../widgets/new_image.dart';
+import '../widgets/product/dropdown.dart' as categoriesmenu;
+import '../widgets/product/new_image.dart';
 
 class NewProductScreen extends StatelessWidget {
   const NewProductScreen({super.key});

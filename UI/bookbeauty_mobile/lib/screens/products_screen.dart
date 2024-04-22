@@ -5,7 +5,9 @@ import 'package:book_beauty/widgets/products_title.dart';
 import 'package:flutter/material.dart';
 
 class ProductsScreen extends StatefulWidget {
-  const ProductsScreen({super.key});
+  const ProductsScreen({super.key, required this.favoritesOnly});
+
+  final bool favoritesOnly;
 
   @override
   State<StatefulWidget> createState() {

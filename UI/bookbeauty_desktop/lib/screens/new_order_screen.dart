@@ -1,6 +1,6 @@
-import 'package:bookbeauty_desktop/widgets/customer_info.dart';
-import 'package:bookbeauty_desktop/widgets/main_title.dart';
-import 'package:bookbeauty_desktop/widgets/order_items.dart';
+import '../widgets/order/customer_info.dart';
+import '../widgets/shared/main_title.dart';
+import '../widgets/order/order_items.dart';
 import 'package:flutter/material.dart';
 
 class NewOrderScreen extends StatelessWidget {

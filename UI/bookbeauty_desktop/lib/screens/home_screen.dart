@@ -3,8 +3,8 @@ import 'package:bookbeauty_desktop/screens/orders_screen.dart';
 import 'package:bookbeauty_desktop/screens/products_screen.dart';
 import 'package:bookbeauty_desktop/screens/reports_screen.dart';
 import 'package:bookbeauty_desktop/screens/services_screen.dart';
-import 'package:bookbeauty_desktop/widgets/main_drawer.dart';
 import 'package:flutter/material.dart';
+import '../widgets/shared/main_drawer.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

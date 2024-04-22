@@ -1,4 +1,4 @@
-import 'package:bookbeauty_desktop/widgets/review_stars.dart';
+import 'package:bookbeauty_desktop/widgets/product/review_stars.dart';
 import 'package:flutter/material.dart';
 
 class ProductItemReview extends StatelessWidget {

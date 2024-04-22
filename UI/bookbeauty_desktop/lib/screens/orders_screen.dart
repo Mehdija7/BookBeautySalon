@@ -1,5 +1,5 @@
 import 'package:bookbeauty_desktop/screens/new_orders.dart';
-import 'package:bookbeauty_desktop/widgets/card.dart';
+import '../widgets/shared/card.dart';
 import 'package:flutter/material.dart';
 
 class OrdersScreen extends StatelessWidget {

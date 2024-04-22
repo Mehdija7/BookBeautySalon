@@ -1,5 +1,5 @@
 import 'package:bookbeauty_desktop/models/service.dart';
-import 'package:bookbeauty_desktop/widgets/service_item.dart';
+import 'package:bookbeauty_desktop/widgets/service/service_item.dart';
 import 'package:flutter/material.dart';
 
 class ServicesList extends StatelessWidget {

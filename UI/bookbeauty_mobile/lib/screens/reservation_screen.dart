@@ -19,11 +19,9 @@ class ReservationScreen extends StatefulWidget {
 
 class _ReservationScreenState extends State<ReservationScreen> {
   bool _decideWhichDayToEnable(DateTime day) {
-    DateTime event = DateTime(2024, 3, 26);
-    DateTime event2 = DateTime(2024, 3, 28);
-    if (day.isAtSameMomentAs(event) ||
-        day.isAtSameMomentAs(event2) ||
-        day.isAtSameMomentAs(DateTime.now())) {
+    DateTime event = DateTime(2024, 4, 26);
+    DateTime event2 = DateTime(2024, 4, 28);
+    if (day.isAtSameMomentAs(event) || day.isAtSameMomentAs(event2)) {
       return false;
     }
     if (day.weekday == 7) {
@@ -37,7 +35,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
   void _presentDatePicker() async {
     final now = DateTime.now();
     final lastDate = DateTime(now.year + 1, now.month, now.day);
-    final firstdate = DateTime(now.year, now.month, now.day);
+    final firstdate = DateTime(now.year, now.month, now.day + 1);
     final pickedDate = await showDatePicker(
       helpText: 'Odaberi datum',
       cancelText: 'Odustani',

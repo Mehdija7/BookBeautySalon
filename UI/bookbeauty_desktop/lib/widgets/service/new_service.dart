@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/service.dart';
+import '../../models/service.dart';
 
 class NewService extends StatefulWidget {
   const NewService(this.onAddService, {super.key});

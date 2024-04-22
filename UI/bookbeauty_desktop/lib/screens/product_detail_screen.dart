@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/review_stars.dart';
+import '../widgets/product/review_stars.dart';
 
 class ProductDetailScreen extends StatelessWidget {
   const ProductDetailScreen({super.key, required this.name});

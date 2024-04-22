@@ -1,6 +1,6 @@
 import 'package:bookbeauty_desktop/screens/new_order_screen.dart';
-import 'package:bookbeauty_desktop/widgets/card.dart';
 import 'package:flutter/material.dart';
+import '../widgets/shared/card.dart';
 
 class NewOrders extends StatelessWidget {
   const NewOrders({super.key});

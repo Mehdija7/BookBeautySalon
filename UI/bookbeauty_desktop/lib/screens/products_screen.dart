@@ -1,6 +1,6 @@
 import 'package:bookbeauty_desktop/screens/new_product_screen.dart';
 import 'package:bookbeauty_desktop/screens/products_list_screen.dart';
-import 'package:bookbeauty_desktop/widgets/card.dart';
+import '../widgets/shared/card.dart';
 import 'package:flutter/material.dart';
 
 class ProductsScreen extends StatelessWidget {
