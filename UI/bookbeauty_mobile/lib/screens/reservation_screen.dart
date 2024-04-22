@@ -37,7 +37,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
   void _presentDatePicker() async {
     final now = DateTime.now();
     final lastDate = DateTime(now.year + 1, now.month, now.day);
-    final firstdate = DateTime(now.year, now.month, now.day + 1);
+    final firstdate = DateTime(now.year, now.month, now.day);
     final pickedDate = await showDatePicker(
       helpText: 'Odaberi datum',
       cancelText: 'Odustani',
