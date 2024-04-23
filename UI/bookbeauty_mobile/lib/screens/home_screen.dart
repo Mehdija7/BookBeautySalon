@@ -14,13 +14,11 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
-  int _selectedPageIndex = 0;
   String maintitle = 'Pocetna';
 
   void _setScreen(String title, int index) {
     setState(() {
       maintitle = title;
-      _selectedPageIndex = index;
     });
   }
 
@@ -123,7 +121,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _openDrawer(BuildContext context) {
-    Scaffold.of(context)
-        .openDrawer(); // Access ScaffoldState using Scaffold.of()
+    Scaffold.of(context).openDrawer();
   }
 }

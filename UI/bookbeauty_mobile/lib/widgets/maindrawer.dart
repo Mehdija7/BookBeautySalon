@@ -19,7 +19,14 @@ class MainDrawer extends StatelessWidget {
               child: ListView(
                 padding: EdgeInsets.zero,
                 children: <Widget>[
-                  SizedBox(height: 100),
+                  SizedBox(height: 30),
+                  ListTile(
+                    title: ProfileItemCard(
+                      text: 'Pozdrav, Mehdija',
+                      icon: Icons.waving_hand,
+                    ),
+                  ),
+                  SizedBox(height: 80),
                   ListTile(
                     title: ProfileItemCard(
                       text: 'Omiljeni proizvodi',

@@ -1,4 +1,5 @@
-import 'package:book_beauty/widgets/maindrawer.dart';
+import 'package:book_beauty/widgets/customer_info.dart';
+import 'package:book_beauty/widgets/customer_info_item.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -37,6 +38,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ),
           Text('Mehdija Sekic'),
+          SizedBox(height: 50),
+          CustomerInfoItem(title: 'Ime: ', value: 'Mehdija'),
+          CustomerInfoItem(title: 'Prezime:', value: 'Sekic'),
+          CustomerInfoItem(title: 'Grad:', value: 'Sanski Most'),
+          CustomerInfoItem(title: 'Adresa:', value: 'Sanski Most'),
+          CustomerInfoItem(title: 'Broj telefona:', value: 'Sanski Most')
         ],
       ),
     );

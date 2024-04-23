@@ -24,7 +24,8 @@ class ProfileItemCard extends StatelessWidget {
         child: Row(
           children: [
             Icon(icon),
-            Text(text),
+            Text(text,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
           ],
         ),
       ),
