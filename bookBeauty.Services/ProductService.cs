@@ -1,23 +1,20 @@
-﻿using bookBeauty.Model;
-using bookBeauty.Model.Requests;
+﻿using bookBeauty.Model.Requests;
 using bookBeauty.Model.SearchObjects;
 using bookBeauty.Services.ProductStateMachine;
 using MapsterMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace bookBeauty.Services
 {
     public class ProductService : BaseCRUDService<Model.Product, ProductSearchObject, Database.Product, ProductInsertRequest, ProductUpdateRequest>, IProductService
-        
+
     {
+        ILogger<ProductService> _logger;
         public BaseProductState BaseProductState { get; set; }
-        public ProductService(Database._200101Context context, IMapper mapper,BaseProductState baseProductState) : base(context, mapper)
+        public ProductService(Database._200101Context context, IMapper mapper,BaseProductState baseProductState, ILogger<ProductService> logger) : base(context, mapper)
         {
             BaseProductState = baseProductState;
+            _logger = logger;
         }
 
         public override IQueryable<Database.Product> AddFilter(ProductSearchObject search, IQueryable<Database.Product> query)
@@ -51,6 +48,38 @@ namespace bookBeauty.Services
             var entity = GetById(id);
             var state = BaseProductState.CreateState(entity.StateMachine);
             return state.Activate(id);
+        }
+
+        public Model.Product Edit(int id)
+        {
+            var entity = GetById(id);
+            var state = BaseProductState.CreateState(entity.StateMachine);
+            return state.Edit(id);
+        }
+
+        public Model.Product Hide(int id)
+        {
+            var entity = GetById(id);
+            var state = BaseProductState.CreateState(entity.StateMachine);
+            return state.Hide(id);
+        }
+
+        public List<string> AllowedActions(int id)
+        {
+            _logger.LogInformation($"Allowed actions called for: {id}");
+
+            if( id <= 0 )
+            {
+                var state = BaseProductState.CreateState("initial");
+                return state.AllowedActions(null);
+            }
+            else
+            {
+                var entity = Context.Products.Find(id);
+                var state = BaseProductState.CreateState(entity.StateMachine);
+                return state.AllowedActions(entity);
+            }
+
         }
     }
 }

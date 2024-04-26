@@ -11,6 +11,6 @@ namespace bookBeauty.Services
 {
     public interface IUserService : ICRUDService<User,UserSearchObject,UserInsertRequest,UserUpdateRequest>
     {
-
+        Model.User Login(string username,string password);
     }
 }

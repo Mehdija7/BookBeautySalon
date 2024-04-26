@@ -9,8 +9,6 @@ class CustomerInfo extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 15),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CustomerInfoItem(title: 'Ime: ', value: 'Mehdija'),
           CustomerInfoItem(title: 'Prezime:', value: 'Sekic'),

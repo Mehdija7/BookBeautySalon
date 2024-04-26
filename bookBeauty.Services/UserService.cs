@@ -3,6 +3,7 @@ using bookBeauty.Model.SearchObjects;
 using bookBeauty.Services.Database;
 using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +15,10 @@ namespace bookBeauty.Services
 {
     public class UserService : BaseCRUDService<Model.User, UserSearchObject, Database.User, UserInsertRequest, UserUpdateRequest>, IUserService
     {
-        public UserService(_200101Context context, IMapper mapper) : base(context, mapper)
+        ILogger<UserService> _logger;
+        public UserService(_200101Context context, IMapper mapper, ILogger<UserService> logger) : base(context, mapper)
         {
-
+            _logger = logger;
         }
         public override IQueryable<Database.User> AddFilter(UserSearchObject searchObject, IQueryable<Database.User> query)
         {
@@ -52,6 +54,7 @@ namespace bookBeauty.Services
 
         public override void BeforeInsert(UserInsertRequest request, Database.User entity)
         {
+            _logger.LogInformation($"Adding user: {entity.Username}");
             if (request.Password != request.PasswordConfirmed)
             {
                 throw new Exception("Password i PasswordPotvrda moraju biti iste");
@@ -97,5 +100,26 @@ namespace bookBeauty.Services
                 entity.PasswordHash = GenerateHash(entity.PasswordSalt, request.Password);
             }
         }
+
+        public Model.User Login(string username, string password)
+        {
+            var entity = Context.Users.FirstOrDefault(x=> x.Username==username);
+
+            if(entity == null)
+            {
+                return null; 
+            }
+
+            var hash = GenerateHash(entity.PasswordSalt, password); 
+
+            if(hash !=  entity.PasswordHash) {
+
+                return null;
+            }
+
+            return this.Mapper.Map<Model.User>(entity);
+        }
+
+     
     }
 }

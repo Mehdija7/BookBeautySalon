@@ -4,6 +4,7 @@ using Mapster;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using bookBeauty.Services;
 using bookBeauty.Services.ProductStateMachine;
+using bookBeauty.API.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,8 +17,12 @@ builder.Services.AddTransient<BaseProductState>();
 builder.Services.AddTransient<InitialProductState>();
 builder.Services.AddTransient<DraftProductState>();
 builder.Services.AddTransient<ActiveProductState>();
+builder.Services.AddTransient<HiddenProductState>();
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(x=>
+{
+    x.Filters.Add<ExceptionFilter>();
+});
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

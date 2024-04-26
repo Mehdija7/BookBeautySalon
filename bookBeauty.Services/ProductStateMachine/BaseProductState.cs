@@ -1,7 +1,9 @@
-﻿using bookBeauty.Model.Requests;
+﻿using bookBeauty.Model;
+using bookBeauty.Model.Requests;
 using bookBeauty.Services.Database;
 using MapsterMapper;
 using Microsoft.Extensions.DependencyInjection;
+using System.Runtime.InteropServices;
 
 
 namespace bookBeauty.Services.ProductStateMachine
@@ -20,24 +22,32 @@ namespace bookBeauty.Services.ProductStateMachine
         }
         public virtual Model.Product Insert(ProductInsertRequest request)
         {
-            throw new Exception("Method not allowed");
+            throw new UserException("Metoda nije dozvoljena");
         }
 
         public virtual Model.Product Update(int id, ProductUpdateRequest request)
         {
-            throw new Exception("Method not allowed");
+            throw new UserException("Metoda nije dozvoljena");
         }
 
         public virtual Model.Product Activate(int id)
         {
-            throw new Exception("Method not allowed");
+            throw new UserException("Metoda nije dozvoljena");
         }
 
         public virtual Model.Product Hide(int id)
         {
-            throw new Exception("Method not allowed");
+            throw new UserException("Metoda nije dozvoljena");
+        }
+        public virtual Model.Product Edit(int id)
+        {
+            throw new UserException("Metoda nije dozvoljena");
         }
 
+        public virtual List<string> AllowedActions(Database.Product entity)
+        {
+            throw new UserException("Metoda nije dozvoljena");
+        }
         public BaseProductState CreateState(string stateName)
         {
             switch (stateName)
@@ -48,6 +58,8 @@ namespace bookBeauty.Services.ProductStateMachine
                     return ServiceProvider.GetService<DraftProductState>();
                 case "active":
                     return ServiceProvider.GetService<ActiveProductState>();
+                case "hidden":
+                    return ServiceProvider.GetService<HiddenProductState>();
                 default: throw new Exception("State not recognized");
             }
         }

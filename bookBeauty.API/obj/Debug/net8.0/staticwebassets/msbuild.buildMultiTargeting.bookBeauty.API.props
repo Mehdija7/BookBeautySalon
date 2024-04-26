@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\bookBeauty.API.props" />
+</Project>
