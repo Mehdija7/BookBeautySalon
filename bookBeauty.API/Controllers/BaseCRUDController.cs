@@ -1,4 +1,5 @@
-﻿using bookBeauty.Model.SearchObjects;
+﻿using bookBeauty.Model;
+using bookBeauty.Model.SearchObjects;
 using bookBeauty.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,21 +9,28 @@ namespace bookBeauty.API.Controllers
     {
         protected new ICRUDService<TModel, TSearch, TInsert, TUpdate> _service;
 
+
         public BaseCRUDController(ICRUDService<TModel, TSearch, TInsert, TUpdate> service) : base(service)
         {
             _service = service;
         }
 
         [HttpPost]
-        public TModel Insert(TInsert request)
+        public virtual Task<TModel> Insert(TInsert request)
         {
             return _service.Insert(request);
         }
 
         [HttpPut("{id}")]
-        public TModel Update(int id, TUpdate request)
+        public virtual Task<TModel> Update(int id, TUpdate request)
         {
             return _service.Update(id, request);
+        }
+
+        [HttpDelete]
+        public virtual Task<TModel> Delete(int id)
+        {
+            return _service.Delete(id);
         }
     }
 }

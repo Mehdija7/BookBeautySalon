@@ -10,7 +10,7 @@ namespace bookBeauty.API
 {
     public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSchemeOptions>
     {
-        IUserService _userService;
+        protected readonly IUserService _userService;
         public BasicAuthenticationHandler(IOptionsMonitor<AuthenticationSchemeOptions> options, ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock, IUserService userService) : base(options, logger, encoder, clock)
         {
             _userService = userService;
@@ -30,7 +30,7 @@ namespace bookBeauty.API
                 var username = credentials[0];
                 var password = credentials[1];
 
-                var user = _userService.Login(username, password);
+                var user =  _userService.Login(username, password);
 
                 if (user == null)
                 {
@@ -44,6 +44,11 @@ namespace bookBeauty.API
                     new Claim(ClaimTypes.NameIdentifier, user.Username)
                 };
 
+
+                foreach(var role in user.UserRoles)
+                {
+                    claims.Add(new Claim(ClaimTypes.Role, role.Role.Name));
+                }
                     var identity = new ClaimsIdentity(claims, Scheme.Name);
 
                     var principal = new ClaimsPrincipal(identity);

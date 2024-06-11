@@ -7,7 +7,7 @@ public partial class Order
 {
     public int OrderId { get; set; }
 
-    public float? TotalPrice { get; set; }
+    public double? TotalPrice { get; set; }
 
     public DateTime? DateTime { get; set; }
 
@@ -16,6 +16,8 @@ public partial class Order
     public string? OrderNumber { get; set; }
 
     public virtual User Customer { get; set; } = null!;
+
+    public string? Status { get; set; }
 
     public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 

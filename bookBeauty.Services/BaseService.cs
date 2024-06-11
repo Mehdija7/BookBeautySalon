@@ -20,7 +20,7 @@ namespace bookBeauty.Services
             Mapper = mapper;
         }
 
-        public PagedResult<TModel> GetPaged(TSearch search)
+        public virtual async Task<PagedResult<TModel>> GetPaged(TSearch search)
         {
             List<TModel> result = new List<TModel>();
 
@@ -51,7 +51,7 @@ namespace bookBeauty.Services
             return query;
         }
 
-        public TModel GetById(int id)
+        public virtual async Task<TModel> GetById(int id)
         {
             var entity = Context.Set<TDbEntity>().Find(id);
 

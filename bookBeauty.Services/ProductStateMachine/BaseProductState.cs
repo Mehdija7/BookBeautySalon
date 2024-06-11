@@ -20,31 +20,31 @@ namespace bookBeauty.Services.ProductStateMachine
             Mapper = mapper;
             ServiceProvider = serviceProvider;
         }
-        public virtual Model.Product Insert(ProductInsertRequest request)
+        public virtual Task<Model.Product> Insert(ProductInsertRequest request)
         {
             throw new UserException("Metoda nije dozvoljena");
         }
 
-        public virtual Model.Product Update(int id, ProductUpdateRequest request)
+        public virtual Task<Model.Product> Update(int id, ProductUpdateRequest request)
         {
             throw new UserException("Metoda nije dozvoljena");
         }
 
-        public virtual Model.Product Activate(int id)
+        public virtual Task<Model.Product> Activate(int id)
         {
             throw new UserException("Metoda nije dozvoljena");
         }
 
-        public virtual Model.Product Hide(int id)
+        public virtual Task<Model.Product> Hide(int id)
         {
             throw new UserException("Metoda nije dozvoljena");
         }
-        public virtual Model.Product Edit(int id)
+        public virtual Task<Model.Product> Edit(int id)
         {
             throw new UserException("Metoda nije dozvoljena");
         }
 
-        public virtual List<string> AllowedActions(Database.Product entity)
+        public virtual async Task<List<string>> AllowedActions(Database.Product entity)
         {
             throw new UserException("Metoda nije dozvoljena");
         }

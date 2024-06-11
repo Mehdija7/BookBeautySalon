@@ -11,7 +11,7 @@ public partial class Appointment
 
     public int? UserId { get; set; }
 
-    public string HairDresserId { get; set; } = null!;
+    public int HairDresserId { get; set; } 
 
     public int ServiceId { get; set; }
 

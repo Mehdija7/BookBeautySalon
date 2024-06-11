@@ -7,11 +7,11 @@ public partial class RecommendResult
 {
     public int RecommendResultId { get; set; }
 
-    public string? ProductId { get; set; }
+    public int? ProductId { get; set; }
 
-    public string? FirstProductId { get; set; }
+    public int? FirstProductId { get; set; }
 
-    public string? SecondProductId { get; set; }
+    public int? SecondProductId { get; set; }
 
-    public string? ThirdProductId { get; set; }
+    public int? ThirdProductId { get; set; }
 }

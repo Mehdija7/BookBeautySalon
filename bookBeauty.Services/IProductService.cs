@@ -12,10 +12,10 @@ namespace bookBeauty.Services
     public interface IProductService : ICRUDService<Product,ProductSearchObject,ProductInsertRequest,ProductUpdateRequest>
     {
 
-        public Product Activate(int id);
-        public Product Edit(int id);
-        public Product Hide(int id);
-        public List<string> AllowedActions(int id);
+        public Task<Product> Activate(int id);
+        public Task<Product> Edit(int id);
+        public Task<Product> Hide(int id);
+        public  Task<List<string>> AllowedActions(int id);
 
     }
 }

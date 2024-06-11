@@ -9,7 +9,7 @@ public partial class FavoriteProduct
 
     public DateTime? AddingDate { get; set; }
 
-    public string ProductId { get; set; } = null!;
+    public int ProductId { get; set; } 
 
     public int? UserId { get; set; }
 

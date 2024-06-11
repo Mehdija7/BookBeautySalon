@@ -11,13 +11,7 @@ namespace bookBeauty.Model.Requests
         public string Name { get; set; }
         public float Price { get; set; }
         public int CategoryId { get; set; }
-
-        //public byte[]? Picture { get; set; }
-
-        //public byte[]? PictureThumb { get; set; }
-
-        //public bool? Status { get; set; }
-
-        //public string? StateMachine { get; set; }
+        public string? Picture { get; set; }
+        public string? StateMachine { get; set; }
     }
 }

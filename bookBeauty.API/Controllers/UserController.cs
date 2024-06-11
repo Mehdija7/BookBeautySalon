@@ -2,6 +2,7 @@
 using bookBeauty.Model.Requests;
 using bookBeauty.Model.SearchObjects;
 using bookBeauty.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace bookBeauty.API.Controllers
@@ -14,5 +15,13 @@ namespace bookBeauty.API.Controllers
         public UserController(IUserService service) : base(service)
         {
         }
+
+        [AllowAnonymous]
+        public override Task<User> Insert(UserInsertRequest request)
+        {
+            return base.Insert(request);
+        }
+
+
     }
 }

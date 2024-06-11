@@ -1,12 +1,14 @@
 ﻿using bookBeauty.Model;
 using bookBeauty.Model.SearchObjects;
 using bookBeauty.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace bookBeauty.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize]
     public class BaseController<TModel, TSearch> : ControllerBase where TSearch : BaseSearchObject
     {
 
@@ -18,13 +20,13 @@ namespace bookBeauty.API.Controllers
         }
 
         [HttpGet]
-        public PagedResult<TModel> GetList([FromQuery] TSearch searchObject)
+        public virtual Task<PagedResult<TModel>> GetList([FromQuery] TSearch searchObject)
         {
             return _service.GetPaged(searchObject);
         }
 
         [HttpGet("{id}")]
-        public TModel GetById(int id)
+        public virtual Task<TModel> GetById(int id)
         {
             return _service.GetById(id);
         }

@@ -14,7 +14,7 @@ namespace bookBeauty.Services.ProductStateMachine
         public InitialProductState(_200101Context context, IMapper mapper, IServiceProvider serviceProvider) : base(context, mapper, serviceProvider)
         {
         }
-        public override Model.Product Insert(ProductInsertRequest request)
+        public override async Task<Model.Product> Insert(ProductInsertRequest request)
         {
             var set = Context.Set<Database.Product>();
             var entity = Mapper.Map<Database.Product>(request);

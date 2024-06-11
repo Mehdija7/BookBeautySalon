@@ -211,9 +211,9 @@ public partial class _200101Context : DbContext
                 .HasMaxLength(50)
                 .IsFixedLength()
                 .HasColumnName("CategoryID");
-            entity.Property(e => e.Image).HasColumnType("image");
             entity.Property(e => e.Name).HasMaxLength(50);
             entity.Property(e => e.Price).HasColumnType("money");
+            entity.Property(e => e.Price).HasColumnType("Image");
             entity.Property(e => e.StateMachine).HasMaxLength(50);
 
             entity.HasOne(d => d.Category).WithMany(p => p.Products)
@@ -348,6 +348,7 @@ public partial class _200101Context : DbContext
         });
 
         OnModelCreatingPartial(modelBuilder);
+
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

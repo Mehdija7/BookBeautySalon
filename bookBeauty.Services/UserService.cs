@@ -7,9 +7,12 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
+using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using bookBeauty.Model;
 
 namespace bookBeauty.Services
 {
@@ -52,12 +55,21 @@ namespace bookBeauty.Services
         }
 
 
-        public override void BeforeInsert(UserInsertRequest request, Database.User entity)
+        public override async Task BeforeInsert(UserInsertRequest request, Database.User entity)
         {
             _logger.LogInformation($"Adding user: {entity.Username}");
+
+            entity.UserId = Context.Users.Count()+1;
+
+           foreach(var u in Context.Users)
+            {
+                if(u.Username.Equals(request.Username))
+                    throw new UserException("Korisnik s tim korisnickim imenom vec postoji");
+            }
+
             if (request.Password != request.PasswordConfirmed)
             {
-                throw new Exception("Password i PasswordPotvrda moraju biti iste");
+                throw new UserException("Password i PasswordPotvrda moraju biti iste");
             }
 
             entity.PasswordSalt = GenerateSalt();
@@ -86,7 +98,7 @@ namespace bookBeauty.Services
             return Convert.ToBase64String(inArray);
         }
 
-        public override void BeforeUpdate(UserUpdateRequest request, Database.User entity)
+        public override async Task BeforeUpdate(UserUpdateRequest request, Database.User entity)
         {
             base.BeforeUpdate(request, entity);
             if (request.Password != null)
@@ -103,7 +115,7 @@ namespace bookBeauty.Services
 
         public Model.User Login(string username, string password)
         {
-            var entity = Context.Users.FirstOrDefault(x=> x.Username==username);
+            var entity = Context.Users.Include(x => x.UserRoles).ThenInclude(y=>y.Role).FirstOrDefault(x => x.Username == username);
 
             if(entity == null)
             {
@@ -120,6 +132,7 @@ namespace bookBeauty.Services
             return this.Mapper.Map<Model.User>(entity);
         }
 
-     
+       
+
     }
 }

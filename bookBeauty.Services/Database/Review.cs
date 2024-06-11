@@ -9,7 +9,7 @@ public partial class Review
 
     public int? Mark { get; set; }
 
-    public string? ProductId { get; set; }
+    public int? ProductId { get; set; }
 
     public int? UserId { get; set; }
 

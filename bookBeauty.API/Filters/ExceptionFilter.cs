@@ -1,17 +1,30 @@
 ﻿using bookBeauty.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using System.Net;
 
 namespace bookBeauty.API.Filters
 {
     public class ExceptionFilter : ExceptionFilterAttribute
     {
+        ILogger<ExceptionFilter> _logger;
+
+        public ExceptionFilter(ILogger<ExceptionFilter> logger)
+        {
+            _logger = logger;
+        }
         public override void OnException(ExceptionContext context)
         {
-            if(context.Exception is UserException)
+            _logger.LogError(context.Exception, context.Exception.Message);
+            if (context.Exception is UserException)
             {
                 context.ModelState.AddModelError("userError",context.Exception.Message);
                 context.HttpContext.Response.StatusCode = 400;
+            }
+            else if (context.Exception is ArgumentException)
+            {
+                context.ModelState.AddModelError("argumentError", context.Exception.Message);
+                context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
             }
             else
             {

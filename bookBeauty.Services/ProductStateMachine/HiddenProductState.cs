@@ -13,7 +13,7 @@ namespace bookBeauty.Services.ProductStateMachine
         public HiddenProductState(_200101Context context, IMapper mapper, IServiceProvider serviceProvider) : base(context, mapper, serviceProvider)
         {
         }
-        public override Model.Product Edit(int id)
+        public override async Task<Model.Product> Edit(int id)
         {
             var set = Context.Set<Database.Product>();
 
@@ -26,7 +26,7 @@ namespace bookBeauty.Services.ProductStateMachine
             return Mapper.Map<Model.Product>(entity);
         }
 
-        public override List<string> AllowedActions(Database.Product entity)
+        public override async Task<List<string>> AllowedActions(Database.Product entity)
         {
             return new List<string>() { nameof(Edit) };
         }

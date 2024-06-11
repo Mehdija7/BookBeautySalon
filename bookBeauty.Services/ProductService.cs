@@ -29,55 +29,55 @@ namespace bookBeauty.Services
             return filteredQuery;
         }
 
-        public override Model.Product Insert(ProductInsertRequest request)
+        public override async Task <Model.Product> Insert(ProductInsertRequest request)
         {
             var state = BaseProductState.CreateState("initial");
-            return state.Insert(request);
+            return await state.Insert(request);
         }
 
-        public override Model.Product Update(int id, ProductUpdateRequest request)
+        public override async Task <Model.Product> Update(int id, ProductUpdateRequest request)
         {
-            var entity = GetById(id);
-            var state = BaseProductState.CreateState(entity.StateMachine);
-            return state.Update(id, request);
+            var entity = await GetById(id);
+            var state =  BaseProductState.CreateState(entity.StateMachine);
+            return await state.Update(id, request);
 
         }
 
-        public Model.Product Activate(int id)
+        public async Task<Model.Product> Activate(int id)
         {
-            var entity = GetById(id);
+            var entity = await  GetById(id);
             var state = BaseProductState.CreateState(entity.StateMachine);
-            return state.Activate(id);
+            return await state.Activate(id);
         }
 
-        public Model.Product Edit(int id)
+        public async Task<Model.Product> Edit(int id)
         {
-            var entity = GetById(id);
+            var entity = await GetById(id);
             var state = BaseProductState.CreateState(entity.StateMachine);
-            return state.Edit(id);
+            return await state.Edit(id);
         }
 
-        public Model.Product Hide(int id)
+        public async Task<Model.Product> Hide(int id)
         {
-            var entity = GetById(id);
+            var entity = await GetById(id);
             var state = BaseProductState.CreateState(entity.StateMachine);
-            return state.Hide(id);
+            return await state.Hide(id);
         }
 
-        public List<string> AllowedActions(int id)
+        public async Task<List<string>> AllowedActions(int id)
         {
             _logger.LogInformation($"Allowed actions called for: {id}");
 
             if( id <= 0 )
             {
                 var state = BaseProductState.CreateState("initial");
-                return state.AllowedActions(null);
+                return await state.AllowedActions(null);
             }
             else
             {
                 var entity = Context.Products.Find(id);
                 var state = BaseProductState.CreateState(entity.StateMachine);
-                return state.AllowedActions(entity);
+                return await state.AllowedActions(entity);
             }
 
         }

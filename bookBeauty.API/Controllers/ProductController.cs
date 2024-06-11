@@ -2,6 +2,8 @@
 using bookBeauty.Model.Requests;
 using bookBeauty.Model.SearchObjects;
 using bookBeauty.Services;
+using bookBeauty.Services.Database;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace bookBeauty.API.Controllers
@@ -14,9 +16,30 @@ namespace bookBeauty.API.Controllers
         {
         }
         [HttpPut("{id}/activate")]
-        public Model.Product Activate(int id)
+        public async Task<Model.Product> Activate(int id)
         {
-            return ((IProductService)_service).Activate(id);
+            return await ((IProductService)_service).Activate(id);
         }
+
+        [Authorize(Roles = "Admin")]
+        public override Task<Model.Product> Insert([FromBody]ProductInsertRequest request)
+        {
+
+            return base.Insert(request);
+        }
+
+        [HttpPut("{id}/hide")]
+        public virtual async Task<Model.Product> Hide(int id)
+        {
+            return await (_service as IProductService).Hide(id);
+        }
+
+        [HttpGet("{id}/allowedActions")]
+        public virtual async Task<List<string>> AllowedActions(int id)
+        {
+            return await (_service as IProductService).AllowedActions(id);
+        }
+
+
     }
 }

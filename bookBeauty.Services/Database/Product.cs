@@ -5,20 +5,19 @@ namespace bookBeauty.Services.Database;
 
 public partial class Product
 {
-    public string ProductId { get; set; } = null!;
+    public int ProductId { get; set; } 
 
     public string Name { get; set; } = null!;
 
-    public decimal Price { get; set; }
-
-    public byte[] Image { get; set; } = null!;
+    public double Price { get; set; }
 
     public string Description { get; set; } = null!;
 
-    public string? CategoryId { get; set; }
+    public int? CategoryId { get; set; }
 
     public string? StateMachine { get; set; }
 
+    public byte[] Image { get; set; } 
     public virtual Category? Category { get; set; }
 
     public virtual ICollection<FavoriteProduct> FavoriteProducts { get; set; } = new List<FavoriteProduct>();

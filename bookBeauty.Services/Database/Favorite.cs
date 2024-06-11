@@ -9,7 +9,7 @@ public partial class Favorite
 
     public string? AddedDate { get; set; }
 
-    public string? ProductId { get; set; }
+    public int? ProductId { get; set; }
 
     public int? UserId { get; set; }
 

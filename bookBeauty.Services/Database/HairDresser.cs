@@ -5,7 +5,7 @@ namespace bookBeauty.Services.Database;
 
 public partial class HairDresser
 {
-    public string HairDresserId { get; set; } = null!;
+    public int HairDresserId { get; set; } 
 
     public DateTime? StartDate { get; set; }
 

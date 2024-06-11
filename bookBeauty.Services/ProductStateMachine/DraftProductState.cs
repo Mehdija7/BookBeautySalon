@@ -1,11 +1,8 @@
 ﻿using bookBeauty.Model.Requests;
 using bookBeauty.Services.Database;
 using MapsterMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using EasyNetQ;
+using bookBeauty.Model.Messages;
 
 namespace bookBeauty.Services.ProductStateMachine
 {
@@ -14,11 +11,11 @@ namespace bookBeauty.Services.ProductStateMachine
         public DraftProductState(_200101Context context, IMapper mapper, IServiceProvider serviceProvider) : base(context, mapper, serviceProvider)
         {
         }
-        public override Model.Product Update(int id, ProductUpdateRequest request)
+        public override async Task<Model.Product> Update(int id, ProductUpdateRequest request)
         {
-            var set = Context.Set<Database.Product>();
+            var set =   Context.Set<Database.Product>();
 
-            var entity = set.Find(id);
+            var entity =   set.Find(id);
 
             Mapper.Map(request, entity);
 
@@ -27,7 +24,7 @@ namespace bookBeauty.Services.ProductStateMachine
             return Mapper.Map<Model.Product>(entity);
         }
 
-        public override Model.Product Activate(int id)
+        public override async Task<Model.Product> Activate(int id)
         {
             var set = Context.Set<Database.Product>();
 
@@ -35,9 +32,17 @@ namespace bookBeauty.Services.ProductStateMachine
 
             entity.StateMachine = "active";
 
+         
+
+            var mappedEntity = Mapper.Map<Model.Product>(entity);
+
+ 
+
+ 
+
             Context.SaveChanges();
 
-            return Mapper.Map<Model.Product>(entity);
+            return mappedEntity;
         }
     }
 }

@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34622.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bookBeauty.API", "bookBeauty.API\bookBeauty.API.csproj", "{950FA877-044B-466D-9D60-769963CD44C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bookBeauty.API", "bookBeauty.API\bookBeauty.API.csproj", "{950FA877-044B-466D-9D60-769963CD44C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bookBeauty.Model", "bookBeauty.Model\bookBeauty.Model.csproj", "{0A7BCC01-90A2-4A33-A229-4B283BB7D0D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bookBeauty.Model", "bookBeauty.Model\bookBeauty.Model.csproj", "{0A7BCC01-90A2-4A33-A229-4B283BB7D0D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bookBeauty.Services", "bookBeauty.Services\bookBeauty.Services.csproj", "{84629801-9861-44C5-9DC7-0B10EE58C1B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bookBeauty.Services", "bookBeauty.Services\bookBeauty.Services.csproj", "{84629801-9861-44C5-9DC7-0B10EE58C1B5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMQConsumer", "RabbitMQConsumer\RabbitMQConsumer.csproj", "{3F2D30FC-57B9-4D06-AAD7-765790F8D3A4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{84629801-9861-44C5-9DC7-0B10EE58C1B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84629801-9861-44C5-9DC7-0B10EE58C1B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{84629801-9861-44C5-9DC7-0B10EE58C1B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F2D30FC-57B9-4D06-AAD7-765790F8D3A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F2D30FC-57B9-4D06-AAD7-765790F8D3A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F2D30FC-57B9-4D06-AAD7-765790F8D3A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F2D30FC-57B9-4D06-AAD7-765790F8D3A4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
