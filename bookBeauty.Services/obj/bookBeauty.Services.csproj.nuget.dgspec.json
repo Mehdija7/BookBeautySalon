@@ -121,6 +121,10 @@
               "target": "Package",
               "version": "[7.8.0, )"
             },
+            "EasyNetQ.DI.Autofac": {
+              "target": "Package",
+              "version": "[7.8.0, )"
+            },
             "Mapster": {
               "target": "Package",
               "version": "[7.4.0, )"

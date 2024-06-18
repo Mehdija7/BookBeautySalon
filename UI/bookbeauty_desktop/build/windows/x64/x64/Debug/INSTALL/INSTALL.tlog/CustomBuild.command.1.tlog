@@ -1,0 +1,10 @@
+^C:\USERS\ELMIN\DESKTOP\BOOKBEAUTYSALON\UI\BOOKBEAUTY_DESKTOP\BUILD\WINDOWS\X64\CMAKEFILES\CF95AFB8A06E37311A743632D32A12BB\INSTALL_FORCE.RULE
+setlocal
+cd .
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

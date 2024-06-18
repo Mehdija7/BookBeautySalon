@@ -176,3 +176,5 @@ C:\Users\elmin\Desktop\BookBeautySalon\bookBeauty.API\bin\Debug\net8.0\runtimes\
 C:\Users\elmin\Desktop\BookBeautySalon\bookBeauty.API\bin\Debug\net8.0\runtimes\win-arm64\native\MatrixFactorizationNative.dll
 C:\Users\elmin\Desktop\BookBeautySalon\bookBeauty.API\bin\Debug\net8.0\runtimes\win-x64\native\MatrixFactorizationNative.dll
 C:\Users\elmin\Desktop\BookBeautySalon\bookBeauty.API\bin\Debug\net8.0\runtimes\win-x86\native\MatrixFactorizationNative.dll
+C:\Users\elmin\Desktop\BookBeautySalon\bookBeauty.API\bin\Debug\net8.0\Autofac.dll
+C:\Users\elmin\Desktop\BookBeautySalon\bookBeauty.API\bin\Debug\net8.0\EasyNetQ.DI.Autofac.dll

@@ -114,63 +114,6 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-string hostname = Environment.GetEnvironmentVariable("RABBITMQ_HOST") ?? "rabbitMQ";
-string username = Environment.GetEnvironmentVariable("RABBITMQ_USERNAME") ?? "guest";
-string password = Environment.GetEnvironmentVariable("RABBITMQ_PASSWORD") ?? "guest";
-string virtualHost = Environment.GetEnvironmentVariable("RABBITMQ_VIRTUALHOST") ?? "/";
-
-
-
-
-
-var factory = new ConnectionFactory
-{
-
-    HostName = hostname,
-    UserName = username,
-    Password = password,
-    VirtualHost = virtualHost,
-};
-using var connection = factory.CreateConnection();
-using var channel = connection.CreateModel();
-
-channel.QueueDeclare(queue: "orders",
-                     durable: false,
-                     exclusive: false,
-                     autoDelete: true,
-                     arguments: null);
-
-Console.WriteLine(" [*] Waiting for messages.");
-
-var consumer = new EventingBasicConsumer(channel);
-consumer.Received += async (model, ea) =>
-{
-    var body = ea.Body.ToArray();
-    var message = Encoding.UTF8.GetString(body);
-    Console.WriteLine(message.ToString());
-    var orders = JsonSerializer.Deserialize<OrderInsertRequest>(message);
-    using (var scope = app.Services.CreateScope())
-    {
-        var orderService = scope.ServiceProvider.GetRequiredService<IOrderService>();
-
-        if (orders != null)
-        {
-            try
-            {
-                await orderService.Insert(orders);
-            }
-            catch (Exception e)
-            {
-
-            }
-        }
-    }
-    Console.WriteLine(Environment.GetEnvironmentVariable("Some"));
-    Console.WriteLine("Order made and inserted");
-};
-channel.BasicConsume(queue: "orders",
-                     autoAck: true,
-                     consumer: consumer);
 
 
 app.Run();

@@ -2,6 +2,19 @@
   "version": 3,
   "targets": {
     "net8.0": {
+      "Autofac/4.9.3": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Autofac.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Autofac.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
       "Azure.Core/1.35.0": {
         "type": "package",
         "dependencies": {
@@ -58,6 +71,23 @@
         },
         "runtime": {
           "lib/netstandard2.0/EasyNetQ.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "EasyNetQ.DI.Autofac/7.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Autofac": "4.9.3",
+          "EasyNetQ": "7.8.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/EasyNetQ.DI.Autofac.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/EasyNetQ.DI.Autofac.dll": {
             "related": ".pdb;.xml"
           }
         }
@@ -2083,6 +2113,7 @@
         "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
           "EasyNetQ": "7.8.0",
+          "EasyNetQ.DI.Autofac": "7.8.0",
           "Mapster": "7.4.0",
           "Microsoft.EntityFrameworkCore.SqlServer": "8.0.2",
           "Microsoft.ML": "3.0.1",
@@ -2102,6 +2133,26 @@
     }
   },
   "libraries": {
+    "Autofac/4.9.3": {
+      "sha512": "vEUiP3N+sCRdd6oYXwoJZ9L3iifKEnDtsqajXZDjSol8McSKbag2fJ/yfSc4f2IqwWXRX0/73TRrQjOHsntSIw==",
+      "type": "package",
+      "path": "autofac/4.9.3",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "autofac.4.9.3.nupkg.sha512",
+        "autofac.nuspec",
+        "lib/net45/Autofac.dll",
+        "lib/net45/Autofac.pdb",
+        "lib/net45/Autofac.xml",
+        "lib/netstandard1.1/Autofac.dll",
+        "lib/netstandard1.1/Autofac.pdb",
+        "lib/netstandard1.1/Autofac.xml",
+        "lib/netstandard2.0/Autofac.dll",
+        "lib/netstandard2.0/Autofac.pdb",
+        "lib/netstandard2.0/Autofac.xml"
+      ]
+    },
     "Azure.Core/1.35.0": {
       "sha512": "hENcx03Jyuqv05F4RBEPbxz29UrM3Nbhnr6Wl6NQpoU9BCIbL3XLentrxDCTrH54NLS11Exxi/o8MYgT/cnKFA==",
       "type": "package",
@@ -2157,6 +2208,22 @@
         "lib/netstandard2.0/EasyNetQ.dll",
         "lib/netstandard2.0/EasyNetQ.pdb",
         "lib/netstandard2.0/EasyNetQ.xml",
+        "licence.txt"
+      ]
+    },
+    "EasyNetQ.DI.Autofac/7.8.0": {
+      "sha512": "bFOQ/M2zc0HoW3PmrhzObBvbYlz+wi42/HxdQHmw6MpUAlALZA+ezbkkLSqceezY04u5d5+UhYgk9AzcMfC6xA==",
+      "type": "package",
+      "path": "easynetq.di.autofac/7.8.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "EasyNetQ.png",
+        "easynetq.di.autofac.7.8.0.nupkg.sha512",
+        "easynetq.di.autofac.nuspec",
+        "lib/netstandard2.0/EasyNetQ.DI.Autofac.dll",
+        "lib/netstandard2.0/EasyNetQ.DI.Autofac.pdb",
+        "lib/netstandard2.0/EasyNetQ.DI.Autofac.xml",
         "licence.txt"
       ]
     },

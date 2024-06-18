@@ -9,6 +9,7 @@
       "bookBeauty.Services/1.0.0": {
         "dependencies": {
           "EasyNetQ": "7.8.0",
+          "EasyNetQ.DI.Autofac": "7.8.0",
           "Mapster": "7.4.0",
           "Microsoft.EntityFrameworkCore.Design": "8.0.2",
           "Microsoft.EntityFrameworkCore.SqlServer": "8.0.2",
@@ -21,6 +22,14 @@
         },
         "runtime": {
           "bookBeauty.Services.dll": {}
+        }
+      },
+      "Autofac/4.9.3": {
+        "runtime": {
+          "lib/netstandard2.0/Autofac.dll": {
+            "assemblyVersion": "4.9.3.0",
+            "fileVersion": "4.9.3.0"
+          }
         }
       },
       "Azure.Core/1.35.0": {
@@ -63,6 +72,18 @@
         },
         "runtime": {
           "lib/netstandard2.0/EasyNetQ.dll": {
+            "assemblyVersion": "7.0.0.0",
+            "fileVersion": "7.8.0.0"
+          }
+        }
+      },
+      "EasyNetQ.DI.Autofac/7.8.0": {
+        "dependencies": {
+          "Autofac": "4.9.3",
+          "EasyNetQ": "7.8.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/EasyNetQ.DI.Autofac.dll": {
             "assemblyVersion": "7.0.0.0",
             "fileVersion": "7.8.0.0"
           }
@@ -1251,6 +1272,13 @@
       "serviceable": false,
       "sha512": ""
     },
+    "Autofac/4.9.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-vEUiP3N+sCRdd6oYXwoJZ9L3iifKEnDtsqajXZDjSol8McSKbag2fJ/yfSc4f2IqwWXRX0/73TRrQjOHsntSIw==",
+      "path": "autofac/4.9.3",
+      "hashPath": "autofac.4.9.3.nupkg.sha512"
+    },
     "Azure.Core/1.35.0": {
       "type": "package",
       "serviceable": true,
@@ -1271,6 +1299,13 @@
       "sha512": "sha512-Qo+OoVkQMsN/LU/0QtKZF+bt8W0G5gd3OUibxluWQhWA2bqmapS9R+Hvb3hpQ5JV+TaiJyxM43ZkmnhOLm9r0g==",
       "path": "easynetq/7.8.0",
       "hashPath": "easynetq.7.8.0.nupkg.sha512"
+    },
+    "EasyNetQ.DI.Autofac/7.8.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-bFOQ/M2zc0HoW3PmrhzObBvbYlz+wi42/HxdQHmw6MpUAlALZA+ezbkkLSqceezY04u5d5+UhYgk9AzcMfC6xA==",
+      "path": "easynetq.di.autofac/7.8.0",
+      "hashPath": "easynetq.di.autofac.7.8.0.nupkg.sha512"
     },
     "Flurl/3.0.6": {
       "type": "package",

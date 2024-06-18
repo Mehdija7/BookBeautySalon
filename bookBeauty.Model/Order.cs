@@ -20,6 +20,8 @@ namespace bookBeauty.Model
 
         public string Status { get; set; }
 
+        public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
+
 
     }
 }

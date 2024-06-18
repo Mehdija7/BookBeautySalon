@@ -2,6 +2,7 @@
 using bookBeauty.Model.Requests;
 using bookBeauty.Model.SearchObjects;
 using bookBeauty.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace bookBeauty.API.Controllers
@@ -12,6 +13,12 @@ namespace bookBeauty.API.Controllers
     {
         public OrderController(IOrderService service) : base(service)
         {
+        }
+
+        [AllowAnonymous]
+        public override Task<PagedResult<Order>> GetList([FromQuery] OrderSearchObject searchObject)
+        {
+            return base.GetList(searchObject);
         }
     }
 }

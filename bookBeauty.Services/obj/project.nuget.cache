@@ -1,12 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "k7aNQB42k03u6if/9AIjHm7uHCNFh3Im2jO0uY+9Gz6fkoimbqqba8Sue6cMgWxBWRhaEIZa+XgZ3izBrbfJCQ==",
+  "dgSpecHash": "UJ4bhu2JP5WUYKXT3Evw92utcC1umL04rQ30gV2drzeEX4tqfh1H7vy/q/byjObI81Suk9+OZ8mt9vlRkB5eiw==",
   "success": true,
   "projectFilePath": "C:\\Users\\elmin\\Desktop\\BookBeautySalon\\bookBeauty.Services\\bookBeauty.Services.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\elmin\\.nuget\\packages\\autofac\\4.9.3\\autofac.4.9.3.nupkg.sha512",
     "C:\\Users\\elmin\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\elmin\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
     "C:\\Users\\elmin\\.nuget\\packages\\easynetq\\7.8.0\\easynetq.7.8.0.nupkg.sha512",
+    "C:\\Users\\elmin\\.nuget\\packages\\easynetq.di.autofac\\7.8.0\\easynetq.di.autofac.7.8.0.nupkg.sha512",
     "C:\\Users\\elmin\\.nuget\\packages\\flurl\\3.0.6\\flurl.3.0.6.nupkg.sha512",
     "C:\\Users\\elmin\\.nuget\\packages\\flurl.http\\3.2.4\\flurl.http.3.2.4.nupkg.sha512",
     "C:\\Users\\elmin\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",

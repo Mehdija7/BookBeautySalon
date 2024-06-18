@@ -1,4 +1,5 @@
-﻿using bookBeauty.Model;
+﻿using Azure.Core;
+using bookBeauty.Model;
 using bookBeauty.Model.Messages;
 using bookBeauty.Model.Requests;
 using bookBeauty.Model.SearchObjects;
@@ -6,6 +7,7 @@ using bookBeauty.Services.Database;
 using EasyNetQ;
 using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Exceptions;
 using System.Text;
@@ -88,6 +90,88 @@ namespace bookBeauty.Services
             }
         }
 
-      
+
+        public override Task<Model.Order> Insert(OrderInsertRequest request)
+        {
+            var factory = new ConnectionFactory()
+            {
+                HostName = "localhost",
+                Port = Protocols.DefaultProtocol.DefaultPort,
+                UserName = "guest",
+                Password = "guest",
+                VirtualHost = "/",
+                ContinuationTimeout = new TimeSpan(10, 0, 0, 0)
+            };
+
+            using var connection = factory.CreateConnection();
+            using var channel = connection.CreateModel();
+
+            channel.QueueDeclare(queue: "orders",
+                                 durable: false,
+                                 exclusive: false,
+                                 autoDelete: false,
+                                 arguments: null);
+
+            var mappedEntity = Mapper.Map<Model.Order>(request);
+            var newOrder = new OrderMade { Order = mappedEntity };
+            var json = JsonConvert.SerializeObject(newOrder);
+            var body = Encoding.UTF8.GetBytes(json);
+
+            channel.BasicPublish(exchange: string.Empty,
+                                 routingKey: "orders",
+                                 basicProperties: null,
+                                 body: body);
+
+            return base.Insert(request);
+        }
+
+        public override Task<PagedResult<Model.Order>> GetPaged(OrderSearchObject search)
+        {
+            var factory = new ConnectionFactory()
+            {
+                HostName = "localhost",
+                Port = Protocols.DefaultProtocol.DefaultPort,
+                UserName = "guest",
+                Password = "guest",
+                VirtualHost = "/",
+                ContinuationTimeout = new TimeSpan(10, 0, 0, 0)
+            };
+
+            using var connection = factory.CreateConnection();
+            using var channel = connection.CreateModel();
+
+            channel.QueueDeclare(queue: "orders",
+                                 durable: false,
+                                 exclusive: false,
+                                 autoDelete: false,
+                                 arguments: null);
+
+            if(search != null)
+            {
+                var mappedEntity = Mapper.Map<Model.Order>(search);
+                var newOrder = new OrderMade { Order = mappedEntity };
+                var finalMessage = $"Kreirana je nova narudzba s brojem {newOrder.Order.OrderNumber} na datum {newOrder.Order.DateTime}";
+                var json = JsonConvert.SerializeObject(finalMessage);
+                var body = Encoding.UTF8.GetBytes(json);
+                channel.BasicPublish(exchange: string.Empty,
+                                 routingKey: "orders",
+                                 basicProperties: null,
+                                 body: body);
+
+            }
+            else
+            {
+                var message = "Niste kreirali ispravno narudzbu";
+                var body = Encoding.UTF8.GetBytes(message);
+                channel.BasicPublish(exchange: string.Empty,
+                                 routingKey: "orders",
+                                 basicProperties: null,
+                                 body: body);
+             
+            }
+
+            return base.GetPaged(search);
+        }
+
     }
 }
