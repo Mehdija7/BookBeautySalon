@@ -10,7 +10,7 @@ namespace bookBeauty.Model
     {
         public int OrderId { get; set; }
 
-        public double? TotalPrice { get; set; }
+        public float? TotalPrice { get; set; }
 
         public DateTime? DateTime { get; set; }
 
@@ -19,6 +19,8 @@ namespace bookBeauty.Model
         public string? OrderNumber { get; set; }
 
         public string Status { get; set; }
+
+        public string? Address { get; set; }
 
         public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 

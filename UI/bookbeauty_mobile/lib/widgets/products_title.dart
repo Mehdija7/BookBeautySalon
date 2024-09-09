@@ -13,7 +13,7 @@ class ProductsTitle extends StatelessWidget {
     }
 
     return Padding(
-      padding: const EdgeInsets.only(left: 5, right: 5, top: 10),
+      padding: const EdgeInsets.only(left: 5, right: 5, top: 16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

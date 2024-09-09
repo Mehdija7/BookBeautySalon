@@ -25,8 +25,11 @@ namespace bookBeauty.Services.Migrations
             modelBuilder.Entity("bookBeauty.Services.Database.Appointment", b =>
                 {
                     b.Property<int>("AppointmentId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("AppointmentID");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AppointmentId"));
 
                     b.Property<DateTime?>("Date")
                         .HasColumnType("datetime");
@@ -80,40 +83,14 @@ namespace bookBeauty.Services.Migrations
                     b.ToTable("Category", (string)null);
                 });
 
-            modelBuilder.Entity("bookBeauty.Services.Database.Favorite", b =>
-                {
-                    b.Property<int>("FavoriteId")
-                        .HasColumnType("int")
-                        .HasColumnName("FavoriteID");
-
-                    b.Property<string>("AddedDate")
-                        .HasMaxLength(10)
-                        .HasColumnType("nchar(10)")
-                        .IsFixedLength();
-
-                    b.Property<int?>("ProductId")
-                        .HasMaxLength(50)
-                        .HasColumnType("int")
-                        .HasColumnName("ProductID");
-
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int")
-                        .HasColumnName("UserID");
-
-                    b.HasKey("FavoriteId");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Favorite", (string)null);
-                });
-
             modelBuilder.Entity("bookBeauty.Services.Database.FavoriteProduct", b =>
                 {
                     b.Property<int>("FavoriteProductsId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("FavoriteProductsID");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FavoriteProductsId"));
 
                     b.Property<DateTime?>("AddingDate")
                         .HasColumnType("datetime");
@@ -139,8 +116,11 @@ namespace bookBeauty.Services.Migrations
             modelBuilder.Entity("bookBeauty.Services.Database.Gender", b =>
                 {
                     b.Property<int>("GenderId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("GenderID");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("GenderId"));
 
                     b.Property<string>("Name")
                         .HasMaxLength(50)
@@ -175,8 +155,14 @@ namespace bookBeauty.Services.Migrations
             modelBuilder.Entity("bookBeauty.Services.Database.Order", b =>
                 {
                     b.Property<int>("OrderId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("OrderID");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderId"));
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("CustomerId")
                         .HasColumnType("int")
@@ -192,8 +178,8 @@ namespace bookBeauty.Services.Migrations
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double?>("TotalPrice")
-                        .HasColumnType("float");
+                    b.Property<float?>("TotalPrice")
+                        .HasColumnType("real");
 
                     b.HasKey("OrderId");
 
@@ -205,8 +191,11 @@ namespace bookBeauty.Services.Migrations
             modelBuilder.Entity("bookBeauty.Services.Database.OrderItem", b =>
                 {
                     b.Property<int>("OrderItemId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("OrderItemID");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderItemId"));
 
                     b.Property<int?>("OrderId")
                         .HasColumnType("int")
@@ -249,18 +238,17 @@ namespace bookBeauty.Services.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte[]>("Image")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)");
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<byte[]>("Price")
+                    b.Property<float>("Price")
                         .IsRequired()
-                        .HasColumnType("Image");
+                        .HasColumnType("real");
 
                     b.Property<string>("StateMachine")
                         .HasMaxLength(50)
@@ -276,8 +264,11 @@ namespace bookBeauty.Services.Migrations
             modelBuilder.Entity("bookBeauty.Services.Database.RecommendResult", b =>
                 {
                     b.Property<int>("RecommendResultId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("RecommendResultID");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RecommendResultId"));
 
                     b.Property<int?>("FirstProductId")
                         .HasMaxLength(50)
@@ -307,8 +298,11 @@ namespace bookBeauty.Services.Migrations
             modelBuilder.Entity("bookBeauty.Services.Database.Review", b =>
                 {
                     b.Property<int>("ReviewId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("ReviewID");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReviewId"));
 
                     b.Property<int?>("Mark")
                         .HasColumnType("int");
@@ -334,8 +328,11 @@ namespace bookBeauty.Services.Migrations
             modelBuilder.Entity("bookBeauty.Services.Database.Role", b =>
                 {
                     b.Property<int>("RoleId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("RoleID");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoleId"));
 
                     b.Property<string>("Description")
                         .HasMaxLength(50)
@@ -354,11 +351,17 @@ namespace bookBeauty.Services.Migrations
             modelBuilder.Entity("bookBeauty.Services.Database.Service", b =>
                 {
                     b.Property<int>("ServiceId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("ServiceID");
 
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ServiceId"));
+
                     b.Property<int?>("Duration")
                         .HasColumnType("int");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LongDescription")
                         .HasMaxLength(50)
@@ -383,8 +386,11 @@ namespace bookBeauty.Services.Migrations
             modelBuilder.Entity("bookBeauty.Services.Database.Transaction", b =>
                 {
                     b.Property<int>("TransactionId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("TransactionID");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TransactionId"));
 
                     b.Property<string>("Name")
                         .HasMaxLength(50)
@@ -394,8 +400,8 @@ namespace bookBeauty.Services.Migrations
                         .HasColumnType("int")
                         .HasColumnName("OrderID");
 
-                    b.Property<double?>("Price")
-                        .HasColumnType("float");
+                    b.Property<float?>("Price")
+                        .HasColumnType("real");
 
                     b.Property<string>("Status")
                         .HasMaxLength(50)
@@ -411,8 +417,11 @@ namespace bookBeauty.Services.Migrations
             modelBuilder.Entity("bookBeauty.Services.Database.User", b =>
                 {
                     b.Property<int>("UserId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("UserID");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
 
                     b.Property<string>("Address")
                         .HasMaxLength(50)
@@ -446,9 +455,6 @@ namespace bookBeauty.Services.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<byte[]>("Picture")
-                        .HasColumnType("image");
-
                     b.Property<string>("Username")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
@@ -463,8 +469,11 @@ namespace bookBeauty.Services.Migrations
             modelBuilder.Entity("bookBeauty.Services.Database.UserRole", b =>
                 {
                     b.Property<int>("UserRoleId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("UserRoleID");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserRoleId"));
 
                     b.Property<DateTime?>("ChangedDate")
                         .HasColumnType("datetime");
@@ -508,23 +517,6 @@ namespace bookBeauty.Services.Migrations
                     b.Navigation("HairDresser");
 
                     b.Navigation("Service");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("bookBeauty.Services.Database.Favorite", b =>
-                {
-                    b.HasOne("bookBeauty.Services.Database.Product", "Product")
-                        .WithMany("Favorites")
-                        .HasForeignKey("ProductId")
-                        .HasConstraintName("FK_Favorite_Product");
-
-                    b.HasOne("bookBeauty.Services.Database.User", "User")
-                        .WithMany("Favorites")
-                        .HasForeignKey("UserId")
-                        .HasConstraintName("FK_Favorite_User");
-
-                    b.Navigation("Product");
 
                     b.Navigation("User");
                 });
@@ -667,8 +659,6 @@ namespace bookBeauty.Services.Migrations
                 {
                     b.Navigation("FavoriteProducts");
 
-                    b.Navigation("Favorites");
-
                     b.Navigation("OrderItems");
 
                     b.Navigation("Reviews");
@@ -689,8 +679,6 @@ namespace bookBeauty.Services.Migrations
                     b.Navigation("Appointments");
 
                     b.Navigation("FavoriteProducts");
-
-                    b.Navigation("Favorites");
 
                     b.Navigation("Orders");
 

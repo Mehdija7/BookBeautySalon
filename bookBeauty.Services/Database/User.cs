@@ -25,13 +25,9 @@ public partial class User
 
     public string? PasswordSalt { get; set; }
 
-    public byte[]? Picture { get; set; }
-
     public virtual ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
 
     public virtual ICollection<FavoriteProduct> FavoriteProducts { get; set; } = new List<FavoriteProduct>();
-
-    public virtual ICollection<Favorite> Favorites { get; set; } = new List<Favorite>();
 
     public virtual Gender? Gender { get; set; }
 

@@ -1,4 +1,9 @@
+import 'dart:io';
+
 import 'package:bookbeauty_desktop/models/service.dart';
+import 'package:bookbeauty_desktop/providers/service_provider.dart';
+import 'package:bookbeauty_desktop/providers/upload_provider.dart';
+import 'package:bookbeauty_desktop/screens/new_service_screen.dart';
 import '../widgets/service/new_service.dart';
 import '../widgets/service/services_list.dart';
 import 'package:flutter/material.dart';
@@ -11,42 +16,65 @@ class ServicesScreen extends StatefulWidget {
 }
 
 class _ServicesScreenState extends State<ServicesScreen> {
-  final List<Service> _registeredServices = [
-    Service(
-      title: 'Sisanje',
-      amount: 20.99,
-    ),
-    Service(
-      title: 'Feniranje',
-      amount: 10,
-    ),
-  ];
+  late List<Service> _registeredServices = [];
+  ServiceProvider serviceProvider = ServiceProvider();
+  FileUploadService uploadService = FileUploadService();
+  bool isLoading = true;
 
-  void _addExpense(Service expense) {
-    setState(() {
-      _registeredServices.add(expense);
-    });
+  @override
+  void initState() {
+    super.initState();
+    _fetchServices();
   }
 
-  void _openAddServiceOverlay() {
-    showModalBottomSheet(
-      useSafeArea: true,
-      isScrollControlled: true,
-      context: context,
-      builder: (ctx) => NewService(_addExpense),
+  Future<void> _fetchServices() async {
+    try {
+      var result = await serviceProvider.get();
+      setState(() {
+        _registeredServices = result.result.cast<Service>();
+        isLoading = false;
+      });
+      print(_registeredServices);
+    } catch (e) {
+      print(
+          "*****************************ERROR MESSAGE $e ***********************************");
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  void _navigateToNewServiceScreen() async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const NewserviceScreen()),
     );
+
+    if (result == 'service_added') {
+      _fetchServices();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        IconButton(
-          onPressed: _openAddServiceOverlay,
-          icon: const Icon(Icons.add),
-          padding: const EdgeInsets.only(left: 40, right: 40),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            IconButton(
+              onPressed: _navigateToNewServiceScreen,
+              icon: const Icon(Icons.add),
+              padding: const EdgeInsets.only(left: 40, right: 40),
+            ),
+          ],
         ),
-        ServicesList(servicesList: _registeredServices),
+        _registeredServices.isEmpty
+            ? const Text("Trenutno nema dodanih usluga")
+            : ServicesList(
+                servicesList: _registeredServices,
+                isService: true,
+              ),
       ],
     );
   }

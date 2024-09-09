@@ -11,12 +11,12 @@ using System.Threading.Tasks;
 
 namespace bookBeauty.Services
 {
-    public class FavoritesService : BaseCRUDService<Model.Favorites, FavoriteSearchObject, Database.Favorite,FavoritesUpsertRequest,FavoritesUpsertRequest>, IFavoritesService
+    public class FavoritesService : BaseCRUDService<Model.Favorites, FavoriteSearchObject, Database.FavoriteProduct,FavoritesUpsertRequest,FavoritesUpsertRequest>, IFavoritesService
     {
         public FavoritesService(_200101Context context, IMapper mapper) : base(context, mapper)
         {
         }
-        public override IQueryable<Favorite> AddFilter(FavoriteSearchObject search, IQueryable<Favorite> query)
+        public override IQueryable<FavoriteProduct> AddFilter(FavoriteSearchObject search, IQueryable<FavoriteProduct> query)
         {
             var filteredQuery = base.AddFilter(search, query);
 

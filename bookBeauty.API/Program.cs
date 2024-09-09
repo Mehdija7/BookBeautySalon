@@ -87,13 +87,27 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseStaticFiles();
-app.UseStaticFiles(new StaticFileOptions()
+/*app.UseStaticFiles(new StaticFileOptions()
 {
     FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Resources")),
     RequestPath = new PathString("/Resources")
 });
 
-app.MapControllers();
+app.MapControllers();*/
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(Directory.GetCurrentDirectory(), "Resources", "Images")),
+    RequestPath = "/images"
+});
+
+app.UseCors("AllowAll");
+app.UseRouting();
+app.UseAuthorization();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+});
 
 
 using (var scope = app.Services.CreateScope())

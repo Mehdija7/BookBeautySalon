@@ -2,6 +2,7 @@
 using bookBeauty.Model.Requests;
 using bookBeauty.Model.SearchObjects;
 using bookBeauty.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace bookBeauty.API.Controllers
@@ -13,6 +14,12 @@ namespace bookBeauty.API.Controllers
     {
         public CategoryController(ICategoryService service) : base(service)
         {
+        }
+
+        [AllowAnonymous]
+        public override Task<Category> Insert(CategoryUpsertRequest request)
+        {
+            return base.Insert(request);
         }
     }
 }

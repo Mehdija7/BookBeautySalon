@@ -14,5 +14,6 @@ namespace bookBeauty.Model
         public string ShortDescription { get; set; }
         public string LongDescription { get; set; }
         public int Duration { get; set; }
+        public string? Image { get; set; }
     }
 }

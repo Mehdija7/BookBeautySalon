@@ -1,1 +1,0 @@
- C:\\Users\\elmin\\Desktop\\UI\\bookbeauty_mobile\\.dart_tool\\flutter_build\\5921484b63cbca466287e79e980e0750\\native_assets.yaml: 

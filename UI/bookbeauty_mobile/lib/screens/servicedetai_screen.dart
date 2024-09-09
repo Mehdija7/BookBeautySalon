@@ -1,13 +1,12 @@
+import 'package:book_beauty/models/service.dart';
 import 'package:book_beauty/screens/reservation_screen.dart';
 import 'package:book_beauty/widgets/main_title.dart';
 import 'package:flutter/material.dart';
 
 class ServiceDetailScreen extends StatelessWidget {
-  const ServiceDetailScreen(
-      {super.key, required this.service, required this.image});
+  const ServiceDetailScreen({super.key, required this.service});
 
-  final String service;
-  final String image;
+  final Service service;
 
   @override
   Widget build(BuildContext context) {
@@ -22,25 +21,25 @@ class ServiceDetailScreen extends StatelessWidget {
       appBar: AppBar(
         forceMaterialTransparency: true,
         title: const Text(''),
-        backgroundColor: Colors.white,
+        backgroundColor: const Color.fromARGB(255, 231, 228, 213),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            MainTitle(title: service),
+            MainTitle(title: service.name!),
             const SizedBox(height: 14),
             Hero(
               tag: UniqueKey(),
-              child: Image.asset(
-                image,
+              child: Image.network(
+                service.image!,
                 height: 300,
                 width: double.infinity,
                 fit: BoxFit.cover,
               ),
             ),
             Container(
-              color: const Color.fromARGB(255, 219, 226, 230),
-              height: 350,
+              color: const Color.fromARGB(255, 231, 228, 213),
+              height: 400,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisSize: MainAxisSize.max,
@@ -51,7 +50,7 @@ class ServiceDetailScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(
-                          'Ukoliko želite skratiti kosu u potpunitosti ili ipak samo vrhove, a možda probati i nešto drugačije, rezervišite svoj termin i naše drage frizerke će ispuniti vaša očekivanja.',
+                          service.shortDescription!,
                           style: Theme.of(context)
                               .textTheme
                               .titleMedium!
@@ -61,7 +60,7 @@ class ServiceDetailScreen extends StatelessWidget {
                           height: 15,
                         ),
                         Text(
-                          'Prilikom odabira termina u rubrici napomena birate da li ćete šišanjem apartom ili makazicama, vašu dužinu kose i koliko želite da se ošišate i kojeg frizera biste htjeli.',
+                          service.longDescription!,
                           style: Theme.of(context)
                               .textTheme
                               .titleMedium!
@@ -73,28 +72,29 @@ class ServiceDetailScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(left: 5),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
+                        Text('${service.price} BAM'),
                         TextButton(
                           style: ButtonStyle(
-                            fixedSize: MaterialStateProperty.all(
+                            fixedSize: WidgetStateProperty.all(
                               const Size(150, 60),
                             ),
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              const Color.fromARGB(255, 31, 30, 30),
+                            backgroundColor: WidgetStateProperty.all<Color>(
+                              const Color.fromARGB(255, 113, 121, 122),
                             ),
-                            foregroundColor: MaterialStateProperty.all<Color>(
+                            foregroundColor: WidgetStateProperty.all<Color>(
                                 const Color.fromARGB(255, 245, 245, 245)),
                             overlayColor:
-                                MaterialStateProperty.resolveWith<Color?>(
-                              (Set<MaterialState> states) {
-                                if (states.contains(MaterialState.hovered)) {
+                                WidgetStateProperty.resolveWith<Color?>(
+                              (Set<WidgetState> states) {
+                                if (states.contains(WidgetState.hovered)) {
                                   return const Color.fromARGB(185, 48, 49, 49)
                                       .withOpacity(0.04);
                                 }
-                                if (states.contains(MaterialState.focused) ||
-                                    states.contains(MaterialState.pressed)) {
+                                if (states.contains(WidgetState.focused) ||
+                                    states.contains(WidgetState.pressed)) {
                                   return const Color.fromARGB(
                                           214, 126, 129, 131)
                                       .withOpacity(0.12);

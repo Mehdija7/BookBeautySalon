@@ -1,4 +1,4 @@
-import 'package:book_beauty/screens/ourteam_screen.dart';
+import 'package:book_beauty/screens/products_screen.dart';
 import 'package:book_beauty/screens/services_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
@@ -21,7 +21,9 @@ class _HomeCardState extends State<HomeCard> {
       MaterialPageRoute(
         builder: (ctx) => widget.id == 1
             ? ServicesScreen(mainTitle: widget.title)
-            : OurTeamScreen(title: widget.title),
+            : const ProductsScreen(
+                favoritesOnly: false,
+              ),
       ),
     );
   }

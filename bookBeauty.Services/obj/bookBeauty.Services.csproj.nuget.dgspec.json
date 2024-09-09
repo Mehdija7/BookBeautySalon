@@ -48,6 +48,12 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Http.Features": {
+              "target": "Package",
+              "version": "[5.0.17, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -154,10 +160,6 @@
             "System.Linq.Dynamic.Core": {
               "target": "Package",
               "version": "[1.3.10, )"
-            },
-            "Verifalia": {
-              "target": "Package",
-              "version": "[4.2.0, )"
             }
           },
           "imports": [

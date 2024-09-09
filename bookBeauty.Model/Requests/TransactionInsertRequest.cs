@@ -10,7 +10,7 @@ namespace bookBeauty.Model.Requests
     {
         public int? OrderId { get; set; }
 
-        public double? Price { get; set; }
+        public float? Price { get; set; }
 
         public string? Status { get; set; }
 

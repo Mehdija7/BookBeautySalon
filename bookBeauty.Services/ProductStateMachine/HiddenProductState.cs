@@ -15,13 +15,13 @@ namespace bookBeauty.Services.ProductStateMachine
         }
         public override async Task<Model.Product> Edit(int id)
         {
-            var set = Context.Set<Database.Product>();
+            var set =  Context.Set<Database.Product>();
 
-            var entity = set.Find(id);
+            var entity =  set.Find(id);
 
             entity.StateMachine = "draft";
 
-            Context.SaveChanges();
+             Context.SaveChanges();
 
             return Mapper.Map<Model.Product>(entity);
         }

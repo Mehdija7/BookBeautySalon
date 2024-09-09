@@ -1,6 +1,6 @@
 import 'package:book_beauty/screens/order_screen.dart';
-import 'package:book_beauty/screens/successful_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_paypal_payment/flutter_paypal_payment.dart';
 
 class BuyButton extends StatelessWidget {
   const BuyButton(
@@ -19,11 +19,52 @@ class BuyButton extends StatelessWidget {
         );
       }
       if (isFromOrder) {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (ctx) => const SuccessfulScreen(),
-          ),
-        );
+        {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (BuildContext context) => PaypalCheckoutView(
+              sandboxMode: true,
+              clientId: "YOUR_CLIENT_ID",
+              secretKey: "YOUR_SECRET_KEY",
+              transactions: const [
+                {
+                  "amount": {
+                    "total": '100',
+                    "currency": "USD",
+                    "details": {
+                      "subtotal": '100',
+                      "shipping": '0',
+                      "shipping_discount": 0
+                    }
+                  },
+                  "description": "Sample payment transaction",
+                  "item_list": {
+                    "items": [
+                      {
+                        "name": "Sample Item",
+                        "quantity": 1,
+                        "price": '100',
+                        "currency": "USD"
+                      }
+                    ]
+                  }
+                }
+              ],
+              note: "Thank you for your purchase!",
+              onSuccess: (Map params) {
+                print("Payment Success: $params");
+                Navigator.pop(context);
+              },
+              onError: (error) {
+                print("Payment Error: $error");
+                Navigator.pop(context);
+              },
+              onCancel: () {
+                print("Payment Canceled");
+                Navigator.pop(context);
+              },
+            ),
+          ));
+        }
       }
     }
 

@@ -1,13 +1,13 @@
+import 'package:book_beauty/models/service.dart';
 import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 import '../screens/servicedetai_screen.dart';
 
 class ServiceCard extends StatelessWidget {
-  const ServiceCard({super.key, required this.image, required this.service});
+  const ServiceCard({super.key, required this.service});
 
-  final String service;
-  final String image;
+  final Service service;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class ServiceCard extends StatelessWidget {
             tag: UniqueKey(),
             child: FadeInImage(
                 placeholder: MemoryImage(kTransparentImage),
-                image: AssetImage(image),
+                image: NetworkImage(service.image!),
                 fit: BoxFit.cover,
                 height: 150,
                 width: double.infinity),
@@ -39,7 +39,7 @@ class ServiceCard extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Text(
-                    service,
+                    service.name!,
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                       fontSize: 26,
@@ -58,7 +58,7 @@ class ServiceCard extends StatelessWidget {
 
   void _selectCard(BuildContext context) {
     Navigator.of(context).push(MaterialPageRoute(
-      builder: (ctx) => ServiceDetailScreen(service: service, image: image),
+      builder: (ctx) => ServiceDetailScreen(service: service),
     ));
   }
 }

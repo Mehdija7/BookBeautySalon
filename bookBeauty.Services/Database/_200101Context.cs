@@ -19,8 +19,6 @@ public partial class _200101Context : DbContext
 
     public virtual DbSet<Category> Categories { get; set; }
 
-    public virtual DbSet<Favorite> Favorites { get; set; }
-
     public virtual DbSet<FavoriteProduct> FavoriteProducts { get; set; }
 
     public virtual DbSet<Gender> Genders { get; set; }
@@ -58,7 +56,7 @@ public partial class _200101Context : DbContext
             entity.ToTable("Appointment");
 
             entity.Property(e => e.AppointmentId)
-                .ValueGeneratedNever()
+                  .ValueGeneratedOnAdd()
                 .HasColumnName("AppointmentID");
             entity.Property(e => e.Date).HasColumnType("datetime");
             entity.Property(e => e.HairDresserId)
@@ -94,36 +92,14 @@ public partial class _200101Context : DbContext
             entity.Property(e => e.Name).HasMaxLength(50);
         });
 
-        modelBuilder.Entity<Favorite>(entity =>
-        {
-            entity.ToTable("Favorite");
-
-            entity.Property(e => e.FavoriteId)
-                .ValueGeneratedNever()
-                .HasColumnName("FavoriteID");
-            entity.Property(e => e.AddedDate)
-                .HasMaxLength(10)
-                .IsFixedLength();
-            entity.Property(e => e.ProductId)
-                .HasMaxLength(50)
-                .HasColumnName("ProductID");
-            entity.Property(e => e.UserId).HasColumnName("UserID");
-
-            entity.HasOne(d => d.Product).WithMany(p => p.Favorites)
-                .HasForeignKey(d => d.ProductId)
-                .HasConstraintName("FK_Favorite_Product");
-
-            entity.HasOne(d => d.User).WithMany(p => p.Favorites)
-                .HasForeignKey(d => d.UserId)
-                .HasConstraintName("FK_Favorite_User");
-        });
+     
 
         modelBuilder.Entity<FavoriteProduct>(entity =>
         {
             entity.HasKey(e => e.FavoriteProductsId);
 
             entity.Property(e => e.FavoriteProductsId)
-                .ValueGeneratedNever()
+                 .ValueGeneratedOnAdd()
                 .HasColumnName("FavoriteProductsID");
             entity.Property(e => e.AddingDate).HasColumnType("datetime");
             entity.Property(e => e.ProductId)
@@ -146,7 +122,7 @@ public partial class _200101Context : DbContext
             entity.ToTable("Gender");
 
             entity.Property(e => e.GenderId)
-                .ValueGeneratedNever()
+                .ValueGeneratedOnAdd()
                 .HasColumnName("GenderID");
             entity.Property(e => e.Name).HasMaxLength(50);
         });
@@ -167,7 +143,7 @@ public partial class _200101Context : DbContext
             entity.ToTable("Order");
 
             entity.Property(e => e.OrderId)
-                .ValueGeneratedNever()
+             .ValueGeneratedOnAdd()
                 .HasColumnName("OrderID");
             entity.Property(e => e.CustomerId).HasColumnName("CustomerID");
             entity.Property(e => e.DateTime).HasColumnType("datetime");
@@ -184,7 +160,7 @@ public partial class _200101Context : DbContext
             entity.ToTable("OrderItem");
 
             entity.Property(e => e.OrderItemId)
-                .ValueGeneratedNever()
+                 .ValueGeneratedOnAdd()
                 .HasColumnName("OrderItemID");
             entity.Property(e => e.OrderId).HasColumnName("OrderID");
             entity.Property(e => e.ProductId)
@@ -212,8 +188,7 @@ public partial class _200101Context : DbContext
                 .IsFixedLength()
                 .HasColumnName("CategoryID");
             entity.Property(e => e.Name).HasMaxLength(50);
-            entity.Property(e => e.Price).HasColumnType("money");
-            entity.Property(e => e.Price).HasColumnType("Image");
+            entity.Property(e => e.Price).HasColumnType("real");
             entity.Property(e => e.StateMachine).HasMaxLength(50);
 
             entity.HasOne(d => d.Category).WithMany(p => p.Products)
@@ -226,7 +201,7 @@ public partial class _200101Context : DbContext
             entity.ToTable("RecommendResult");
 
             entity.Property(e => e.RecommendResultId)
-                .ValueGeneratedNever()
+              .ValueGeneratedOnAdd()
                 .HasColumnName("RecommendResultID");
             entity.Property(e => e.FirstProductId)
                 .HasMaxLength(50)
@@ -247,7 +222,7 @@ public partial class _200101Context : DbContext
             entity.ToTable("Review");
 
             entity.Property(e => e.ReviewId)
-                .ValueGeneratedNever()
+                 .ValueGeneratedOnAdd()
                 .HasColumnName("ReviewID");
             entity.Property(e => e.ProductId)
                 .HasMaxLength(50)
@@ -268,7 +243,7 @@ public partial class _200101Context : DbContext
             entity.ToTable("Role");
 
             entity.Property(e => e.RoleId)
-                .ValueGeneratedNever()
+                 .ValueGeneratedOnAdd()
                 .HasColumnName("RoleID");
             entity.Property(e => e.Description).HasMaxLength(50);
             entity.Property(e => e.Name).HasMaxLength(50);
@@ -279,7 +254,7 @@ public partial class _200101Context : DbContext
             entity.ToTable("Service");
 
             entity.Property(e => e.ServiceId)
-                .ValueGeneratedNever()
+              .ValueGeneratedOnAdd()
                 .HasColumnName("ServiceID");
             entity.Property(e => e.LongDescription).HasMaxLength(50);
             entity.Property(e => e.Name).HasMaxLength(50);
@@ -291,7 +266,7 @@ public partial class _200101Context : DbContext
             entity.ToTable("Transaction");
 
             entity.Property(e => e.TransactionId)
-                .ValueGeneratedNever()
+                .ValueGeneratedOnAdd()
                 .HasColumnName("TransactionID");
             entity.Property(e => e.Name).HasMaxLength(50);
             entity.Property(e => e.OrderId).HasColumnName("OrderID");
@@ -307,7 +282,7 @@ public partial class _200101Context : DbContext
             entity.ToTable("User");
 
             entity.Property(e => e.UserId)
-                .ValueGeneratedNever()
+                .ValueGeneratedOnAdd()
                 .HasColumnName("UserID");
             entity.Property(e => e.Address).HasMaxLength(50);
             entity.Property(e => e.Email).HasMaxLength(50);
@@ -317,7 +292,6 @@ public partial class _200101Context : DbContext
             entity.Property(e => e.PasswordHash).HasMaxLength(50);
             entity.Property(e => e.PasswordSalt).HasMaxLength(50);
             entity.Property(e => e.Phone).HasMaxLength(50);
-            entity.Property(e => e.Picture).HasColumnType("image");
             entity.Property(e => e.Username).HasMaxLength(50);
 
             entity.HasOne(d => d.Gender).WithMany(p => p.Users)
@@ -330,7 +304,7 @@ public partial class _200101Context : DbContext
             entity.ToTable("UserRole");
 
             entity.Property(e => e.UserRoleId)
-                .ValueGeneratedNever()
+                 .ValueGeneratedOnAdd()
                 .HasColumnName("UserRoleID");
             entity.Property(e => e.ChangedDate).HasColumnType("datetime");
             entity.Property(e => e.RoleId).HasColumnName("RoleID");

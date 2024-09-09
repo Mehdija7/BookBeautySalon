@@ -1,4 +1,5 @@
-﻿using bookBeauty.Services;
+﻿using bookBeauty.Model.Requests;
+using bookBeauty.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Options;
 using System.Net.Http.Headers;
@@ -30,7 +31,12 @@ namespace bookBeauty.API
                 var username = credentials[0];
                 var password = credentials[1];
 
-                var user =  _userService.Login(username, password);
+            var req = new LoginInsertRequest
+            {
+                Username = username,
+                Password = password
+            };
+                var user =  _userService.Login(req);
 
                 if (user == null)
                 {

@@ -15,6 +15,8 @@ public partial class Appointment
 
     public int ServiceId { get; set; }
 
+    public string? Note { get; set; }
+
     public virtual HairDresser HairDresser { get; set; } = null!;
 
     public virtual Service Service { get; set; } = null!;

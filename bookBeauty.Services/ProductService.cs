@@ -1,4 +1,5 @@
-﻿using bookBeauty.Model.Requests;
+﻿using bookBeauty.Model;
+using bookBeauty.Model.Requests;
 using bookBeauty.Model.SearchObjects;
 using bookBeauty.Services.ProductStateMachine;
 using MapsterMapper;
@@ -28,13 +29,11 @@ namespace bookBeauty.Services
 
             return filteredQuery;
         }
-
         public override async Task <Model.Product> Insert(ProductInsertRequest request)
         {
             var state = BaseProductState.CreateState("initial");
             return await state.Insert(request);
         }
-
         public override async Task <Model.Product> Update(int id, ProductUpdateRequest request)
         {
             var entity = await GetById(id);
@@ -42,14 +41,12 @@ namespace bookBeauty.Services
             return await state.Update(id, request);
 
         }
-
         public async Task<Model.Product> Activate(int id)
         {
             var entity = await  GetById(id);
             var state = BaseProductState.CreateState(entity.StateMachine);
             return await state.Activate(id);
         }
-
         public async Task<Model.Product> Edit(int id)
         {
             var entity = await GetById(id);
@@ -80,6 +77,26 @@ namespace bookBeauty.Services
                 return await state.AllowedActions(entity);
             }
 
+        }
+
+        public async  Task<List<Product>> GetMobile()
+        {
+            List<Product> list = new List<Product>();
+            var db = Context.Products.ToList();
+
+            foreach (var s in db)
+            {
+                var product = Mapper.Map<Model.Product>(s);
+
+                if (!string.IsNullOrEmpty(product.Image) && product.Image.Contains("localhost"))
+                {
+                    product.Image = product.Image.Replace("localhost", "10.0.2.2");
+                }
+
+                list.Add(product);
+            }
+
+            return list;
         }
     }
 }

@@ -1,16 +1,17 @@
+import 'package:bookbeauty_desktop/models/product.dart';
 import 'package:bookbeauty_desktop/widgets/product/product_text.dart';
 import 'package:flutter/material.dart';
 
 class ProductGridItem extends StatelessWidget {
   const ProductGridItem(
       {super.key,
-      required this.name,
-      required this.image,
-      required this.onSelectProduct});
+      required this.product,
+      required this.activeProduct,
+      required this.hideProduct});
 
-  final String name;
-  final String image;
-  final void Function(String name) onSelectProduct;
+  final Product product;
+  final void Function(Product product) activeProduct;
+  final void Function(Product product) hideProduct;
 
   @override
   Widget build(BuildContext context) {
@@ -32,14 +33,14 @@ class ProductGridItem extends StatelessWidget {
             children: [
               Container(
                 width: double.infinity,
-                height: 100,
+                height: 200,
                 color: Colors.white,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(0),
-                  child: Image.asset(
-                    image,
+                  child: Image.network(
+                    product.image!,
                     width: 100,
-                    height: 100,
+                    height: 200,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -50,8 +51,9 @@ class ProductGridItem extends StatelessWidget {
                 right: 0,
                 child: Center(
                   child: ProductText(
-                    name: name,
-                    onSelectProduct: onSelectProduct,
+                    product: product,
+                    activeProduct: activeProduct,
+                    hideProduct: hideProduct,
                   ),
                 ),
               ),

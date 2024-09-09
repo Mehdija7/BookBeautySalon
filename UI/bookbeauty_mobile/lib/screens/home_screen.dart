@@ -28,29 +28,17 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        key: _scaffoldKey,
-        automaticallyImplyLeading: false,
-        backgroundColor: const Color.fromARGB(255, 238, 238, 238),
-        title: Text(
-          'Book Beauty',
-          style: Theme.of(context).textTheme.titleMedium!.copyWith(
-              color: Theme.of(context).colorScheme.onBackground,
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
-              fontStyle: FontStyle.italic),
-        ),
-        centerTitle: true,
-        leading: Builder(
-          builder: (context) => IconButton(
-            icon: Icon(Icons.menu),
-            onPressed: () {
-              Scaffold.of(context).openDrawer();
-            },
+        title: Center(
+          child: Image.asset(
+            'assets/images/logoBB3.jpg',
+            fit: BoxFit.cover,
+            width: MediaQuery.of(context).size.width,
+            height: 100,
           ),
         ),
-      ),
-      drawer: MainDrawer(
-        goToScreen: _setScreen,
+        backgroundColor: Color.fromARGB(255, 190, 187, 168).withOpacity(0.4),
+        key: _scaffoldKey,
+        automaticallyImplyLeading: false,
       ),
       body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: createBottombar(context),
@@ -60,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final _widgetOptions = [
     const StartScreen(),
     const ProductsScreen(
-      favoritesOnly: false,
+      favoritesOnly: true,
     ),
     const AppointmentScreen(),
     const ProfileScreen()
@@ -83,10 +71,10 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomNavigationBar(
               onTap: _onItemTapped,
               currentIndex: _selectedIndex,
-              unselectedItemColor: const Color.fromARGB(255, 167, 170, 170),
+              unselectedItemColor: const Color.fromARGB(255, 92, 110, 110),
               selectedItemColor: Colors.white,
               type: BottomNavigationBarType.fixed,
-              backgroundColor: const Color.fromARGB(255, 43, 41, 41),
+              backgroundColor: const Color.fromARGB(255, 196, 189, 171),
               iconSize: 24,
               items: const [
                 BottomNavigationBarItem(
@@ -95,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     label: ''),
                 BottomNavigationBarItem(
                     icon: Icon(
-                      Icons.shopping_basket,
+                      Icons.favorite,
                     ),
                     label: ''),
                 BottomNavigationBarItem(
@@ -118,9 +106,5 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
     );
-  }
-
-  void _openDrawer(BuildContext context) {
-    Scaffold.of(context).openDrawer();
   }
 }

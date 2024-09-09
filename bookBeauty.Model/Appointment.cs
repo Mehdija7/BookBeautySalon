@@ -17,5 +17,7 @@ namespace bookBeauty.Model
         public int HairDresserId { get; set; } 
 
         public int ServiceId { get; set; }
+
+        public string? Note { get; set; }
     }
 }

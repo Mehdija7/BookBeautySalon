@@ -16,14 +16,33 @@ namespace bookBeauty.Services.ProductStateMachine
         }
         public override async Task<Model.Product> Insert(ProductInsertRequest request)
         {
+          
             var set = Context.Set<Database.Product>();
+            Console.WriteLine("**********************   PRODUCT SET   **********************************************");
+            Console.WriteLine(set);
             var entity = Mapper.Map<Database.Product>(request);
+            Console.WriteLine("**********************   PRODUCT ENTITY   **********************************************");
+            Console.WriteLine(entity.Price);
             entity.StateMachine = "draft";
-            set.Add(entity);
-            Context.SaveChanges();
+            try
+            {
+                set.Add(entity);
+                Console.WriteLine(entity.Price.GetType());
+                Context.SaveChanges();
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("**********************   EXCEPTION   **********************************************");
+                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.InnerException.Message);
+            }
+           
 
             return Mapper.Map<Model.Product>(entity);
         }
-
+        public override async Task<List<string>> AllowedActions(Database.Product entity)
+        {
+            return new List<string>() { nameof(Insert) };
+        }
     }
 }

@@ -8,6 +8,6 @@ namespace bookBeauty.Model.SearchObjects
 {
     public class ServiceSearchObject : BaseSearchObject
     {
-        public string Name  { get; set; }
+        public string? Name  { get; set; }
     }
 }

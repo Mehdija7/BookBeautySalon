@@ -18,10 +18,6 @@ namespace bookBeauty.Services
         {
         }
 
-        public override async Task BeforeInsert(CategoryUpsertRequest request, Category entity)
-        {
-            entity.CategoryId = Context.Categories.Count();
-             base.BeforeInsert(request, entity);
-        }
+      
     }
 }

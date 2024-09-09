@@ -10,7 +10,7 @@ namespace bookBeauty.Model.Requests
     {
         public string? Name { get; set; }
         public float Price { get; set; }
-        public byte[]? Picture { get; set; }
+        public string? Image { get; set; }
         public string? StateMachine { get; set; }
     }
 }

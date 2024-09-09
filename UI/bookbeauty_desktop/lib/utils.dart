@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:typed_data';
 
 import 'package:table_calendar/table_calendar.dart';
 
@@ -16,14 +17,14 @@ final kEvents = LinkedHashMap<DateTime, List<Event>>(
   hashCode: getHashCode,
 )..addAll(_kEventSource);
 
-final _kEventSource = Map.fromIterable(List.generate(50, (index) => index),
-    key: (item) => DateTime.utc(kFirstDay.year, kFirstDay.month, item * 5),
-    value: (item) => List.generate(
-        item % 4 + 1, (index) => Event('Event $item | ${index + 1}')))
-  ..addAll({
+final _kEventSource = {
+  for (var item in List.generate(50, (index) => index))
+    DateTime.utc(kFirstDay.year, kFirstDay.month, item * 5): List.generate(
+        item % 4 + 1, (index) => Event('Event $item | ${index + 1}'))
+}..addAll({
     kToday: [
-      Event('Sisanje'),
-      Event('Feniranje'),
+      const Event('Sisanje'),
+      const Event('Feniranje'),
     ],
   });
 
@@ -42,3 +43,9 @@ List<DateTime> daysInRange(DateTime first, DateTime last) {
 final kToday = DateTime.now();
 final kFirstDay = DateTime(kToday.year, kToday.month, kToday.day);
 final kLastDay = DateTime(kToday.year, kToday.month + 6, kToday.day);
+
+Uint8List _getImageBinary(dynamicList) {
+  List<int> intList = dynamicList.cast<int>().toList();
+  Uint8List data = Uint8List.fromList(intList);
+  return data;
+}

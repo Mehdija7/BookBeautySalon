@@ -31,7 +31,7 @@ class OrderScreen extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 20),
             child: BuyButton(
               validateInputs: () {
-                return false;
+                return true;
               },
               isFromOrder: true,
             ),

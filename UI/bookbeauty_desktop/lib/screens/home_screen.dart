@@ -1,4 +1,6 @@
+import 'package:bookbeauty_desktop/models/order.dart';
 import 'package:bookbeauty_desktop/screens/appointment_screen.dart';
+import 'package:bookbeauty_desktop/screens/categories_screen.dart';
 import 'package:bookbeauty_desktop/screens/orders_screen.dart';
 import 'package:bookbeauty_desktop/screens/products_screen.dart';
 import 'package:bookbeauty_desktop/screens/reports_screen.dart';
@@ -31,7 +33,8 @@ class _HomeScreen extends State {
     const OrdersScreen(),
     const AppointmentScreen(),
     const ProductsScreen(),
-    const ServicesScreen()
+    const ServicesScreen(),
+    const CategoriesScreen()
   ];
 
   @override

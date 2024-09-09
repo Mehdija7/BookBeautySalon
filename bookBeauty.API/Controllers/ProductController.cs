@@ -2,7 +2,6 @@
 using bookBeauty.Model.Requests;
 using bookBeauty.Model.SearchObjects;
 using bookBeauty.Services;
-using bookBeauty.Services.Database;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -40,6 +39,11 @@ namespace bookBeauty.API.Controllers
             return await (_service as IProductService).AllowedActions(id);
         }
 
-
+        [AllowAnonymous]
+        [HttpGet("/Product/Mobile")]
+        public async Task<List<Model.Product>> GetMobile()
+        {
+            return await ((IProductService)_service).GetMobile();
+        }
     }
 }

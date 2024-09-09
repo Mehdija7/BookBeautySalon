@@ -1,12 +1,14 @@
+import 'package:book_beauty/models/product.dart';
 import 'package:book_beauty/widgets/main_title.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/review_stars.dart';
 
 class ProductDetailScreen extends StatelessWidget {
-  const ProductDetailScreen({super.key, required this.name});
+  const ProductDetailScreen({super.key, required this.product});
 
-  final String name;
+  final Product product;
+
   @override
   Widget build(BuildContext context) {
     void buy() {}
@@ -24,28 +26,30 @@ class ProductDetailScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              MainTitle(title: name),
-              Image.asset('assets/images/sisanje.webp'),
+              MainTitle(title: product.name!),
+              Image.network(product.image!),
               const Padding(
                 padding: EdgeInsets.all(15),
                 child: ReviewStars(average: 3.6),
               ),
-              const Padding(
-                padding: EdgeInsets.all(8),
+              Padding(
+                padding: const EdgeInsets.all(8),
                 child: Text(
-                  'jdnkjdj jncjkd d dan jdznfj jhdanfb b dbjs da nhjdnhjv ndsvv ',
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                  product.description!,
+                  style: const TextStyle(
+                      fontSize: 14, fontWeight: FontWeight.bold),
                 ),
               ),
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Padding(
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 15),
                     child: Text(
-                      '26.70KM',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      '${product.price} BAM',
+                      style: const TextStyle(
+                          fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                   ),
                 ],
@@ -61,7 +65,7 @@ class ProductDetailScreen extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(
                             vertical: 15, horizontal: 50),
                         backgroundColor:
-                            const Color.fromARGB(255, 226, 157, 163),
+                            const Color.fromARGB(255, 134, 165, 185),
                         foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(25),

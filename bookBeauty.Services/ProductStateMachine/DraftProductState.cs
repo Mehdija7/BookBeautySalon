@@ -13,9 +13,9 @@ namespace bookBeauty.Services.ProductStateMachine
         }
         public override async Task<Model.Product> Update(int id, ProductUpdateRequest request)
         {
-            var set =   Context.Set<Database.Product>();
+            var set = Context.Set<Database.Product>();
 
-            var entity =   set.Find(id);
+            var entity = set.Find(id);
 
             Mapper.Map(request, entity);
 
@@ -30,19 +30,18 @@ namespace bookBeauty.Services.ProductStateMachine
 
             var entity = set.Find(id);
 
-            entity.StateMachine = "active";
-
-         
+            entity.StateMachine = "active";        
 
             var mappedEntity = Mapper.Map<Model.Product>(entity);
-
- 
-
- 
 
             Context.SaveChanges();
 
             return mappedEntity;
+        }
+
+        public override async Task<List<string>> AllowedActions(Database.Product entity)
+        {
+            return new List<string>() { nameof(Update), nameof(Activate) };
         }
     }
 }

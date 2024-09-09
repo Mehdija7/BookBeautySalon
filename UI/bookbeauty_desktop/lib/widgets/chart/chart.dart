@@ -1,32 +1,29 @@
+import 'package:bookbeauty_desktop/models/category.dart';
+import 'package:bookbeauty_desktop/models/product.dart';
 import 'package:flutter/material.dart';
-import '../../models/product.dart';
-
+import 'productTest.dart';
 import './chart_bar.dart';
 
 class Chart extends StatelessWidget {
-  const Chart({super.key, required this.products});
+  const Chart({super.key, required this.products, required this.categories});
 
   final List<Product> products;
+  final List<Category> categories;
 
   List<ProductBucket> get buckets {
-    return [
-      ProductBucket.forCategory(products, Category.cream),
-      ProductBucket.forCategory(products, Category.oil),
-      ProductBucket.forCategory(products, Category.serum),
-      ProductBucket.forCategory(products, Category.shampoo),
-    ];
+    return categories.map((category) {
+      return ProductBucket.forCategory(products, category);
+    }).toList();
   }
 
-  double get maxTotalExpense {
-    double maxTotalExpense = 0;
-
+  double get maxTotalSum {
+    double maxTotalSum = 0;
     for (final bucket in buckets) {
-      if (bucket.totalExpenses > maxTotalExpense) {
-        maxTotalExpense = bucket.totalExpenses;
+      if (bucket.totalSum > maxTotalSum) {
+        maxTotalSum = bucket.totalSum;
       }
     }
-
-    return maxTotalExpense;
+    return maxTotalSum;
   }
 
   @override
@@ -40,7 +37,8 @@ class Chart extends StatelessWidget {
       width: double.infinity,
       height: 180,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8), color: Colors.white),
+          borderRadius: BorderRadius.circular(8),
+          color: const Color.fromARGB(255, 255, 255, 255)),
       child: Column(
         children: [
           Expanded(
@@ -49,9 +47,10 @@ class Chart extends StatelessWidget {
               children: [
                 for (final bucket in buckets)
                   ChartBar(
-                    fill: bucket.totalExpenses == 0
+                    fill: bucket.totalSum == 0
                         ? 0
-                        : bucket.totalExpenses / maxTotalExpense,
+                        : (bucket.totalSum / maxTotalSum).clamp(0.03, 1.0),
+                    totalSum: bucket.totalSum,
                   )
               ],
             ),
@@ -65,7 +64,12 @@ class Chart extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 15),
                       child: Center(
                         child: Text(
-                          categoryName[bucket.category].toString(),
+                          bucket.category.name!,
+                          style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          //categoryName[bucket.category].toString(),
                         ),
                       ),
                     ),

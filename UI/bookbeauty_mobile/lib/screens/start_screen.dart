@@ -6,43 +6,41 @@ class StartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 10, top: 30),
-            child: Text(
-              "Spremni za",
-              style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                  color: Theme.of(context).colorScheme.onBackground,
-                  fontWeight: FontWeight.bold),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Expanded(
+          child: Container(
+            decoration: BoxDecoration(
+              color: const Color.fromARGB(255, 190, 187, 168).withOpacity(0.4),
             ),
-          ),
-          const SizedBox(
-            height: 2,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10, top: 2, bottom: 20),
-            child: Text(
-              "PROMJENU",
-              style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                    color: Theme.of(context).colorScheme.onBackground,
-                    fontSize: 30,
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: ListView(
+                children: const [
+                  Text(
+                    'Dobro dosli u aplikaciju BookBeauty, pogledajte nase usluge i proizvode.',
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
                   ),
+                  HomeCard(
+                    title: 'Naše usluge',
+                    image: 'assets/images/pranje_kose.jpg',
+                    id: 1,
+                  ),
+                  HomeCard(
+                    title: 'Naši proizvodi',
+                    image: 'assets/images/proizvodi.jpg',
+                    id: 2,
+                  ),
+                ],
+              ),
             ),
           ),
-          const HomeCard(
-              title: 'Naše usluge',
-              image: 'assets/images/pranje_kose.jpg',
-              id: 1),
-          const HomeCard(
-            title: 'Naš tim',
-            image: 'assets/images/haidressers.jpg',
-            id: 2,
-          )
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

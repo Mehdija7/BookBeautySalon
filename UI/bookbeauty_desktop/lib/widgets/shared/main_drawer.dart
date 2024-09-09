@@ -1,3 +1,4 @@
+import 'package:bookbeauty_desktop/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 
 class MainDrawer extends StatelessWidget {
@@ -17,50 +18,77 @@ class MainDrawer extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: <Widget>[
           DrawerHeader(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Color.fromARGB(255, 69, 71, 73),
             ),
             child: Text(
               isAdmin ? 'ADMIN PANEL' : 'Frizer panel',
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 24,
               ),
             ),
           ),
           ListTile(
-            title: Text('Pocetna'),
+            title: const Text('Pocetna'),
             onTap: () {
               goToScreen('Pocetna', 0);
               Navigator.pop(context);
             },
           ),
           ListTile(
-              title: Text('Narudzbe'),
+              title: const Text('Narudzbe'),
               onTap: () {
                 Navigator.pop(context);
-                goToScreen('narudzbe', 1);
+                goToScreen('Narudzbe', 1);
               }),
           ListTile(
-            title: Text('Termini'),
+            title: const Text('Termini'),
             onTap: () {
               Navigator.pop(context);
               goToScreen('Termini', 2);
             },
           ),
           ListTile(
-            title: Text('Proizvodi'),
+            title: const Text('Proizvodi'),
             onTap: () {
-              goToScreen('proizvodi', 3);
+              goToScreen('Proizvodi', 3);
               Navigator.pop(context);
             },
           ),
           ListTile(
-            title: Text('Usluge'),
+            title: const Text('Usluge'),
             onTap: () {
-              goToScreen('usluge', 4);
+              goToScreen('Usluge', 4);
               Navigator.pop(context);
             },
+          ),
+          ListTile(
+            title: const Text('Kategorije'),
+            onTap: () {
+              goToScreen('Kategorije', 5);
+              Navigator.pop(context);
+            },
+          ),
+          const SizedBox(
+            height: 200,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              TextButton.icon(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => LoginScreen(),
+                    ),
+                  );
+                },
+                icon: const Icon(Icons.logout),
+                label: const Text('Odjava'),
+                style: TextButton.styleFrom(),
+              ),
+            ],
           ),
         ],
       ),

@@ -6,11 +6,12 @@ class ProductSearchBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      alignment: Alignment.topLeft,
-      width: 150,
+      padding: const EdgeInsets.only(left: 10, right: 10),
+      alignment: Alignment.center,
+      width: 350,
       height: 40,
       decoration: BoxDecoration(
-        color: const Color.fromARGB(255, 255, 255, 255),
+        color: const Color.fromARGB(255, 248, 249, 250),
         borderRadius: BorderRadius.circular(10),
       ),
       child: const TextField(

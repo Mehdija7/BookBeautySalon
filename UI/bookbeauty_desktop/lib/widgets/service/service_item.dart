@@ -19,10 +19,11 @@ class ServiceItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Text(
-              service.title,
+              service.name!,
             ),
             const SizedBox(height: 4),
-            Text('BAM ${service.amount.toStringAsFixed(2)}'),
+            Text('BAM ${service.price!.toStringAsFixed(2)}'),
+            Text('min ${service.duration!.toString()}'),
           ],
         ),
       ),

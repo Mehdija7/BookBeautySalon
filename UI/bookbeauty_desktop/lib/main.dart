@@ -1,10 +1,12 @@
-import 'package:bookbeauty_desktop/screens/home_screen.dart';
+import 'package:bookbeauty_desktop/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 void main() async {
   await initializeDateFormatting('bs');
-  runApp(const MyApp());
+  runApp(
+    const MyApp(),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -19,7 +21,7 @@ class MyApp extends StatelessWidget {
             seedColor: const Color.fromARGB(255, 91, 100, 107)),
         useMaterial3: true,
       ),
-      home: const HomeScreen(),
+      home: LoginScreen(),
     );
   }
 }

@@ -29,7 +29,7 @@ class AppointmentCard extends StatelessWidget {
       height: 150,
       child: Card(
         color: isNew
-            ? const Color.fromARGB(127, 178, 240, 127)
+            ? const Color.fromARGB(125, 125, 252, 22)
             : const Color.fromARGB(201, 207, 195, 195),
         margin: const EdgeInsets.all(20),
         shape: RoundedRectangleBorder(

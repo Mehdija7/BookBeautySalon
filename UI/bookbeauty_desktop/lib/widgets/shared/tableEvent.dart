@@ -79,7 +79,9 @@ class _TableEventsState extends State<TableEvents> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+      ),
       body: Column(
         children: [
           TableCalendar<Event>(
@@ -94,12 +96,12 @@ class _TableEventsState extends State<TableEvents> {
             rangeSelectionMode: _rangeSelectionMode,
             eventLoader: _getEventsForDay,
             startingDayOfWeek: StartingDayOfWeek.monday,
-            calendarStyle: CalendarStyle(
+            calendarStyle: const CalendarStyle(
               outsideDaysVisible: true,
-              selectedDecoration: const BoxDecoration(
+              selectedDecoration: BoxDecoration(
                   color: Color.fromARGB(255, 139, 171, 180),
                   shape: BoxShape.circle),
-              todayDecoration: const BoxDecoration(
+              todayDecoration: BoxDecoration(
                   color: Color.fromARGB(255, 157, 162, 163),
                   shape: BoxShape.circle),
             ),

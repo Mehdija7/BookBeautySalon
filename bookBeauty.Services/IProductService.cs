@@ -16,6 +16,7 @@ namespace bookBeauty.Services
         public Task<Product> Edit(int id);
         public Task<Product> Hide(int id);
         public  Task<List<string>> AllowedActions(int id);
+        public Task<List<Product>> GetMobile();
 
     }
 }

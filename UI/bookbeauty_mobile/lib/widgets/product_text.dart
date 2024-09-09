@@ -1,23 +1,25 @@
+import 'package:book_beauty/models/product.dart';
 import 'package:flutter/material.dart';
 
 class ProductText extends StatelessWidget {
-  const ProductText({super.key});
+  const ProductText({super.key, required this.product});
 
+  final Product product;
   @override
   Widget build(BuildContext context) {
     void buy() {}
     return Column(
       children: [
-        const Padding(
-          padding: EdgeInsets.symmetric(vertical: 2, horizontal: 5),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 5),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Krema UNO",
-                style: TextStyle(fontSize: 16, color: Colors.black),
+                product.name!,
+                style: const TextStyle(fontSize: 16, color: Colors.black),
               ),
-              Icon(
+              const Icon(
                 Icons.favorite_border,
                 size: 20,
                 color: Colors.grey,
@@ -25,14 +27,15 @@ class ProductText extends StatelessWidget {
             ],
           ),
         ),
-        const Padding(
-          padding: EdgeInsets.only(left: 5),
+        Padding(
+          padding: const EdgeInsets.only(left: 5),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text(
-                "24.47 KM",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                '${product.price!} BAM',
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ],
           ),
@@ -47,7 +50,7 @@ class ProductText extends StatelessWidget {
                 style: TextButton.styleFrom(
                   padding:
                       const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
-                  backgroundColor: const Color.fromARGB(255, 212, 146, 152),
+                  backgroundColor: const Color.fromARGB(255, 134, 165, 185),
                   foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),

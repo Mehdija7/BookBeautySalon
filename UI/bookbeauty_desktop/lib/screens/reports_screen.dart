@@ -1,7 +1,7 @@
-import 'package:bookbeauty_desktop/screens/report_screen.dart';
-import 'package:bookbeauty_desktop/screens/review_screen.dart';
 import '../widgets/shared/card.dart';
 import 'package:flutter/material.dart';
+import '../screens/report_screen.dart';
+import '../screens/review_screen.dart';
 
 class ReportsScreen extends StatelessWidget {
   const ReportsScreen({super.key});

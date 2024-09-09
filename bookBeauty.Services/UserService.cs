@@ -4,14 +4,8 @@ using bookBeauty.Services.Database;
 using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Sockets;
-using System.Net;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 using bookBeauty.Model;
 
 namespace bookBeauty.Services
@@ -59,7 +53,6 @@ namespace bookBeauty.Services
         {
             _logger.LogInformation($"Adding user: {entity.Username}");
 
-            entity.UserId = Context.Users.Count()+1;
 
            foreach(var u in Context.Users)
             {
@@ -74,7 +67,7 @@ namespace bookBeauty.Services
 
             entity.PasswordSalt = GenerateSalt();
             entity.PasswordHash = GenerateHash(entity.PasswordSalt, request.Password);
-            base.BeforeInsert(request, entity);
+           await base.BeforeInsert(request, entity);
         }
 
         public static string GenerateSalt()
@@ -113,18 +106,19 @@ namespace bookBeauty.Services
             }
         }
 
-        public Model.User Login(string username, string password)
+        public Model.User Login(LoginInsertRequest req)
         {
-            var entity = Context.Users.Include(x => x.UserRoles).ThenInclude(y=>y.Role).FirstOrDefault(x => x.Username == username);
+            var entity = Context.Users.Include(x => x.UserRoles).ThenInclude(y => y.Role).FirstOrDefault(x => x.Username == req.Username);
 
-            if(entity == null)
+            if (entity == null)
             {
-                return null; 
+                return null;
             }
 
-            var hash = GenerateHash(entity.PasswordSalt, password); 
+            var hash = GenerateHash(entity.PasswordSalt, req.Password);
 
-            if(hash !=  entity.PasswordHash) {
+            if (hash != entity.PasswordHash)
+            {
 
                 return null;
             }
@@ -132,7 +126,21 @@ namespace bookBeauty.Services
             return this.Mapper.Map<Model.User>(entity);
         }
 
-       
+        public Model.User AddUloga(int id, string namerole)
+        {
+            var user = Context.Users.Include("UserRoles.Role").FirstOrDefault(x => x.UserId == id);
+            var role = Context.Roles.FirstOrDefault(x => x.Name.ToLower() == namerole);
+            Database.UserRole newrole = new Database.UserRole
+            {
+                ChangedDate = DateTime.Now,
+                UserId = id,
+                RoleId = role.RoleId
+            };
+            Context.UserRoles.Add(newrole);
+            Context.SaveChanges();
+            return Mapper.Map<Model.User>(user);
+        }
 
+       
     }
 }

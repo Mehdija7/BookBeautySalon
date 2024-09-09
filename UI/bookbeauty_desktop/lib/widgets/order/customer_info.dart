@@ -12,15 +12,15 @@ class CustomerInfo extends StatelessWidget {
         MainTitle(title: 'Informacije o kupcu'),
         Padding(
           padding: EdgeInsets.only(right: 200, left: 20, bottom: 10),
-          child: Text('Aresa:' + ' Azize Sacirbegovica Sarajevo'),
+          child: Text('Aresa:' ' Azize Sacirbegovica Sarajevo'),
         ),
         Padding(
           padding: EdgeInsets.only(right: 200, left: 20, bottom: 20),
-          child: Text('Ime: ' + ' Kupac Kupac'),
+          child: Text('Ime: ' ' Kupac Kupac'),
         ),
         Padding(
           padding: EdgeInsets.only(right: 200, left: 20, bottom: 20),
-          child: Text('Broj: ' + '38760484854'),
+          child: Text('Broj: ' '38760484854'),
         ),
       ],
     );
