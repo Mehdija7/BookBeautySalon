@@ -11,14 +11,16 @@ class Order {
   String? orderNumber;
   String? status;
   String? address;
-  Order(
-      {this.orderId,
-      this.totalPrice,
-      this.dateTime,
-      this.customerId,
-      this.orderNumber,
-      this.status,
-      this.address});
+
+  Order({
+    this.orderId,
+    this.totalPrice,
+    this.dateTime,
+    this.customerId,
+    this.orderNumber,
+    this.status,
+    this.address,
+  });
 
   factory Order.fromJson(Map<String, dynamic> json) => _$OrderFromJson(json);
 

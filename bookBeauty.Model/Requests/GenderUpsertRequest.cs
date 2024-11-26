@@ -8,7 +8,6 @@ namespace bookBeauty.Model.Requests
 {
     public class GenderUpsertRequest
     {
-        public int Id { get; set; }
         public string Name { get; set; }
     }
 }

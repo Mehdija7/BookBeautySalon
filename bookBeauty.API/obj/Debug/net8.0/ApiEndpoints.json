@@ -1,6 +1,6 @@
 [
   {
-    "ContainingType": "bookBeauty.API.Controllers.BaseCRUDController\u00604[[bookBeauty.Model.Appointment, bookBeauty.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[bookBeauty.Model.SearchObjects.AppointmentSearchObject, bookBeauty.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[bookBeauty.Model.Requests.AppointmentInsertRequest, bookBeauty.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[bookBeauty.Model.Requests.AppointmentUpdateRequest, bookBeauty.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "ContainingType": "bookBeauty.API.Controllers.AppointmentController",
     "Method": "Insert",
     "RelativePath": "Appointment",
     "HttpMethod": "POST",
@@ -155,7 +155,59 @@
     ]
   },
   {
-    "ContainingType": "bookBeauty.API.Controllers.CategoryController",
+    "ContainingType": "bookBeauty.API.Controllers.AppointmentController",
+    "Method": "GetAvailableAppointments",
+    "RelativePath": "Appointment/availableAppointments",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "req",
+        "Type": "bookBeauty.Model.Requests.AppointmentInsertRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[System.TimeOnly, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "bookBeauty.API.Controllers.AppointmentController",
+    "Method": "GetAppointmentsByUser",
+    "RelativePath": "Appointment/getAppointmentsByUser",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[bookBeauty.Model.Requests.AppointmentGetRequest, bookBeauty.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "bookBeauty.API.Controllers.BaseCRUDController\u00604[[bookBeauty.Model.Category, bookBeauty.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[bookBeauty.Model.SearchObjects.CategorySearchObject, bookBeauty.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[bookBeauty.Model.Requests.CategoryUpsertRequest, bookBeauty.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[bookBeauty.Model.Requests.CategoryUpsertRequest, bookBeauty.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "Insert",
     "RelativePath": "Category",
     "HttpMethod": "POST",
@@ -295,59 +347,29 @@
     ]
   },
   {
-    "ContainingType": "bookBeauty.API.Controllers.BaseCRUDController\u00604[[bookBeauty.Model.Favorites, bookBeauty.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[bookBeauty.Model.SearchObjects.FavoriteSearchObject, bookBeauty.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[bookBeauty.Model.Requests.FavoritesUpsertRequest, bookBeauty.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[bookBeauty.Model.Requests.FavoritesUpsertRequest, bookBeauty.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-    "Method": "Insert",
-    "RelativePath": "FavoriteProduct",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "request",
-        "Type": "bookBeauty.Model.Requests.FavoritesUpsertRequest",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "bookBeauty.Model.Favorites",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "bookBeauty.API.Controllers.BaseCRUDController\u00604[[bookBeauty.Model.Favorites, bookBeauty.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[bookBeauty.Model.SearchObjects.FavoriteSearchObject, bookBeauty.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[bookBeauty.Model.Requests.FavoritesUpsertRequest, bookBeauty.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[bookBeauty.Model.Requests.FavoritesUpsertRequest, bookBeauty.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-    "Method": "Delete",
-    "RelativePath": "FavoriteProduct",
+    "ContainingType": "bookBeauty.API.Controllers.UserController",
+    "Method": "DeleteUserRoles",
+    "RelativePath": "DeleteUserRoles",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "id",
+        "Name": "userId",
         "Type": "System.Int32",
         "IsRequired": false
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "bookBeauty.Model.Favorites",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
+        "Type": "System.Void",
+        "MediaTypes": [],
         "StatusCode": 200
       }
     ]
   },
   {
-    "ContainingType": "bookBeauty.API.Controllers.BaseController\u00602[[bookBeauty.Model.Favorites, bookBeauty.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[bookBeauty.Model.SearchObjects.FavoriteSearchObject, bookBeauty.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "ContainingType": "bookBeauty.API.Controllers.FavoriteProductController",
     "Method": "GetList",
     "RelativePath": "FavoriteProduct",
     "HttpMethod": "GET",
@@ -377,7 +399,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "bookBeauty.Model.PagedResult\u00601[[bookBeauty.Model.Favorites, bookBeauty.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "bookBeauty.Model.PagedResult\u00601[[bookBeauty.Model.FavoriteProduct, bookBeauty.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -388,7 +410,59 @@
     ]
   },
   {
-    "ContainingType": "bookBeauty.API.Controllers.BaseCRUDController\u00604[[bookBeauty.Model.Favorites, bookBeauty.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[bookBeauty.Model.SearchObjects.FavoriteSearchObject, bookBeauty.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[bookBeauty.Model.Requests.FavoritesUpsertRequest, bookBeauty.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[bookBeauty.Model.Requests.FavoritesUpsertRequest, bookBeauty.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "ContainingType": "bookBeauty.API.Controllers.FavoriteProductController",
+    "Method": "Insert",
+    "RelativePath": "FavoriteProduct",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "bookBeauty.Model.Requests.FavoritesUpsertRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "bookBeauty.Model.FavoriteProduct",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "bookBeauty.API.Controllers.FavoriteProductController",
+    "Method": "Delete",
+    "RelativePath": "FavoriteProduct",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "bookBeauty.Model.FavoriteProduct",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "bookBeauty.API.Controllers.BaseCRUDController\u00604[[bookBeauty.Model.FavoriteProduct, bookBeauty.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[bookBeauty.Model.SearchObjects.FavoriteSearchObject, bookBeauty.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[bookBeauty.Model.Requests.FavoritesUpsertRequest, bookBeauty.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[bookBeauty.Model.Requests.FavoritesUpsertRequest, bookBeauty.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "Update",
     "RelativePath": "FavoriteProduct/{id}",
     "HttpMethod": "PUT",
@@ -408,7 +482,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "bookBeauty.Model.Favorites",
+        "Type": "bookBeauty.Model.FavoriteProduct",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -419,7 +493,7 @@
     ]
   },
   {
-    "ContainingType": "bookBeauty.API.Controllers.BaseController\u00602[[bookBeauty.Model.Favorites, bookBeauty.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[bookBeauty.Model.SearchObjects.FavoriteSearchObject, bookBeauty.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "ContainingType": "bookBeauty.API.Controllers.BaseController\u00602[[bookBeauty.Model.FavoriteProduct, bookBeauty.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[bookBeauty.Model.SearchObjects.FavoriteSearchObject, bookBeauty.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "GetById",
     "RelativePath": "FavoriteProduct/{id}",
     "HttpMethod": "GET",
@@ -434,7 +508,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "bookBeauty.Model.Favorites",
+        "Type": "bookBeauty.Model.FavoriteProduct",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -575,6 +649,92 @@
     "ReturnTypes": [
       {
         "Type": "bookBeauty.Model.Gender",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "bookBeauty.API.Controllers.GenderController",
+    "Method": "GetGenders",
+    "RelativePath": "Gender/getGenders",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[bookBeauty.Model.Gender, bookBeauty.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "bookBeauty.API.Controllers.ReviewController",
+    "Method": "GetAverage",
+    "RelativePath": "GetAverage",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "productId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Double",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "bookBeauty.API.Controllers.UserController",
+    "Method": "GetHairdressers",
+    "RelativePath": "GetHairdressers",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[bookBeauty.Model.User, bookBeauty.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "bookBeauty.API.Controllers.UserController",
+    "Method": "GetHairdressersMobile",
+    "RelativePath": "GetHairdressersMobile",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[bookBeauty.Model.Requests.HairdresserGetRequest, bookBeauty.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -1098,6 +1258,37 @@
     ]
   },
   {
+    "ContainingType": "bookBeauty.API.Controllers.FavoriteProductController",
+    "Method": "IsProductFav",
+    "RelativePath": "Product/IsProductFav",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "productId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Boolean",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "bookBeauty.API.Controllers.ProductController",
     "Method": "GetMobile",
     "RelativePath": "Product/Mobile",
@@ -1258,7 +1449,7 @@
     ]
   },
   {
-    "ContainingType": "bookBeauty.API.Controllers.BaseCRUDController\u00604[[bookBeauty.Model.Review, bookBeauty.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[bookBeauty.Model.SearchObjects.ReviewSearchObject, bookBeauty.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[bookBeauty.Model.Requests.ReviewInsertRequest, bookBeauty.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[bookBeauty.Model.Requests.ReviewUpdateRequest, bookBeauty.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+    "ContainingType": "bookBeauty.API.Controllers.ReviewController",
     "Method": "Insert",
     "RelativePath": "Review",
     "HttpMethod": "POST",
@@ -1905,6 +2096,89 @@
     "ReturnTypes": [
       {
         "Type": "bookBeauty.Model.User",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "bookBeauty.API.Controllers.UserController",
+    "Method": "AddRole",
+    "RelativePath": "User/{id}/AddRole",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "namerole",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "bookBeauty.Model.User",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "bookBeauty.API.Controllers.UserController",
+    "Method": "AddUserRole",
+    "RelativePath": "User/{id}/AddUserRole",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "bookBeauty.Model.User",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "bookBeauty.API.Controllers.UserController",
+    "Method": "GetUserRoles",
+    "RelativePath": "User/{id}/GetRoles",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[bookBeauty.Model.UserRoles, bookBeauty.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",

@@ -2,6 +2,8 @@
 using bookBeauty.Model.Requests;
 using bookBeauty.Model.SearchObjects;
 using bookBeauty.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace bookBeauty.API.Controllers
 {
@@ -10,5 +12,15 @@ namespace bookBeauty.API.Controllers
         public GenderController(IGenderService service) : base(service)
         {
         }
+
+
+        [AllowAnonymous]
+        [HttpGet("getGenders")]
+        public List<Model.Gender> GetGenders()
+        {
+            return ((IGenderService)_service).GetGenders();
+        }
+
+
     }
 }

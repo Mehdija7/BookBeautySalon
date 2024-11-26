@@ -1,5 +1,8 @@
+import 'package:bookbeauty_desktop/models/user.dart';
+import 'package:bookbeauty_desktop/models/user_roles.dart';
 import 'package:bookbeauty_desktop/providers/auth_provider.dart';
 import 'package:bookbeauty_desktop/providers/service_provider.dart';
+import 'package:bookbeauty_desktop/providers/user_provider.dart';
 import 'package:bookbeauty_desktop/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -46,21 +49,15 @@ class LoginScreen extends StatelessWidget {
                   ),
                   ElevatedButton(
                       onPressed: () async {
-                        ServiceProvider provider = ServiceProvider();
+                        UserProvider provider = UserProvider();
+
                         print(
                             "credentials: ${_usernameController.text} : ${_passwordController.text}");
                         AuthProvider.username = _usernameController.text;
                         AuthProvider.password = _passwordController.text;
 
-                        if (_usernameController.text == "") {}
-                        try {
-                          var data = await provider.get();
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => const HomeScreen(),
-                            ),
-                          );
-                        } on Exception catch (e) {
+                        if (_usernameController.text.trim() == "" ||
+                            _passwordController.text.trim() == "") {
                           showDialog(
                               context: context,
                               builder: (context) => AlertDialog(
@@ -71,9 +68,47 @@ class LoginScreen extends StatelessWidget {
                                               Navigator.pop(context),
                                           child: const Text("OK"))
                                     ],
-                                    content: Text(e.toString()),
+                                    content: const Text(
+                                        'Neispravni podaci za prijavu'),
                                   ));
                         }
+                        try {
+                          User data = await provider.authenticate(
+                              _usernameController.text,
+                              _passwordController.text);
+                          var roles = await provider.getRoles(data.userId!);
+                          bool isAdmin = roles
+                              .where(
+                                  (r) => r.role!.name!.toLowerCase() == 'admin')
+                              .isNotEmpty;
+                          bool isHairdresser = roles
+                              .where((r) =>
+                                  r.role!.name!.toLowerCase() == 'frizer')
+                              .isNotEmpty;
+                          if (isAdmin || isHairdresser) {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => HomeScreen(
+                                  isAdmin: isAdmin,
+                                ),
+                              ),
+                            );
+                          } else {
+                            showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                      title: const Text("Greška"),
+                                      actions: [
+                                        TextButton(
+                                            onPressed: () =>
+                                                Navigator.pop(context),
+                                            child: const Text("OK"))
+                                      ],
+                                      content: const Text(
+                                          'Neispravni podaci za prijavu'),
+                                    ));
+                          }
+                        } on Exception catch (e) {}
                       },
                       child: const Text("Login"))
                 ],

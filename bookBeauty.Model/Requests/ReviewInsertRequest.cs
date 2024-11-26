@@ -11,6 +11,5 @@ namespace bookBeauty.Model.Requests
         public int Mark  { get; set;}
         public int UserId { get; set; }
         public int ProductId { get; set; }
-        public DateTime Date { get; set; }
     }
 }

@@ -7,6 +7,8 @@ using Microsoft.Extensions.Logging;
 using System.Security.Cryptography;
 using System.Text;
 using bookBeauty.Model;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace bookBeauty.Services
 {
@@ -124,9 +126,8 @@ namespace bookBeauty.Services
             }
 
             return this.Mapper.Map<Model.User>(entity);
-        }
-
-        public Model.User AddUloga(int id, string namerole)
+        }  
+        public Model.User AddRole(int id, string namerole)
         {
             var user = Context.Users.Include("UserRoles.Role").FirstOrDefault(x => x.UserId == id);
             var role = Context.Roles.FirstOrDefault(x => x.Name.ToLower() == namerole);
@@ -141,6 +142,57 @@ namespace bookBeauty.Services
             return Mapper.Map<Model.User>(user);
         }
 
-       
+        
+        public Model.User AddUserRole(int id)
+        {
+            var user = Context.Users.Include("UserRoles.Role").FirstOrDefault(x => x.UserId == id);
+            var role = Context.Roles.FirstOrDefault(x => x.Name.ToLower() == "korisnik"); ;
+            Database.UserRole newrole = new Database.UserRole
+            {
+                ChangedDate = DateTime.Now,
+                UserId = id,
+                RoleId = role.RoleId
+            };
+            Context.UserRoles.Add(newrole);
+            Context.SaveChanges();
+            return Mapper.Map<Model.User>(user);
+        }
+
+        public List<UserRoles> GetUserRoles(int id)
+        {
+            var userRoles = Context.UserRoles.Include(r=>r.Role).Where(u=>u.UserId == id).ToList();
+            return Mapper.Map<List<UserRoles>>(userRoles);
+        }
+
+        public List<Model.User> GetHairdressers()
+        {
+            var users = Context.Users
+            .Include("UserRoles.Role")
+             .Where(u => u.UserRoles.Any(r => r.Role.Name.ToLower() == "frizer"))
+            .ToList();
+
+            return Mapper.Map<List<Model.User>>(users);
+        }
+
+        public List<HairdresserGetRequest> GetHairdressersMobile()
+        {
+
+            var users = Context.Users
+            .Include("UserRoles.Role")
+             .Where(u => u.UserRoles.Any(r => r.Role.Name.ToLower() == "frizer"))
+            .ToList();
+            return Mapper.Map<List<HairdresserGetRequest>>(users);
+
+        }
+
+        public void DeleteUserRoles(int userId)
+        {
+            var userRoles = Context.UserRoles.Where(ur => ur.UserId == userId).ToList();
+
+            Context.UserRoles.RemoveRange(userRoles);
+
+            Context.SaveChanges();
+        }
+
     }
 }

@@ -23,8 +23,6 @@ public partial class _200101Context : DbContext
 
     public virtual DbSet<Gender> Genders { get; set; }
 
-    public virtual DbSet<HairDresser> HairDressers { get; set; }
-
     public virtual DbSet<Order> Orders { get; set; }
 
     public virtual DbSet<OrderItem> OrderItems { get; set; }
@@ -58,17 +56,17 @@ public partial class _200101Context : DbContext
             entity.Property(e => e.AppointmentId)
                   .ValueGeneratedOnAdd()
                 .HasColumnName("AppointmentID");
-            entity.Property(e => e.Date).HasColumnType("datetime");
-            entity.Property(e => e.HairDresserId)
+            entity.Property(e => e.DateTime).HasColumnType("datetime");
+            entity.Property(e => e.HairdresserId)
                 .HasMaxLength(50)
-                .HasColumnName("HairDresserID");
+                .HasColumnName("HairdresserID");
             entity.Property(e => e.ServiceId).HasColumnName("ServiceID");
             entity.Property(e => e.UserId).HasColumnName("UserID");
 
-            entity.HasOne(d => d.HairDresser).WithMany(p => p.Appointments)
-                .HasForeignKey(d => d.HairDresserId)
+            entity.HasOne(d => d.User).WithMany(p => p.Appointments)
+                .HasForeignKey(d => d.HairdresserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Appointment_HairDresser");
+                .HasConstraintName("FK_Appointment_User");
 
             entity.HasOne(d => d.Service).WithMany(p => p.Appointments)
                 .HasForeignKey(d => d.ServiceId)
@@ -121,22 +119,14 @@ public partial class _200101Context : DbContext
         {
             entity.ToTable("Gender");
 
+          
             entity.Property(e => e.GenderId)
                 .ValueGeneratedOnAdd()
                 .HasColumnName("GenderID");
             entity.Property(e => e.Name).HasMaxLength(50);
         });
 
-        modelBuilder.Entity<HairDresser>(entity =>
-        {
-            entity.ToTable("HairDresser");
-
-            entity.Property(e => e.HairDresserId)
-                .HasMaxLength(50)
-                .HasColumnName("HairDresserID");
-            entity.Property(e => e.EndDate).HasColumnType("datetime");
-            entity.Property(e => e.StartDate).HasColumnType("datetime");
-        });
+       
 
         modelBuilder.Entity<Order>(entity =>
         {

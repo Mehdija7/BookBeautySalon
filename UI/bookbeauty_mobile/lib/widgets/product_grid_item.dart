@@ -2,13 +2,22 @@ import 'package:book_beauty/models/product.dart';
 import 'package:book_beauty/widgets/product_text.dart';
 import 'package:flutter/material.dart';
 
-class ProductGridItem extends StatelessWidget {
+class ProductGridItem extends StatefulWidget {
   const ProductGridItem(
-      {super.key, required this.product, required this.onSelectProduct});
+      {super.key,
+      required this.product,
+      required this.onSelectProduct,
+      required this.f});
 
   final Product product;
   final void Function(Product) onSelectProduct;
+  final bool? f;
 
+  @override
+  State<ProductGridItem> createState() => _ProductGridItemState();
+}
+
+class _ProductGridItemState extends State<ProductGridItem> {
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -23,7 +32,7 @@ class ProductGridItem extends StatelessWidget {
         clipBehavior: Clip.hardEdge,
         child: InkWell(
           onTap: () {
-            onSelectProduct(product);
+            widget.onSelectProduct(widget.product);
           },
           child: Container(
             color: const Color.fromARGB(207, 255, 253, 253),
@@ -38,7 +47,7 @@ class ProductGridItem extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(0),
                     child: Image.network(
-                      product.image!,
+                      widget.product.image!,
                       width: 120,
                       height: 120,
                       fit: BoxFit.cover,
@@ -51,7 +60,7 @@ class ProductGridItem extends StatelessWidget {
                   right: 0,
                   child: Center(
                       child: ProductText(
-                    product: product,
+                    product: widget.product,
                   )),
                 ),
               ],

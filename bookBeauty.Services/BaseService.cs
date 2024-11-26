@@ -65,24 +65,6 @@ namespace bookBeauty.Services
             }
 
         }
-       /* public virtual async Task<List<TModel>> GetMobile()
-        {
-            List<TModel> result = new List<TModel>();
-
-            var query = Context.Set<TDbEntity>().AsQueryable();
-
-
-            int count = query.Count();
-
-            
-
-            var list = query.ToList();
-
-            result = Mapper.Map(list, result);
-
-
-
-            return result;
-        }*/
+  
     }
 }

@@ -1,4 +1,6 @@
+import 'package:book_beauty/models/gender.dart';
 import 'package:book_beauty/models/user.dart';
+import 'package:book_beauty/providers/gender_provider.dart';
 import 'package:book_beauty/providers/user_provider.dart';
 import 'package:book_beauty/screens/login_screen.dart';
 import 'package:flutter/material.dart';
@@ -11,8 +13,9 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
+  late List<Gender> _registeredGenders = [];
   final UserProvider _userProvider = UserProvider();
-
+  final GenderProvider _genderProvider = GenderProvider();
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
@@ -26,6 +29,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   String? _selectedGender;
 
   @override
+  void initState() {
+    _fetchGender();
+    super.initState();
+  }
+
+  @override
   void dispose() {
     _firstNameController.dispose();
     _lastNameController.dispose();
@@ -36,6 +45,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     _passwordController.dispose();
     _confirmPasswordController.dispose();
     super.dispose();
+  }
+
+  Future<void> _fetchGender() async {
+    var result = await _genderProvider.get();
+    setState(() {
+      _registeredGenders = result.result;
+    });
   }
 
   void _showErrorDialog(String message) {
@@ -129,7 +145,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     _buildLabel('Prezime'),
                     _buildTextField(_lastNameController),
                     _buildLabel('Spol'),
-                    _buildDropdownField(['Male', 'Female', 'Other']),
+                    _buildDropdownField(_registeredGenders),
                     _buildLabel('Adresa'),
                     _buildTextField(_addressController),
                     _buildLabel('Email'),
@@ -228,7 +244,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     );
   }
 
-  Widget _buildDropdownField(List<String> options) {
+  Widget _buildDropdownField(List<Gender> options) {
     return DropdownButtonFormField<String>(
       value: _selectedGender,
       decoration: InputDecoration(
@@ -239,10 +255,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           borderSide: BorderSide.none,
         ),
       ),
-      items: options.map((String option) {
+      items: options.map((Gender option) {
         return DropdownMenuItem<String>(
-          value: option,
-          child: Text(option),
+          value: option.genderId.toString(),
+          child: Text(option.name!),
         );
       }).toList(),
       onChanged: (String? newValue) {

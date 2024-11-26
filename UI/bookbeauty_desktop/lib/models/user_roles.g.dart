@@ -13,6 +13,9 @@ UserRoles _$UserRolesFromJson(Map<String, dynamic> json) => UserRoles(
       changedDate: json['changedDate'] == null
           ? null
           : DateTime.parse(json['changedDate'] as String),
+      role: json['role'] == null
+          ? null
+          : Role.fromJson(json['role'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$UserRolesToJson(UserRoles instance) => <String, dynamic>{
@@ -20,4 +23,5 @@ Map<String, dynamic> _$UserRolesToJson(UserRoles instance) => <String, dynamic>{
       'userId': instance.userId,
       'roleId': instance.roleId,
       'changedDate': instance.changedDate?.toIso8601String(),
+      'role': instance.role,
     };

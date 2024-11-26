@@ -1,6 +1,7 @@
 import 'package:bookbeauty_desktop/models/order.dart';
 import 'package:bookbeauty_desktop/screens/appointment_screen.dart';
 import 'package:bookbeauty_desktop/screens/categories_screen.dart';
+import 'package:bookbeauty_desktop/screens/hairdresser_screen.dart';
 import 'package:bookbeauty_desktop/screens/orders_screen.dart';
 import 'package:bookbeauty_desktop/screens/products_screen.dart';
 import 'package:bookbeauty_desktop/screens/reports_screen.dart';
@@ -9,7 +10,9 @@ import 'package:flutter/material.dart';
 import '../widgets/shared/main_drawer.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({super.key, required this.isAdmin});
+
+  final bool isAdmin;
 
   @override
   State<StatefulWidget> createState() {
@@ -17,7 +20,7 @@ class HomeScreen extends StatefulWidget {
   }
 }
 
-class _HomeScreen extends State {
+class _HomeScreen extends State<HomeScreen> {
   int _selectedPageIndex = 0;
   String maintitle = 'Pocetna';
 
@@ -34,7 +37,8 @@ class _HomeScreen extends State {
     const AppointmentScreen(),
     const ProductsScreen(),
     const ServicesScreen(),
-    const CategoriesScreen()
+    const CategoriesScreen(),
+    const HairdresserScreen(),
   ];
 
   @override
@@ -42,7 +46,7 @@ class _HomeScreen extends State {
     return Scaffold(
         appBar: AppBar(title: Text(maintitle)),
         drawer: MainDrawer(
-          isAdmin: false,
+          isAdmin: widget.isAdmin,
           goToScreen: _setScreen,
         ),
         body: _widgetOptions.elementAt(_selectedPageIndex));

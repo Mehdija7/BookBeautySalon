@@ -2,6 +2,7 @@ import 'package:book_beauty/screens/home_screen.dart';
 import 'package:book_beauty/screens/login_screen.dart';
 import 'package:book_beauty/screens/registration_screen.dart';
 import 'package:book_beauty/screens/start_screen.dart';
+import 'package:book_beauty/screens/test.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';

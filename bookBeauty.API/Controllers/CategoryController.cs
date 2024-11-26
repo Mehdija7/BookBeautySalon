@@ -16,10 +16,5 @@ namespace bookBeauty.API.Controllers
         {
         }
 
-        [AllowAnonymous]
-        public override Task<Category> Insert(CategoryUpsertRequest request)
-        {
-            return base.Insert(request);
-        }
     }
 }

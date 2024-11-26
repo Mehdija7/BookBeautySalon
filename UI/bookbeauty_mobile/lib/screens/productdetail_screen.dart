@@ -1,13 +1,34 @@
 import 'package:book_beauty/models/product.dart';
+import 'package:book_beauty/providers/review_provider.dart';
 import 'package:book_beauty/widgets/main_title.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/review_stars.dart';
 
-class ProductDetailScreen extends StatelessWidget {
+class ProductDetailScreen extends StatefulWidget {
   const ProductDetailScreen({super.key, required this.product});
 
   final Product product;
+
+  @override
+  State<ProductDetailScreen> createState() => _ProductDetailScreenState();
+}
+
+class _ProductDetailScreenState extends State<ProductDetailScreen> {
+  final ReviewProvider _reviewProvider = ReviewProvider();
+  double rating = 0.0;
+  @override
+  void initState() {
+    super.initState();
+    _fetchAverage();
+  }
+
+  void _fetchAverage() async {
+    var r = await _reviewProvider.getAverageRating(widget.product.productId!);
+    setState(() {
+      rating = r;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,16 +47,16 @@ class ProductDetailScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              MainTitle(title: product.name!),
-              Image.network(product.image!),
-              const Padding(
-                padding: EdgeInsets.all(15),
-                child: ReviewStars(average: 3.6),
+              MainTitle(title: widget.product.name!),
+              Image.network(widget.product.image!),
+              Padding(
+                padding: const EdgeInsets.all(15),
+                child: ReviewStars(average: rating, product: widget.product),
               ),
               Padding(
                 padding: const EdgeInsets.all(8),
                 child: Text(
-                  product.description!,
+                  widget.product.description!,
                   style: const TextStyle(
                       fontSize: 14, fontWeight: FontWeight.bold),
                 ),
@@ -47,7 +68,7 @@ class ProductDetailScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(
                         vertical: 10, horizontal: 15),
                     child: Text(
-                      '${product.price} BAM',
+                      '${widget.product.price} BAM',
                       style: const TextStyle(
                           fontSize: 20, fontWeight: FontWeight.bold),
                     ),

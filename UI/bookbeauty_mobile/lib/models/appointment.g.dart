@@ -15,6 +15,9 @@ Appointment _$AppointmentFromJson(Map<String, dynamic> json) => Appointment(
       hairdresserId: (json['hairdresserId'] as num?)?.toInt(),
       serviceId: (json['serviceId'] as num?)?.toInt(),
       note: json['note'] as String?,
+      service: json['service'] == null
+          ? null
+          : Service.fromJson(json['service'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$AppointmentToJson(Appointment instance) =>
@@ -25,4 +28,5 @@ Map<String, dynamic> _$AppointmentToJson(Appointment instance) =>
       'hairdresserId': instance.hairdresserId,
       'serviceId': instance.serviceId,
       'note': instance.note,
+      'service': instance.service,
     };

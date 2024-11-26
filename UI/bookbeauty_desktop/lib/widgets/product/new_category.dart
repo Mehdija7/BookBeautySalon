@@ -56,7 +56,7 @@ class _NewCategoryState extends State<NewCategory> {
                     ),
                     ElevatedButton(
                       onPressed: () async {
-                        if (_titleController.text == "") {
+                        if (_titleController.text.trim().isEmpty) {
                           showDialog(
                             context: context,
                             builder: (context) => AlertDialog(
@@ -68,24 +68,25 @@ class _NewCategoryState extends State<NewCategory> {
                               ],
                             ),
                           );
-                        }
-                        try {
-                          widget.onAddCategory(_titleController.text);
+                        } else {
+                          try {
+                            widget.onAddCategory(_titleController.text.trim());
 
-                          Navigator.pop(context);
-                        } on Exception catch (e) {
-                          showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                              title: const Text("Desila se greska"),
-                              actions: [
-                                TextButton(
-                                    onPressed: () => Navigator.pop(context),
-                                    child: const Text("OK"))
-                              ],
-                              content: Text(e.toString()),
-                            ),
-                          );
+                            Navigator.pop(context);
+                          } on Exception catch (e) {
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: const Text("Desila se greska"),
+                                actions: [
+                                  TextButton(
+                                      onPressed: () => Navigator.pop(context),
+                                      child: const Text("OK"))
+                                ],
+                                content: Text(e.toString()),
+                              ),
+                            );
+                          }
                         }
                       },
                       child: const Text(

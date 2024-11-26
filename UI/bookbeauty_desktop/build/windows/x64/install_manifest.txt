@@ -3,12 +3,14 @@ C:/Users/elmin/Desktop/BookBeautySalon/UI/bookbeauty_desktop/build/windows/x64/r
 C:/Users/elmin/Desktop/BookBeautySalon/UI/bookbeauty_desktop/build/windows/x64/runner/Debug/printing_plugin.dll
 C:/Users/elmin/Desktop/BookBeautySalon/UI/bookbeauty_desktop/build/windows/x64/runner/Debug/pdfium.dll
 C:/Users/elmin/Desktop/BookBeautySalon/UI/bookbeauty_desktop/build/windows/x64/runner/Debug/data/flutter_assets/AssetManifest.bin
+C:/Users/elmin/Desktop/BookBeautySalon/UI/bookbeauty_desktop/build/windows/x64/runner/Debug/data/flutter_assets/AssetManifest.bin.json
 C:/Users/elmin/Desktop/BookBeautySalon/UI/bookbeauty_desktop/build/windows/x64/runner/Debug/data/flutter_assets/AssetManifest.json
 C:/Users/elmin/Desktop/BookBeautySalon/UI/bookbeauty_desktop/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/logoBB3.jpg
 C:/Users/elmin/Desktop/BookBeautySalon/UI/bookbeauty_desktop/build/windows/x64/runner/Debug/data/flutter_assets/assets/images/pravaslika.png
 C:/Users/elmin/Desktop/BookBeautySalon/UI/bookbeauty_desktop/build/windows/x64/runner/Debug/data/flutter_assets/FontManifest.json
 C:/Users/elmin/Desktop/BookBeautySalon/UI/bookbeauty_desktop/build/windows/x64/runner/Debug/data/flutter_assets/fonts/MaterialIcons-Regular.otf
 C:/Users/elmin/Desktop/BookBeautySalon/UI/bookbeauty_desktop/build/windows/x64/runner/Debug/data/flutter_assets/kernel_blob.bin
+C:/Users/elmin/Desktop/BookBeautySalon/UI/bookbeauty_desktop/build/windows/x64/runner/Debug/data/flutter_assets/NOTICES
 C:/Users/elmin/Desktop/BookBeautySalon/UI/bookbeauty_desktop/build/windows/x64/runner/Debug/data/flutter_assets/NOTICES.Z
 C:/Users/elmin/Desktop/BookBeautySalon/UI/bookbeauty_desktop/build/windows/x64/runner/Debug/data/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf
 C:/Users/elmin/Desktop/BookBeautySalon/UI/bookbeauty_desktop/build/windows/x64/runner/Debug/data/flutter_assets/shaders/ink_sparkle.frag

@@ -1,11 +1,26 @@
+import 'package:book_beauty/models/product.dart';
 import 'package:flutter/material.dart';
+import 'package:book_beauty/screens/review_screen.dart';
 
 class ReviewStars extends StatelessWidget {
-  const ReviewStars({super.key, required this.average});
+  const ReviewStars({super.key, required this.average, required this.product});
 
   final double average;
+  final Product product;
+
   @override
   Widget build(BuildContext context) {
+    void openAddReviewOverlay() {
+      showModalBottomSheet(
+        useSafeArea: true,
+        isScrollControlled: true,
+        context: context,
+        builder: (ctx) => ReviewScreen(
+          product: product.productId!,
+        ),
+      );
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -44,10 +59,15 @@ class ReviewStars extends StatelessWidget {
             const Icon(Icons.favorite_border_outlined),
           ],
         ),
-        const Text(
-          'Dodaj recenziju',
-          style: TextStyle(color: Color.fromARGB(255, 92, 92, 92)),
-        ),
+        TextButton(
+          onPressed: () {
+            openAddReviewOverlay();
+          },
+          child: const Text(
+            'Dodaj recenziju',
+            style: TextStyle(color: Color.fromARGB(255, 92, 92, 92)),
+          ),
+        )
       ],
     );
   }

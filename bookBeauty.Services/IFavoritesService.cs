@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace bookBeauty.Services
 {
-    public interface IFavoritesService : ICRUDService<Model.Favorites,FavoriteSearchObject,FavoritesUpsertRequest,FavoritesUpsertRequest>
+    public interface IFavoritesService : ICRUDService<Model.FavoriteProduct,FavoriteSearchObject,FavoritesUpsertRequest,FavoritesUpsertRequest>
     {
+           bool IsProductFav(int productId, int userId);
     }
 }

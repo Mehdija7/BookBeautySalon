@@ -1,3 +1,4 @@
+import 'package:book_beauty/models/service.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'appointment.g.dart';
@@ -10,13 +11,15 @@ class Appointment {
   int? hairdresserId;
   int? serviceId;
   String? note;
+  Service? service;
   Appointment(
       {this.appointmentId,
       this.dateTime,
       this.userId,
       this.hairdresserId,
       this.serviceId,
-      this.note});
+      this.note,
+      this.service});
 
   factory Appointment.fromJson(Map<String, dynamic> json) =>
       _$AppointmentFromJson(json);

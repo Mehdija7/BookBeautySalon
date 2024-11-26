@@ -31,19 +31,43 @@ namespace bookBeauty.API.Controllers
 
         }
 
-       /* [HttpPost("Authenticate")]
+        [HttpPost("{id}/AddUserRole")]
         [AllowAnonymous]
-        public Model.User Authenticate()
+        public Model.User AddUserRole(int id)
         {
-           string authorization = HttpContext.Request.Headers["Authorization"];
-            string encodedHeader = authorization["Basic ".Length..].Trim();
-            Encoding encoding = Encoding.GetEncoding("iso-8859-1");
-            string usernamePassword = encoding.GetString(Convert.FromBase64String(encodedHeader));
-            int seperatorIndex = usernamePassword.IndexOf(':');
+            return ((IUserService)_service).AddUserRole(id);
+        }
 
-            return ((IUserService)_service).Login(usernamePassword.Substring(0, seperatorIndex), usernamePassword[(seperatorIndex + 1)..]);
-        }*/
+        [HttpPost("{id}/AddRole")]
+        public Model.User AddRole(int id,[FromBody]string namerole)
+        {
+            return ((IUserService)_service).AddRole(id,namerole);
+        }
 
+        [HttpGet("{id}/GetRoles")]
+        [AllowAnonymous]
+        public List<UserRoles> GetUserRoles(int id)
+        {
+            return ((IUserService)_service).GetUserRoles(id);
+        }
 
+        [HttpGet("/GetHairdressers")]
+        public List<Model.User> GetHairdressers()
+        {
+            return ((IUserService)_service).GetHairdressers();
+        }
+
+        [HttpDelete("/DeleteUserRoles")]
+        public void DeleteUserRoles(int userId)
+        {
+              ((IUserService)_service).DeleteUserRoles(userId);
+        }
+
+        [HttpGet("/GetHairdressersMobile")]
+        [AllowAnonymous]
+        public List<HairdresserGetRequest> GetHairdressersMobile()
+        {
+            return ((IUserService)_service).GetHairdressersMobile();
+        }
     }
 }

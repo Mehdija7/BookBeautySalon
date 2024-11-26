@@ -14,10 +14,11 @@ namespace bookBeauty.Model
 
         public int? UserId { get; set; }
 
-        public int HairDresserId { get; set; } 
+        public int HairdresserId { get; set; } 
 
         public int ServiceId { get; set; }
 
         public string? Note { get; set; }
+
     }
 }

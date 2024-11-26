@@ -101,8 +101,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () async {
-                      if (_usernameController.value.text.isEmpty &&
-                          _passwordController.value.text.isEmpty) {
+                      if (_usernameController.value.text.trim().isEmpty ||
+                          _passwordController.value.text.trim().isEmpty) {
                         showDialog(
                           context: context,
                           builder: (context) => AlertDialog(
@@ -124,9 +124,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           var data = await _userProvider.authenticate(
                               _usernameController.text,
                               _passwordController.text);
+
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => const HomeScreen(),
+                              builder: (context) => HomeScreen(user: data),
                             ),
                           );
                         } on Exception catch (e) {
@@ -153,7 +154,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     child: const Text(
-                      "Login",
+                      "Prijavi se",
                       style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
                   ),

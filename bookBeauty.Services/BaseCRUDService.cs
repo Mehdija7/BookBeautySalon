@@ -1,4 +1,5 @@
 ﻿using bookBeauty.Model;
+using bookBeauty.Model.Requests;
 using bookBeauty.Model.SearchObjects;
 using bookBeauty.Services.Database;
 using MapsterMapper;
@@ -23,6 +24,7 @@ namespace bookBeauty.Services
 
 
             TDbEntity entity =   Mapper.Map<TDbEntity>(request);
+
 
            await BeforeInsert(request, entity);
 

@@ -21,7 +21,7 @@ namespace bookBeauty.API.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        public override Task<Model.Product> Insert([FromBody]ProductInsertRequest request)
+        public override Task<Model.Product> Insert([FromBody] ProductInsertRequest request)
         {
 
             return base.Insert(request);
@@ -45,5 +45,6 @@ namespace bookBeauty.API.Controllers
         {
             return await ((IProductService)_service).GetMobile();
         }
+
     }
 }

@@ -15,7 +15,7 @@ namespace bookBeauty.API.Controllers
         {
         }
 
-        [AllowAnonymous]
+        
         public override Task<PagedResult<Order>> GetList([FromQuery] OrderSearchObject searchObject)
         {
             return base.GetList(searchObject);

@@ -1,3 +1,4 @@
+import 'package:book_beauty/models/user.dart';
 import 'package:book_beauty/screens/appointment_screen.dart';
 import 'package:book_beauty/screens/products_screen.dart';
 import 'package:book_beauty/screens/profile_screen.dart';
@@ -6,7 +7,9 @@ import 'package:book_beauty/widgets/maindrawer.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({super.key, required this.user});
+
+  final User user;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -15,6 +18,20 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
   String maintitle = 'Pocetna';
+  late List<Widget> _widgetOptions;
+
+  @override
+  void initState() {
+    super.initState();
+    _widgetOptions = [
+      const StartScreen(),
+      const ProductsScreen(
+        favoritesOnly: true,
+      ),
+      AppointmentScreen(userId: widget.user.userId!),
+      const ProfileScreen()
+    ];
+  }
 
   void _setScreen(String title, int index) {
     setState(() {
@@ -44,15 +61,6 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: createBottombar(context),
     );
   }
-
-  final _widgetOptions = [
-    const StartScreen(),
-    const ProductsScreen(
-      favoritesOnly: true,
-    ),
-    const AppointmentScreen(),
-    const ProfileScreen()
-  ];
 
   void _onItemTapped(int index) {
     setState(() {

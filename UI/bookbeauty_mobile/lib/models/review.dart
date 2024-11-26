@@ -8,9 +8,8 @@ class Review {
   int? mark;
   int? productId;
   int? userId;
-  DateTime? date;
 
-  Review({this.reviewId, this.mark, this.productId, this.userId, this.date});
+  Review({this.reviewId, this.mark, this.productId, this.userId});
 
   factory Review.fromJson(Map<String, dynamic> json) => _$ReviewFromJson(json);
 

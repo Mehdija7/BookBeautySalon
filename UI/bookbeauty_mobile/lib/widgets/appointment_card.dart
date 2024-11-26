@@ -11,16 +11,14 @@ class AppointmentCard extends StatelessWidget {
       required this.service,
       required this.date,
       required this.time,
-      required this.isNew});
+      required this.isNew,
+      required this.price});
 
   final String service;
-  final DateTime date;
+  final String date;
   final String time;
   final bool isNew;
-
-  String get formattedDate {
-    return formater.format(date);
-  }
+  final String price;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +28,7 @@ class AppointmentCard extends StatelessWidget {
       child: Card(
         color: isNew
             ? const Color.fromARGB(125, 125, 252, 22)
-            : const Color.fromARGB(201, 207, 195, 195),
+            : const Color.fromARGB(255, 230, 197, 108),
         margin: const EdgeInsets.all(20),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(24),
@@ -53,12 +51,16 @@ class AppointmentCard extends StatelessWidget {
               left: 10,
               child: Row(
                 children: [
-                  ApointmentTrait(
-                      date: formattedDate, icon: Icons.calendar_month),
+                  ApointmentTrait(date: date, icon: Icons.calendar_month),
                   const SizedBox(
-                    width: 120,
+                    width: 60,
                   ),
                   ApointmentTrait(date: time, icon: Icons.watch_later_outlined),
+                  const SizedBox(
+                    width: 60,
+                  ),
+                  ApointmentTrait(
+                      date: price, icon: Icons.monetization_on_sharp),
                 ],
               ),
             ),

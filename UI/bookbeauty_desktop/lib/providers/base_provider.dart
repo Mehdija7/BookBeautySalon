@@ -183,22 +183,25 @@ abstract class BaseProvider<T> with ChangeNotifier {
       return null;
     }
   }
-  /*Future<T> getById({required int id}) async {
-    var url = "$_baseUrl$_endpoint";
-    var uri = Uri.parse('${url}?id=$id');
+
+  Future<T?> delete(int id) async {
+    final url = Uri.parse('$baseUrl$_endpoint?id=$id');
+    print(url);
     var headers = createHeaders();
 
-    var response = await http.get(uri, headers: headers);
+    try {
+      final response = await http.delete(url, headers: headers);
 
-    Future<T> result;
-    if (isValidResponse(response)) {
-      var data = jsonDecode(response.body);
-      result = data.fromJson();
-      print("RESULTSSS ${result}");
-      return result;
-    } else {
-      print("*************** ERROR OCCURED DURING GET METHOD ****************");
-      throw Exception("Unknown error");
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseBody = jsonDecode(response.body);
+        return fromJson(responseBody);
+      } else {
+        print('Failed to delete entity: ${response.body}');
+        return null;
+      }
+    } catch (e) {
+      print('Error deleting entity: $e');
+      return null;
     }
-  }*/
+  }
 }

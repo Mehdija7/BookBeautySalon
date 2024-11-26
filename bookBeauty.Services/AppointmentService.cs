@@ -1,9 +1,14 @@
-﻿using bookBeauty.Model.Requests;
+﻿using bookBeauty.Model;
+using bookBeauty.Model.Requests;
 using bookBeauty.Model.SearchObjects;
 using bookBeauty.Services.Database;
 using MapsterMapper;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,37 +34,101 @@ namespace bookBeauty.Services
             }
             if (search.Date != null)
             {
-                filteredQuery = filteredQuery.Where(x => x.Date.Value.Day == search.Date.Day &&
-                                                        x.Date.Value.Month == search.Date.Month &&
-                                                        x.Date.Value.Year == search.Date.Year);
+                filteredQuery = filteredQuery.Where(x => x.DateTime.Value.Day == search.Date.Day &&
+                                                        x.DateTime.Value.Month == search.Date.Month &&
+                                                        x.DateTime.Value.Year == search.Date.Year);
             }
             return filteredQuery;
         }
 
         public override Task<Model.Appointment> Insert(AppointmentInsertRequest insert)
         {
-            if (insert.Date == null)
+            if (insert.DateTime == null)
             {
                 throw new ArgumentException("Datum ne smije biti null.");
             }
+            Console.WriteLine("****************************************************");
+            Console.WriteLine(insert.DateTime);
 
-            if (insert.Date.Minute != 0)
-            {
-                throw new ArgumentException("Minute moraju biti 0.");
-            }
+            return base.Insert(insert);
+        }
 
-            if (insert.Date.Hour < 8 || insert.Date.Hour > 20)
-            {
-                throw new ArgumentException("Sati moraju biti između 8 i 20.");
-            }
-
+        public List<TimeOnly> GetAvailableAppointments(AppointmentInsertRequest request)
+        {
             DateTime currentDate = DateTime.Now.Date;
-            if (insert.Date <= currentDate)
+            Console.WriteLine("++++++++++++++++++++++++++++++");
+            Console.WriteLine(request.DateTime);
+            if (request.DateTime <= currentDate)
             {
                 throw new ArgumentException("Ne možete zakazati termin za trenutni dan ili dane unazad.");
             }
 
-            return base.Insert(insert);
+            if (request.HairdresserId == null || request.ServiceId == null || request.UserId == null)
+            {
+                throw new UserException("Polja frizer, usluga i korisnik su obavezna.");
+            }
+
+  
+
+            int workStart = 8*60; 
+            int workEnd = 16*60;   
+
+            List<TimeOnly> availableAppointments = new List<TimeOnly>();
+
+            List<Database.Appointment> existingAppointments = GetAppointmentsForDate(request.DateTime,request.HairdresserId) ?? new List<Database.Appointment>();
+
+            Database.Service service = Context.Services.FirstOrDefault(s => s.ServiceId == request.ServiceId);
+
+            if (service == null)
+            {
+                throw new ArgumentException("Invalid Service ID.");
+            }
+
+            List<(int start, int? end)> bookedTimes = existingAppointments
+                 .Where(a => a.DateTime.HasValue && a.Service != null)
+                 .Select(a => (
+                     start: a.DateTime.Value.Hour * 60 + a.DateTime.Value.Minute,
+                     end: a.DateTime.Value.Hour * 60 + a.DateTime.Value.Minute + a.Service.Duration))
+                 .ToList();
+
+            int currentTime = workStart;
+
+             while (currentTime + service.Duration <= workEnd)
+             {
+                bool isFree = existingAppointments.Any(a=> a.DateTime.Value.Hour*60 == currentTime);
+                 if (!isFree)
+                 {
+                     availableAppointments.Add(TimeOnly.FromTimeSpan(TimeSpan.FromMinutes(currentTime)));
+                 }
+
+                currentTime += 60;
+             }
+            
+
+
+            return availableAppointments;
         }
+
+        private List<Database.Appointment> GetAppointmentsForDate(DateTime date, int hairdresserId)
+        {
+            return Context.Appointments
+                .Where(a => a.DateTime.HasValue &&
+                            a.DateTime.Value.Year == date.Year &&
+                            a.DateTime.Value.Month == date.Month &&
+                            a.DateTime.Value.Day == date.Day
+                            && a.HairdresserId == hairdresserId)
+                .ToList();
+        }
+
+        public List<Model.Requests.AppointmentGetRequest> GetAppointmentsByUser(int userId)
+        {
+            var list = Context.Appointments.Where(a => a.UserId == userId).Include(a => a.Service).
+                OrderByDescending(a => a.DateTime).
+                ToList();
+
+            return Mapper.Map<List<Model.Requests.AppointmentGetRequest>>(list);
+        }
+
+
     }
 }

@@ -1,7 +1,10 @@
-﻿using bookBeauty.Model.SearchObjects;
+﻿using bookBeauty.Model;
+using bookBeauty.Model.Requests;
+using bookBeauty.Model.SearchObjects;
 using bookBeauty.Services.Database;
 using EasyNetQ.Events;
 using MapsterMapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +19,7 @@ namespace bookBeauty.Services
         {
         }
 
-        public override IQueryable<Review> AddFilter(ReviewSearchObject search, IQueryable<Review> query)
+        public override IQueryable<Database.Review> AddFilter(ReviewSearchObject search, IQueryable<Database.Review> query)
         {
             var filteredQuery = base.AddFilter(search, query);
 
@@ -33,5 +36,35 @@ namespace bookBeauty.Services
 
             return filteredQuery;
         }
+
+        public async Task<double> GetAverage(int productId)
+        {
+            if (productId <= 0 || !_context.Reviews.Any(r => r.ProductId == productId))
+                return 0;
+
+            var average = await _context.Reviews
+                .Where(r => r.ProductId == productId)
+                .AverageAsync(r => r.Mark ?? 0);
+
+            return average;
+        }
+
+        public override async Task BeforeInsert(ReviewInsertRequest request, Database.Review entity)
+        {
+            if(Context.OrderItems.Any(o=> (o.ProductId == request.ProductId) && (o.Order.CustomerId == request.UserId))){
+                foreach (var r in Context.Reviews)
+                {
+                    if ((r.UserId == request.UserId) && (r.ProductId == request.ProductId))
+                        throw new UserException("Recenzija na ovaj proizvod vec postoji");
+                }
+
+            }
+            else
+            {
+                throw new UserException("ne mozete dati recenziju");
+            }
+            await base.BeforeInsert(request, entity);
+        }
+
     }
 }

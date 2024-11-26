@@ -16,5 +16,7 @@ namespace bookBeauty.Model
 
         public int? OrderId { get; set; }
 
+        public virtual Product? Product {  get; set; }
+
     }
 }

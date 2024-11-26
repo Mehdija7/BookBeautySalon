@@ -8,5 +8,6 @@ namespace bookBeauty.Services
 {
     public interface IReviewService : ICRUDService<Model.Review,Model.SearchObjects.ReviewSearchObject,Model.Requests.ReviewInsertRequest,Model.Requests.ReviewUpdateRequest>
     {
+        public  Task<double> GetAverage(int productId);
     }
 }

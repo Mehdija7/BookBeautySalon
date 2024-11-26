@@ -1,11 +1,16 @@
+import 'package:book_beauty/models/order_item.dart';
+import 'package:book_beauty/models/product.dart';
 import 'package:book_beauty/widgets/item_count.dart';
 import 'package:flutter/material.dart';
 
 class CartCard extends StatelessWidget {
-  const CartCard({super.key});
+  const CartCard({super.key, required this.product});
+
+  final OrderItem product;
 
   @override
   Widget build(BuildContext context) {
+    var count = product.quantity!.toString();
     return Card(
       margin: const EdgeInsets.all(10),
       shape: RoundedRectangleBorder(
@@ -16,32 +21,33 @@ class CartCard extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Padding(
-            padding: EdgeInsets.only(left: 10),
+          Padding(
+            padding: const EdgeInsets.only(left: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Serum Hemedy',
-                  style: TextStyle(
+                  product.product!.name!,
+                  style: const TextStyle(
                     fontSize: 14,
                   ),
                 ),
                 Text(
-                  '34.70KM',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  product.product!.price.toString(),
+                  style: const TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
           ),
-          Image.asset(
-            'assets/images/sisanje.webp',
+          Image.network(
+            product.product!.image!,
             width: 100,
             height: 80,
           ),
-          const Padding(
-            padding: EdgeInsets.only(right: 5),
-            child: ItemCount(),
+          Padding(
+            padding: const EdgeInsets.only(right: 5),
+            child: ItemCount(count: count),
           )
         ],
       ),

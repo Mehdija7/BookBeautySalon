@@ -1,3 +1,4 @@
+import 'package:book_beauty/models/product.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'order_item.g.dart';
@@ -8,8 +9,14 @@ class OrderItem {
   int? quantity;
   int? productId;
   int? orderId;
+  Product? product;
 
-  OrderItem({this.orderItemId, this.quantity, this.productId, this.orderId});
+  OrderItem(
+      {this.orderItemId,
+      this.quantity,
+      this.productId,
+      this.orderId,
+      this.product});
 
   factory OrderItem.fromJson(Map<String, dynamic> json) =>
       _$OrderItemFromJson(json);

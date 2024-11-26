@@ -70,8 +70,17 @@ class MainDrawer extends StatelessWidget {
               Navigator.pop(context);
             },
           ),
+          isAdmin
+              ? ListTile(
+                  title: const Text('Frizeri'),
+                  onTap: () {
+                    goToScreen('Frizeri', 6);
+                    Navigator.pop(context);
+                  },
+                )
+              : const SizedBox(height: 50),
           const SizedBox(
-            height: 200,
+            height: 150,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
