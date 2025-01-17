@@ -1,0 +1,36 @@
+﻿[*.cs]
+
+# CS1998: Async method lacks 'await' operators and will run synchronously
+dotnet_diagnostic.CS1998.severity = silent
+
+# CS8603: Possible null reference return.
+dotnet_diagnostic.CS8603.severity = silent
+
+dotnet_diagnostic.CS8603.severity = silent
+
+# CS8601: Possible null reference assignment.
+dotnet_diagnostic.CS8601.severity = suggestion
+
+# SYSLIB0045: Type or member is obsolete
+dotnet_diagnostic.SYSLIB0045.severity = suggestion
+
+# CS8625: Cannot convert null literal to non-nullable reference type.
+dotnet_diagnostic.CS8625.severity = suggestion
+
+# CS8600: Converting null literal or possible null value to non-nullable type.
+dotnet_diagnostic.CS8600.severity = suggestion
+
+# CS8602: Dereference of a possibly null reference.
+dotnet_diagnostic.CS8602.severity = silent
+
+# CS8604: Possible null reference argument.
+dotnet_diagnostic.CS8604.severity = silent
+
+# CS0472: The result of the expression is always the same since a value of this type is never equal to 'null'
+dotnet_diagnostic.CS0472.severity = suggestion
+
+# CS0168: Variable is declared but never used
+dotnet_diagnostic.CS0168.severity = suggestion
+
+# CS0219: Variable is assigned but its value is never used
+dotnet_diagnostic.CS0219.severity = suggestion

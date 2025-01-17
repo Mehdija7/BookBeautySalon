@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "4izJAcoVtkHNU3DnnT+iT/O6nkh6pFCvvjeXJXBPn3tpb9vEtcHSBqqpxTlyEc3o62cip8SdVU4KQyzmCQVMXg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\elmin\\Desktop\\BookBeautySalon\\bookbeautysalon\\bookBeauty.Model\\bookBeauty.Model.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\elmin\\.nuget\\packages\\microsoft.aspnetcore.http.features\\5.0.17\\microsoft.aspnetcore.http.features.5.0.17.nupkg.sha512",
+    "C:\\Users\\elmin\\.nuget\\packages\\microsoft.extensions.primitives\\5.0.1\\microsoft.extensions.primitives.5.0.1.nupkg.sha512",
+    "C:\\Users\\elmin\\.nuget\\packages\\system.io.pipelines\\5.0.2\\system.io.pipelines.5.0.2.nupkg.sha512"
+  ],
+  "logs": []
+}
