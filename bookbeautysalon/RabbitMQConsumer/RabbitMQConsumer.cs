@@ -53,7 +53,7 @@ namespace RabbitMQConsumer
                 var email = ExtractEmailFromMessage(message);
                 if (!string.IsNullOrEmpty(email))
                 {
-                    _emailService.SendEmail(email, "Your reservation has been successfully created.");
+                    _emailService.SendEmail(email, "Your order has been successfully created.");
                 }
             };
             _channel.BasicConsume(queue: _configuration["RabbitMQ:QueueName"],

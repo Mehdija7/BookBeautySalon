@@ -14,13 +14,7 @@ namespace bookBeauty.API.Controllers
         public OrderController(ILogger<BaseController<Order, OrderSearchObject>> logger, Services.Services.IOrderService service) : base(logger, service)
         {
         }
-
-        [Authorize]
-        public override Task<PagedResult<Order>> GetList([FromQuery] OrderSearchObject searchObject)
-        {
-            return base.GetList(searchObject);
-        }
-                    
+              
         [Authorize]
         [HttpPost]
         public override async Task<Order> Insert(OrderInsertRequest request)

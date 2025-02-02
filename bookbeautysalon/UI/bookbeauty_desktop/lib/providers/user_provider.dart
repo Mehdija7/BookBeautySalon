@@ -1,11 +1,8 @@
-import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
 import 'package:bookbeauty_desktop/models/user.dart';
 import 'package:bookbeauty_desktop/models/user_roles.dart';
 import 'package:bookbeauty_desktop/providers/base_provider.dart';
-import 'package:flutter/material.dart';
-import '../providers/auth_provider.dart';
 import 'package:http/http.dart' as http;
 
 class UserProvider extends BaseProvider<User> {

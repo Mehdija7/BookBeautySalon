@@ -1,3 +1,5 @@
+import 'package:bookbeauty_desktop/models/order_item.dart';
+import 'package:bookbeauty_desktop/models/user.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'order.g.dart';
@@ -10,7 +12,8 @@ class Order {
   int? customerId;
   String? orderNumber;
   String? status;
-  String? address;
+  User? customer;
+  List<OrderItem>? orderItems;
   Order(
       {this.orderId,
       this.totalPrice,
@@ -18,7 +21,8 @@ class Order {
       this.customerId,
       this.orderNumber,
       this.status,
-      this.address});
+      this.customer,
+      this.orderItems});
 
   factory Order.fromJson(Map<String, dynamic> json) => _$OrderFromJson(json);
 

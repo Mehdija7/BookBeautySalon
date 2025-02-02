@@ -19,7 +19,7 @@ namespace bookBeauty.Services.Services
         private readonly string _host = Environment.GetEnvironmentVariable("RABBITMQ_HOST") ?? "localhost";
         private readonly string _username = Environment.GetEnvironmentVariable("RABBITMQ_USERNAME") ?? "guest";
         private readonly string _password = Environment.GetEnvironmentVariable("RABBITMQ_PASSWORD") ?? "guest";
-
+        private readonly string _virtualhost = Environment.GetEnvironmentVariable("RABBITMQ_VIRTUALHOST") ?? "/";
         public TransactionService(_200101Context context, IMapper mapper) : base(context, mapper)
         {
             var factory = new ConnectionFactory
@@ -66,6 +66,12 @@ namespace bookBeauty.Services.Services
               
             }
             await base.BeforeInsert(insert,db);
+        }
+
+        public override IQueryable<Database.Transaction> AddInclude(IQueryable<Database.Transaction> query, BaseSearchObject? search = null)
+        {
+            query = query.Include("Order");
+            return base.AddInclude(query, search);
         }
     }
 }

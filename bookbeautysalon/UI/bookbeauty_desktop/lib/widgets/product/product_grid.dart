@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:bookbeauty_desktop/models/product.dart';
 import 'package:bookbeauty_desktop/widgets/product/product_text.dart';
 import 'package:flutter/material.dart';
@@ -37,12 +40,26 @@ class ProductGridItem extends StatelessWidget {
                 color: Colors.white,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(0),
-                  child: Image.network(
-                    product.image!,
+                  /* child: Image.asset(
+                    "assets/images/logoBB.png",
                     width: 100,
                     height: 200,
                     fit: BoxFit.cover,
-                  ),
+                  ),*/
+                  child: product.image != null
+                      ? Image.memory(
+                          base64Decode(product
+                              .image!), // Assuming it's a Uint8List if not null
+                          width: 100,
+                          height: 200,
+                          fit: BoxFit.cover,
+                        )
+                      : Image.asset(
+                          "assets/images/logoBB.png", // Fallback asset image when image is null
+                          width: 100,
+                          height: 200,
+                          fit: BoxFit.cover,
+                        ),
                 ),
               ),
               Positioned(

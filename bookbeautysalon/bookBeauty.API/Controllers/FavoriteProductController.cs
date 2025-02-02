@@ -9,20 +9,13 @@ using Microsoft.AspNetCore.Mvc;
 namespace bookBeauty.API.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
     public class FavoriteProductController : BaseCRUDController<Model.Model.FavoriteProduct, FavoriteSearchObject, FavoritesUpsertRequest, FavoritesUpsertRequest>
     {
         public FavoriteProductController(ILogger<BaseController<Model.Model.FavoriteProduct, FavoriteSearchObject>> logger, Services.Services.IFavoritesService service) : base(logger, service)
         {
         }
 
-        [Authorize]
-        [HttpGet]
-        public override Task<PagedResult<Model.Model.FavoriteProduct>> GetList([FromQuery] FavoriteSearchObject searchObject)
-        {
-            return base.GetList(searchObject);
-        }
-
+    
         [Authorize]
         [HttpPost]
         public override Task<Model.Model.FavoriteProduct> Insert(FavoritesUpsertRequest request)

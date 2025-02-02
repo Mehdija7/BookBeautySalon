@@ -1,8 +1,6 @@
 import 'dart:io';
-
 import 'package:bookbeauty_desktop/models/service.dart';
 import 'package:bookbeauty_desktop/providers/service_provider.dart';
-import 'package:bookbeauty_desktop/providers/upload_provider.dart';
 import 'package:bookbeauty_desktop/screens/new_service_screen.dart';
 import '../widgets/service/new_service.dart';
 import '../widgets/service/services_list.dart';
@@ -18,7 +16,6 @@ class ServicesScreen extends StatefulWidget {
 class _ServicesScreenState extends State<ServicesScreen> {
   late List<Service> _registeredServices = [];
   ServiceProvider serviceProvider = ServiceProvider();
-  FileUploadService uploadService = FileUploadService();
   bool isLoading = true;
 
   @override

@@ -1497,7 +1497,7 @@
           "buildTransitive/netcoreapp3.1/_._": {}
         }
       },
-      "System.Linq.Dynamic.Core/1.3.10": {
+      "System.Linq.Dynamic.Core/1.6.0": {
         "type": "package",
         "compile": {
           "lib/net8.0/System.Linq.Dynamic.Core.dll": {
@@ -4046,10 +4046,10 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "System.Linq.Dynamic.Core/1.3.10": {
-      "sha512": "xkMCropqN0WTgPuPbIlYgXss1KAyjd+8VRbx/BFh57yUOi5LylljIpK0iGa58ziXr+xJqzmcaRGtKHlsI5C4tg==",
+    "System.Linq.Dynamic.Core/1.6.0": {
+      "sha512": "6xGWCu89VdrAYpw07KSbvVZC21XcJ5YSEzPEFbWBZsgeATTep5c5x/MQA/QS15HVHqoAtYIAHzr3ke6zCyOX7g==",
       "type": "package",
-      "path": "system.linq.dynamic.core/1.3.10",
+      "path": "system.linq.dynamic.core/1.6.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -4081,6 +4081,9 @@
         "lib/net8.0/System.Linq.Dynamic.Core.dll",
         "lib/net8.0/System.Linq.Dynamic.Core.pdb",
         "lib/net8.0/System.Linq.Dynamic.Core.xml",
+        "lib/net9.0/System.Linq.Dynamic.Core.dll",
+        "lib/net9.0/System.Linq.Dynamic.Core.pdb",
+        "lib/net9.0/System.Linq.Dynamic.Core.xml",
         "lib/netcoreapp2.1/System.Linq.Dynamic.Core.dll",
         "lib/netcoreapp2.1/System.Linq.Dynamic.Core.pdb",
         "lib/netcoreapp2.1/System.Linq.Dynamic.Core.xml",
@@ -4101,7 +4104,7 @@
         "lib/uap10.0.10240/System.Linq.Dynamic.Core.pri",
         "lib/uap10.0.10240/System.Linq.Dynamic.Core.xml",
         "logo.png",
-        "system.linq.dynamic.core.1.3.10.nupkg.sha512",
+        "system.linq.dynamic.core.1.6.0.nupkg.sha512",
         "system.linq.dynamic.core.nuspec"
       ]
     },
@@ -5245,7 +5248,7 @@
       "Microsoft.ML >= 3.0.1",
       "Microsoft.ML.Recommender >= 0.21.1",
       "Newtonsoft.Json >= 13.0.3",
-      "System.Linq.Dynamic.Core >= 1.3.10",
+      "System.Linq.Dynamic.Core >= 1.6.0",
       "bookBeauty.Model >= 1.0.0"
     ]
   },
@@ -5338,7 +5341,7 @@
           },
           "System.Linq.Dynamic.Core": {
             "target": "Package",
-            "version": "[1.3.10, )"
+            "version": "[1.6.0, )"
           }
         },
         "imports": [

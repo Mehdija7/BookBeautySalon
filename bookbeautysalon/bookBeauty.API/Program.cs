@@ -13,36 +13,19 @@ using System.Text.Json;
 using bookBeauty.Model.Requests;
 using System.Security.Cryptography;
 using bookBeauty.Services.Services;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configure Swagger with schema ID and basic authentication
+
+
+
 builder.Services.AddSwaggerGen(options =>
 {
     options.CustomSchemaIds(type => type.ToString());
-    options.AddSecurityDefinition("basicAuth", new OpenApiSecurityScheme
-    {
-        Type = SecuritySchemeType.Http,
-        Scheme = "basic",
-        Description = "Basic Authentication"
-    });
-    options.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
-                {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "basicAuth"
-                }
-            },
-            new string[] { }
-        }
-    });
 });
 
-// Register application services
+
 builder.Services.AddTransient<IProductService, ProductService>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<ICategoryService, CategoryService>();
@@ -57,44 +40,60 @@ builder.Services.AddTransient<IGenderService, GenderService>();
 builder.Services.AddTransient<INewsService, NewsService>();
 
 
-// Register product state machine services
 builder.Services.AddTransient<BaseProductState>();
 builder.Services.AddTransient<InitialProductState>();
 builder.Services.AddTransient<DraftProductState>();
 builder.Services.AddTransient<ActiveProductState>();
 builder.Services.AddTransient<HiddenProductState>();
 
-// Add exception filter
 builder.Services.AddControllers(options =>
 {
     options.Filters.Add<ExceptionFilter>();
 });
 
-// Configure database connection
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(a =>
+{
+    a.AddSecurityDefinition("basicAuth", new Microsoft.OpenApi.Models.OpenApiSecurityScheme()
+    {
+        Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
+        Scheme = "basic"
+    });
+
+    a.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement()
+    {
+        {
+        new OpenApiSecurityScheme
+        {
+            Reference = new OpenApiReference{Type = ReferenceType.SecurityScheme, Id = "basicAuth" }
+        },
+        new string[]{}
+        }
+    });
+}
+);
+
+builder.Configuration.AddEnvironmentVariables();
+
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<_200101Context>(options =>
     options.UseSqlServer(connectionString));
 
-// Add Mapster for object mapping
 builder.Services.AddMapster();
 
-// Configure authentication
 builder.Services.AddAuthentication("BasicAuthentication")
     .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
 
-// Add RabbitMQ connection factory as a singleton service
 var rabbitMqFactory = new ConnectionFactory
 {
     HostName = builder.Configuration["RabbitMQ:HostName"]
 };
 builder.Services.AddSingleton(rabbitMqFactory);
 
-// Add endpoints API explorer
 builder.Services.AddEndpointsApiExplorer();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -102,21 +101,15 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseStaticFiles();
-
-app.UseRouting();
 
 app.UseAuthentication();
+
 app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
 
-
-
-
-// SEEDING  
+Console.WriteLine("SEEDING");
 
 
 using (var scope = app.Services.CreateScope())
@@ -127,26 +120,29 @@ using (var scope = app.Services.CreateScope())
         dataContext.Database.Migrate();
 
         dataContext.Categories.AddRange(
-            new Category { CategoryId = 1, Name = "Šampon" },
-            new Category { CategoryId = 2, Name = "Ulje" },
-            new Category { CategoryId = 3, Name = "Serum" },
-            new Category { CategoryId = 4, Name = "Krema" },
-            new Category { CategoryId = 5, Name = "Regenerator" },
-            new Category { CategoryId = 6, Name = "Sprej" },
-            new Category { CategoryId = 7, Name = "Maska" }
+            new Category { Name = "Šampon" },
+            new Category { Name = "Ulje" },
+            new Category { Name = "Serum" },
+            new Category { Name = "Krema" },
+            new Category { Name = "Regenerator" },
+            new Category { Name = "Sprej" },
+            new Category { Name = "Maska" }
         );
+        dataContext.SaveChanges();
 
         dataContext.Roles.AddRange(
-            new Role { Name = "Admin", Description = "Administrator ima omoguæene sve funkcionalnosti. Jedna od glavnih jeste dodavanje/brisanje frizera." },
-            new Role { Name = "Frizer", Description = "Frizer ima ulogu da manipulise narudzbama i terminima" },
+            new Role { Name = "Admin", Description = "Administrator ima omoguæene sve funkcionalnosti." },
+            new Role { Name = "Frizer", Description = "Frizer ima ulogu da manipulise narudzbama/terminima" },
             new Role { Name = "Kupac", Description = "Dostupne su mu funkcinonalnosti poput online kupovine i rezervacije termina" }
 
         );
+        dataContext.SaveChanges();
 
         dataContext.Genders.AddRange(
-          new Gender { GenderId = 1, Name = "Ženski" },
-          new Gender { GenderId = 2, Name = "Muški" }
+          new Gender { Name = "Ženski" },
+          new Gender {  Name = "Muški" }
       );
+        dataContext.SaveChanges();
 
 
         dataContext.Products.AddRange(new Product
@@ -210,7 +206,8 @@ using (var scope = app.Services.CreateScope())
             Name = "Hibiskus sprej",
             CategoryId = 6,
             Description = "Balea natural beauty hidratantna njega u spreju s organskim ekstraktom hibiskusa i kokosovim mlijekom. Formula sadrži 97 % sastojaka prirodnog podrijetla i ne sadrži silikone. Hrani, njeguje i hidratizira suhu i lomljivu kosu, daje joj mekoæu i prirodan sjaj bez otežavanja. Za zdraviji izgled kose i prirodan sjaj od korijena do vrhova.",
-            Price = 5.00f
+            Price = 5.00f,
+            StateMachine = "active"
         },
         new Product
         {
@@ -237,6 +234,7 @@ using (var scope = app.Services.CreateScope())
              Price = 17.00f
          }
     );
+        dataContext.SaveChanges();
 
         dataContext.Services.AddRange(
             new Service
@@ -289,6 +287,7 @@ using (var scope = app.Services.CreateScope())
        }
 
     );
+        dataContext.SaveChanges();
 
         string adminpass = "admin";
         string userpass = "korisnik";
@@ -307,6 +306,7 @@ using (var scope = app.Services.CreateScope())
         dataContext.Users.AddRange(
             new User
             {
+                GenderId =1,
                 FirstName = "Admin",
                 LastName = "Admin",
                 Username = "admin",
@@ -317,7 +317,7 @@ using (var scope = app.Services.CreateScope())
                 Address = "ADMIN"
             },
                new User
-               {
+               {   GenderId = 2,
                    FirstName = "Frizer",
                    LastName = "Frizer",
                    Username = "frizer",
@@ -329,6 +329,7 @@ using (var scope = app.Services.CreateScope())
                },
                  new User
                  {
+                     GenderId = 1,
                      FirstName = "Lejla",
                      LastName = "Kovacevic",
                      Username = "lejlakovacevic",
@@ -339,7 +340,7 @@ using (var scope = app.Services.CreateScope())
                      Address = "Zelenih beretki, Sarajevo"
                  },
         new User
-        {
+        {   GenderId = 1,
             FirstName = "Meliha",
             LastName = "Kazic",
             Username = "melihakazic",
@@ -350,7 +351,7 @@ using (var scope = app.Services.CreateScope())
             Address = "Branilaca, Sarajevo"
         },
         new User
-        {
+        {   GenderId = 1,
             FirstName = "Selma",
             LastName = "Mehmedovic",
             Username = "selmamehmedovic",
@@ -363,7 +364,7 @@ using (var scope = app.Services.CreateScope())
         },
       
         new User
-        {
+        {   GenderId = 2,
             FirstName = "Korisnik",
             LastName = "Korisnik",
             Username = "korisnik",
@@ -375,6 +376,7 @@ using (var scope = app.Services.CreateScope())
         },   
         new User
         {
+            GenderId = 1,
             FirstName = "Zehra",
             LastName = "Sekic",
             Username = "zehrasekic",
@@ -385,7 +387,7 @@ using (var scope = app.Services.CreateScope())
             Address = "Kijevo, Sanski Most"
         },
          new User
-         {
+         {   GenderId = 1,
              FirstName = "Adna",
              LastName = "Burnic",
              Username = "adnaburnic",
@@ -396,7 +398,7 @@ using (var scope = app.Services.CreateScope())
              Address = "Kijevo, Sanski Most"
          }
 
-    ); 
+    );
         dataContext.SaveChanges();
         dataContext.UserRoles.AddRange(
             new UserRole
@@ -441,6 +443,8 @@ using (var scope = app.Services.CreateScope())
         }
 
     );
+        dataContext.SaveChanges();
+
 
         dataContext.Appointments.AddRange(
             new Appointment
@@ -560,7 +564,8 @@ using (var scope = app.Services.CreateScope())
 
     );
 
-       
+        dataContext.SaveChanges();
+
         dataContext.Reviews.AddRange(
 
             new Review {Mark = 5, UserId= 5, ProductId = 1 },
@@ -586,6 +591,7 @@ using (var scope = app.Services.CreateScope())
          
 
         );
+        dataContext.SaveChanges();
 
         dataContext.Orders.AddRange(
                new Order { OrderNumber = "#1",  DateTime = new DateTime(2024,1,15),CustomerId =5,Status = "Kreirana" ,TotalPrice=100 },
@@ -607,46 +613,37 @@ using (var scope = app.Services.CreateScope())
         dataContext.SaveChanges();
 
         dataContext.OrderItems.AddRange(
-            new OrderItem { Quantity = 3, OrderId = 1,   },
-            new OrderItem { Quantity = 1, OrderId = 2,   },
-            new OrderItem { Quantity = 4, OrderId = 3,   },
-            new OrderItem { Quantity = 2, OrderId = 4,   },
-            new OrderItem { Quantity = 5, OrderId = 15   },
-            new OrderItem { Quantity = 2, OrderId = 16   },
-            new OrderItem { Quantity = 3, OrderId = 7,   },
-            new OrderItem { Quantity = 1, OrderId = 14,  },
-            new OrderItem { Quantity = 4, OrderId = 9,   },
-            new OrderItem { Quantity = 2, OrderId = 10,  },
-            new OrderItem { Quantity = 1, OrderId = 11,  },
-            new OrderItem { Quantity = 5, OrderId = 12,  },
-            new OrderItem { Quantity = 3, OrderId = 3,   },
-            new OrderItem { Quantity = 2, OrderId = 14,  },
-            new OrderItem { Quantity = 4, OrderId = 15,  },
-            new OrderItem { Quantity = 1, OrderId = 16,  },
-            new OrderItem { Quantity = 3, OrderId = 17,  },
-            new OrderItem { Quantity = 2, OrderId = 8,   },
-            new OrderItem { Quantity = 5, OrderId = 19,  },
-            new OrderItem { Quantity = 1, OrderId = 20,  },
-            new OrderItem { Quantity = 4, OrderId = 1,  },
-            new OrderItem { Quantity = 2, OrderId = 2,  },
-            new OrderItem { Quantity = 5, OrderId = 3,  },
-            new OrderItem { Quantity = 3, OrderId = 14  },
-            new OrderItem { Quantity = 1, OrderId = 5,  },
-            new OrderItem { Quantity = 2, OrderId = 6,  },
-            new OrderItem { Quantity = 4, OrderId = 12,  },
-            new OrderItem { Quantity = 3, OrderId = 8,  },
-            new OrderItem { Quantity = 2, OrderId = 9,  },
-            new OrderItem { Quantity = 5, OrderId = 1,  },
-            new OrderItem { Quantity = 1, OrderId = 11,  },
-            new OrderItem { Quantity = 4, OrderId = 12,  },
-            new OrderItem { Quantity = 2, OrderId = 13,  },
-            new OrderItem { Quantity = 3, OrderId = 14,  },
-            new OrderItem { Quantity = 1, OrderId = 15,  },
-            new OrderItem { Quantity = 4, OrderId = 16,  },
-            new OrderItem { Quantity = 2, OrderId = 17,  },
-            new OrderItem { Quantity = 5, OrderId = 14,  },
-            new OrderItem { Quantity = 3, OrderId = 19,  },
-            new OrderItem { Quantity = 1, OrderId = 20,  }
+            new OrderItem { Quantity = 3, OrderId = 1, ProductId = 1  },
+            new OrderItem { Quantity = 1, OrderId = 2, ProductId = 2  },
+            new OrderItem { Quantity = 4, OrderId = 3, ProductId = 3  },
+            new OrderItem { Quantity = 2, OrderId = 4, ProductId = 4  },
+            new OrderItem { Quantity = 3, OrderId = 7, ProductId = 7  },
+            new OrderItem { Quantity = 1, OrderId = 14,ProductId = 8  },
+            new OrderItem { Quantity = 4, OrderId = 9, ProductId = 10  },
+            new OrderItem { Quantity = 2, OrderId = 10,ProductId = 9  },
+            new OrderItem { Quantity = 1, OrderId = 11,ProductId = 2  },
+            new OrderItem { Quantity = 5, OrderId = 12,ProductId = 1  },
+            new OrderItem { Quantity = 3, OrderId = 3, ProductId = 8  },
+            new OrderItem { Quantity = 2, OrderId = 14,ProductId = 1  },
+            new OrderItem { Quantity = 2, OrderId = 8, ProductId = 10  },
+            new OrderItem { Quantity = 4, OrderId = 1, ProductId = 5 },
+            new OrderItem { Quantity = 2, OrderId = 2, ProductId = 1 },
+            new OrderItem { Quantity = 5, OrderId = 3, ProductId = 1 },
+            new OrderItem { Quantity = 3, OrderId = 14,ProductId = 4 },
+            new OrderItem { Quantity = 1, OrderId = 5, ProductId = 1 },
+            new OrderItem { Quantity = 2, OrderId = 6, ProductId = 1 },
+            new OrderItem { Quantity = 4, OrderId = 12,ProductId = 5  },
+            new OrderItem { Quantity = 3, OrderId = 8, ProductId = 9 },
+            new OrderItem { Quantity = 2, OrderId = 9, ProductId = 1 },
+            new OrderItem { Quantity = 5, OrderId = 1, ProductId = 6 },
+            new OrderItem { Quantity = 1, OrderId = 11,ProductId = 7  },
+            new OrderItem { Quantity = 4, OrderId = 12,ProductId = 11  },
+            new OrderItem { Quantity = 2, OrderId = 13,ProductId = 1  },
+            new OrderItem { Quantity = 3, OrderId = 14,ProductId = 2  },
+            new OrderItem { Quantity = 1, OrderId = 4,ProductId = 9  },
+            new OrderItem { Quantity = 4, OrderId = 3,ProductId = 10  },
+            new OrderItem { Quantity = 2, OrderId = 2,ProductId = 3  },
+            new OrderItem { Quantity = 5, OrderId = 14,ProductId = 5  }
         );
         dataContext.SaveChanges();
     }
@@ -657,35 +654,25 @@ app.Run();
 
 
 
-static string GenerateSalt()
+ static string GenerateSalt()
 {
-    int saltSize = 16;
+    var byteArray = RandomNumberGenerator.GetBytes(16);
 
-    byte[] saltBytes = new byte[saltSize];
-
-
-#pragma warning disable SYSLIB0023 // Type or member is obsolete
-    using (var rng = new RNGCryptoServiceProvider())
-    {
-      rng.GetBytes(saltBytes);
-    }
-#pragma warning restore SYSLIB0023 // Type or member is obsolete
-
-    return Convert.ToBase64String(saltBytes);
+    return Convert.ToBase64String(byteArray);
 }
 
-static string GenerateHash(string salt, string password)
+ static string GenerateHash(string salt, string password)
 {
-    string saltedPassword = salt + password;
+    byte[] src = Convert.FromBase64String(salt);
+    byte[] bytes = Encoding.Unicode.GetBytes(password);
+    byte[] dst = new byte[src.Length + bytes.Length];
 
-    using (var sha256 = SHA256.Create())
-    {
-        byte[] saltedPasswordBytes = System.Text.Encoding.UTF8.GetBytes(saltedPassword);
-        byte[] hashBytes = sha256.ComputeHash(saltedPasswordBytes);
+    Buffer.BlockCopy(src, 0, dst, 0, src.Length);
+    Buffer.BlockCopy(bytes, 0, dst, src.Length, bytes.Length);
 
-        // Convert the hash byte array to a base64 string
-        return Convert.ToBase64String(hashBytes);
-    }
+    HashAlgorithm algorithm = HashAlgorithm.Create("SHA1");
+    byte[] inArray = algorithm.ComputeHash(dst);
+    return Convert.ToBase64String(inArray);
 }
 
 

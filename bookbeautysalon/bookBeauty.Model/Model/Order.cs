@@ -22,7 +22,7 @@ namespace bookBeauty.Model.Model
 
         public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 
-        public virtual User? User { get; set; }
+        public virtual User? Customer { get; set; }
 
 
     }

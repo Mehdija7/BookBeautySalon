@@ -1,8 +1,7 @@
 import 'dart:convert';
-import 'package:bookbeauty_desktop/models/search_result.dart';
+import 'package:bookbeauty_desktop/providers/base_provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:bookbeauty_desktop/models/product.dart';
-import 'package:bookbeauty_desktop/providers/base_provider.dart';
 
 class ProductProvider extends BaseProvider<Product> {
   ProductProvider() : super("Product");

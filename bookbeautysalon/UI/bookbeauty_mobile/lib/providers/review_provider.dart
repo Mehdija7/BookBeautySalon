@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:http/http.dart' as http;
 import 'package:book_beauty/models/review.dart';
 import 'package:book_beauty/providers/base_provider.dart';
 
@@ -15,7 +15,7 @@ class ReviewProvider extends BaseProvider<Review> {
     try {
       var url =
           Uri.parse('${BaseProvider.baseUrl}GetAverage/?productId=$productId');
-      var response = await http!.get(url);
+      var response = await http.get(url);
 
       if (response.statusCode == 200) {
         return double.parse(response.body);

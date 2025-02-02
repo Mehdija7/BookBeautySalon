@@ -3,6 +3,7 @@ using MapsterMapper;
 using bookBeauty.Model.Requests;
 using bookBeauty.Services.Database;
 using bookBeauty.Model.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace bookBeauty.Services.Services
 {
@@ -18,6 +19,10 @@ namespace bookBeauty.Services.Services
             return base.AddFilter(search, query);
         }
 
-
+        public override IQueryable<Database.OrderItem> AddInclude(IQueryable<Database.OrderItem> query, OrderItemSearchObject? search = null)
+        {
+            query = query.Include("Product");
+            return base.AddInclude(query, search);
+        }
     }
 }

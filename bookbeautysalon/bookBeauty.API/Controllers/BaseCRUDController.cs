@@ -6,11 +6,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace bookBeauty.API.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class BaseCRUDController<TModel, TSearch, TInsert, TUpdate> : BaseController<TModel, TSearch> where TSearch : BaseSearchObject where TModel : class
     {
         protected new Services.Services.ICRUDService<TModel, TSearch, TInsert, TUpdate> _service;
         protected new readonly ILogger<BaseController<TModel, TSearch>> _logger;
 
+      
         public BaseCRUDController(ILogger<BaseController<TModel, TSearch>> logger, Services.Services.ICRUDService<TModel, TSearch, TInsert, TUpdate> service) : base(logger,service)
         {
             _service = service;
@@ -24,7 +27,7 @@ namespace bookBeauty.API.Controllers
             return await _service.Insert(request);
         }
 
-        [Authorize]
+       [Authorize]
         [HttpPut("{id}")]
         public virtual async Task<TModel> Update(int id, TUpdate request)
         {

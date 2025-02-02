@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:bookbeauty_desktop/providers/upload_provider.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import '../../models/service.dart';
@@ -24,7 +23,6 @@ class _NewServiceState extends State<NewService> {
   final _durationController = TextEditingController();
   File? _image;
   String? fileUrl;
-  final FileUploadService uploadService = FileUploadService();
 
   void _openFilePicker() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(

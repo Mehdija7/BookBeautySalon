@@ -18,6 +18,7 @@ namespace bookBeauty.Model.Model
 
         public string? Status { get; set; }
 
+        public  virtual Order? Order { get; set; }
 
     }
 }

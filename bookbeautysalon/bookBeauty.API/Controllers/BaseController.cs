@@ -8,7 +8,7 @@ namespace bookBeauty.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    [Authorize]
+ 
     public class BaseController<TModel, TSearch> : ControllerBase where TSearch : BaseSearchObject
     {
 
@@ -23,16 +23,16 @@ namespace bookBeauty.API.Controllers
 
         [Authorize]
         [HttpGet]
-        public virtual Task<PagedResult<TModel>> GetList([FromQuery] TSearch searchObject)
+        public async Task<PagedResult<TModel>> GetList([FromQuery] TSearch searchObject)
         {
-            return _service.GetPaged(searchObject);
+            return await _service.GetPaged(searchObject);
         }
 
         [Authorize]
         [HttpGet("{id}")]
-        public virtual Task<TModel> GetById(int id)
+        public async Task<TModel> GetById(int id)
         {
-            return _service.GetById(id);
+            return await _service.GetById(id);
         }
     }
 }

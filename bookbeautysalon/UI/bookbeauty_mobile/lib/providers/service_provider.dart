@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:http/http.dart' as http;
 import 'package:book_beauty/models/service.dart';
 import 'package:book_beauty/providers/base_provider.dart';
 
@@ -19,7 +19,7 @@ class ServiceProvider extends BaseProvider<Service> {
     print('****************** URI *******************************************');
     print(uri);
 
-    var response = await http!.get(uri, headers: headers);
+    var response = await http.get(uri, headers: headers);
 
     if (isValidResponse(response)) {
       print("response: ${response.request}");

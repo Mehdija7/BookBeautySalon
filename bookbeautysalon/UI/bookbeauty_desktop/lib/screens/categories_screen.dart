@@ -1,7 +1,9 @@
 import 'package:bookbeauty_desktop/models/category.dart';
+import 'package:bookbeauty_desktop/models/search_result.dart';
 import 'package:bookbeauty_desktop/providers/category_provider.dart';
 import 'package:bookbeauty_desktop/widgets/product/new_category.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CategoriesScreen extends StatefulWidget {
   const CategoriesScreen({super.key});
@@ -12,20 +14,25 @@ class CategoriesScreen extends StatefulWidget {
 
 class _CategoriesScreenState extends State<CategoriesScreen> {
   late List<Category> _registeredCategories = [];
-  CategoryProvider categoryProvider = CategoryProvider();
+  late CategoryProvider categoryProvider;
   bool isLoading = true;
 
   @override
   void initState() {
+    categoryProvider = context.read<CategoryProvider>();
     super.initState();
     _fetchCategories();
   }
 
   Future<void> _fetchCategories() async {
     try {
+      print("RESULT FROM CATEGORIES SCREEN");
       var result = await categoryProvider.get();
+      List<Category> list = result.result;
+      print(result.count);
+      print(result.result);
       setState(() {
-        _registeredCategories = result.result;
+        _registeredCategories = list;
         isLoading = false;
       });
     } catch (e) {

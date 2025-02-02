@@ -111,19 +111,22 @@ namespace bookBeauty.Services.Services
 
         public async Task<Model.Model.User> Login(LoginInsertRequest req)
         {
-            var entity = Context.Users.Include(x => x.UserRoles).ThenInclude(y => y.Role).FirstOrDefault(x => x.Username == req.Username);
 
-            if (entity == null)
-            {
-                return null;
-            }
-
+            Console.WriteLine("++++++++++++++++++     login endpoint         +++++++++++++++++++++");
+            Console.WriteLine(req);
+            Console.WriteLine(req.Username);
+            Console.WriteLine(req.Password);
+            var entity = Context.Users.Include(x => x.UserRoles).ThenInclude(y => y.Role).FirstOrDefault(x => x.Username == req.Username) ?? throw new UserException("Korisnik s takvim imenom ne postoji");
+            Console.WriteLine(entity.Username);
+            Console.WriteLine(entity.PasswordSalt);
             var hash = GenerateHash(entity.PasswordSalt, req.Password);
-
+            Console.WriteLine("Hash entity");
+            Console.WriteLine(entity.PasswordHash);
+            Console.WriteLine("Hash request");
+            Console.WriteLine(hash);
             if (hash != entity.PasswordHash)
             {
-
-                return null;
+                throw new UserException("Pogresna lozinka ili korisnicko ime");
             }
 
             return Mapper.Map<Model.Model.User>(entity);

@@ -42,7 +42,7 @@ public partial class _200101Context : DbContext
 
     public virtual DbSet<News>News { get; set; }
 
-    
+  
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Appointment>(entity =>
@@ -53,6 +53,7 @@ public partial class _200101Context : DbContext
                   .ValueGeneratedOnAdd()
                 .HasColumnName("AppointmentID");
             entity.Property(e => e.DateTime).HasColumnType("datetime");
+            entity.Property(e => e.Note).HasMaxLength(200);
             entity.Property(e => e.HairdresserId)
                 .HasMaxLength(50)
                 .HasColumnName("HairdresserID");
@@ -82,7 +83,7 @@ public partial class _200101Context : DbContext
                 .HasMaxLength(50)
                 .IsFixedLength()
                 .HasColumnName("CategoryID");
-            entity.Property(e => e.Description).HasMaxLength(50);
+            entity.Property(e => e.Description).HasMaxLength(200);
             entity.Property(e => e.Name).HasMaxLength(50);
         });
 
@@ -94,9 +95,13 @@ public partial class _200101Context : DbContext
                 .HasMaxLength(50)
                 .IsFixedLength()
                 .HasColumnName("NewsID");
-            entity.Property(e => e.Text).HasMaxLength(150);
+            entity.Property(e => e.Text);
             entity.Property(e => e.Title).HasMaxLength(50);
             entity.Property(e => e.DateTime).HasColumnType("datetime");
+            entity.HasOne(e => e.Hairdresser).WithMany(p => p.News)
+               .HasForeignKey(d => d.HairdresserId)
+               .OnDelete(DeleteBehavior.ClientSetNull)
+               .HasConstraintName("FK_News_User");
 
         });
 
@@ -125,12 +130,10 @@ public partial class _200101Context : DbContext
 
         modelBuilder.Entity<Gender>(entity =>
         {
-            entity.ToTable("Gender");
-
-          
+            entity.ToTable("Gender");   
             entity.Property(e => e.GenderId)
-                .ValueGeneratedOnAdd()
-                .HasColumnName("GenderID");
+                .HasColumnName("GenderID")
+                .ValueGeneratedOnAdd();
             entity.Property(e => e.Name).HasMaxLength(50);
         });
 
@@ -224,7 +227,7 @@ public partial class _200101Context : DbContext
             entity.Property(e => e.RoleId)
                  .ValueGeneratedOnAdd()
                 .HasColumnName("RoleID");
-            entity.Property(e => e.Description).HasMaxLength(50);
+            entity.Property(e => e.Description).HasMaxLength(150);
             entity.Property(e => e.Name).HasMaxLength(50);
         });
 
@@ -235,9 +238,9 @@ public partial class _200101Context : DbContext
             entity.Property(e => e.ServiceId)
               .ValueGeneratedOnAdd()
                 .HasColumnName("ServiceID");
-            entity.Property(e => e.LongDescription).HasMaxLength(50);
+            entity.Property(e => e.LongDescription);
             entity.Property(e => e.Name).HasMaxLength(50);
-            entity.Property(e => e.ShortDescription).HasMaxLength(50);
+            entity.Property(e => e.ShortDescription);
         });
 
         modelBuilder.Entity<Transaction>(entity =>
@@ -305,4 +308,5 @@ public partial class _200101Context : DbContext
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
 }

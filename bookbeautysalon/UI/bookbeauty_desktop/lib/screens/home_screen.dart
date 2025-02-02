@@ -3,6 +3,7 @@ import 'package:bookbeauty_desktop/screens/appointment_screen.dart';
 import 'package:bookbeauty_desktop/screens/categories_screen.dart';
 import 'package:bookbeauty_desktop/screens/hairdresser_screen.dart';
 import 'package:bookbeauty_desktop/screens/orders_screen.dart';
+import 'package:bookbeauty_desktop/screens/proba.dart';
 import 'package:bookbeauty_desktop/screens/products_screen.dart';
 import 'package:bookbeauty_desktop/screens/reports_screen.dart';
 import 'package:bookbeauty_desktop/screens/services_screen.dart';

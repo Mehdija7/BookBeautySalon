@@ -22,11 +22,5 @@ namespace bookBeauty.API.Controllers
             return base.Insert(request);
         }
 
-        [Authorize(Roles="Admin")]
-        [HttpGet]
-        public override  Task<PagedResult<Transaction>> GetList([FromQuery] BaseSearchObject searchObject)
-        {
-            return _service.GetPaged(searchObject);
-        }
     }
 }

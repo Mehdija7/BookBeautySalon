@@ -12,5 +12,7 @@ namespace bookBeauty.Model.Model
         public int Mark { get; set; }
         public int ProductId { get; set; }
         public int UserId { get; set; }
+        public virtual Product? Product { get; set; }
+        public virtual User? User { get; set; }
     }
 }

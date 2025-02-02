@@ -4,7 +4,6 @@ import 'package:bookbeauty_desktop/models/category.dart';
 import 'package:bookbeauty_desktop/models/service.dart';
 import 'package:bookbeauty_desktop/providers/category_provider.dart';
 import 'package:bookbeauty_desktop/providers/service_provider.dart';
-import 'package:bookbeauty_desktop/providers/upload_provider.dart';
 import 'package:file_picker/file_picker.dart';
 import '../widgets/shared/main_title.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +23,6 @@ class _NewserviceScreenState extends State<NewserviceScreen> {
   final _durationController = TextEditingController();
   File? _image;
   String? fileUrl;
-  final FileUploadService uploadService = FileUploadService();
   ServiceProvider serviceProvider = ServiceProvider();
 
   @override
@@ -53,15 +51,6 @@ class _NewserviceScreenState extends State<NewserviceScreen> {
         _image = File(result.files.single.path!);
         fileUrl = _image?.path;
       });
-    }
-  }
-
-  Future<void> _uploadFile(int id) async {
-    if (_image == null) return;
-    try {
-      await uploadService.uploadFileService(_image!, id);
-    } catch (e) {
-      print('Error upload service: $e');
     }
   }
 
@@ -123,7 +112,6 @@ class _NewserviceScreenState extends State<NewserviceScreen> {
   Future<void> _addservice(Service newservice) async {
     try {
       var id = await serviceProvider.insert(newservice);
-      await _uploadFile(id.serviceId!);
       setState(() {
         _titleController.text = '';
         _priceController.text = '';

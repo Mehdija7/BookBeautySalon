@@ -1,10 +1,10 @@
 import 'dart:convert';
-
 import 'package:book_beauty/models/appointment.dart';
 import 'package:book_beauty/models/service.dart';
 import 'package:intl/intl.dart';
 import 'base_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class AppointmentProvider extends BaseProvider<Appointment> {
   AppointmentProvider() : super("Appointment");
@@ -36,7 +36,7 @@ class AppointmentProvider extends BaseProvider<Appointment> {
     print(
         "------------------------------ BODY  --------------------------------");
     print(body);
-    final response = await http!.post(url, headers: headers, body: body);
+    final response = await http.post(url, headers: headers, body: body);
 
     if (response.statusCode == 200) {
       List<dynamic> data = jsonDecode(response.body);
@@ -58,7 +58,7 @@ class AppointmentProvider extends BaseProvider<Appointment> {
         '${BaseProvider.baseUrl}Appointment/getAppointmentsByUser?userId=$userId');
 
     var headers = createHeaders();
-    final response = await http?.get(url, headers: headers);
+    final response = await http.get(url, headers: headers);
 
     if (response!.statusCode == 200) {
       List<dynamic> jsonResponse = json.decode(response.body);

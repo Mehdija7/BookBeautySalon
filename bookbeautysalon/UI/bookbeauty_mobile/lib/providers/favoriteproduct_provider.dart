@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:book_beauty/models/favoriteproduct.dart';
 import 'package:book_beauty/providers/base_provider.dart';
+import 'package:http/http.dart' as http;
 
 class FavoriteProductProvider extends BaseProvider<FavoriteProduct> {
   FavoriteProductProvider() : super("FavoriteProduct");
@@ -17,7 +18,7 @@ class FavoriteProductProvider extends BaseProvider<FavoriteProduct> {
         '${BaseProvider.baseUrl}Product/IsProductFav?productId=$productId&userId=$userId');
     var headers = createHeaders();
 
-    var response = await http!.get(uri, headers: headers);
+    var response = await http.get(uri, headers: headers);
 
     if (response.statusCode == 200) {
       final isFav = jsonDecode(response.body) as bool;

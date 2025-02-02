@@ -36,4 +36,5 @@ public partial class User
     public virtual ICollection<Review> Reviews { get; set; } = [];
 
     public virtual ICollection<UserRole> UserRoles { get; set; } = [];
+    public virtual ICollection<News> News { get; set; } = [];
 }

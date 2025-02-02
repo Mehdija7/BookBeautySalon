@@ -1,9 +1,6 @@
-import 'package:bookbeauty_desktop/models/user.dart';
-import 'package:bookbeauty_desktop/models/user_roles.dart';
-import 'package:bookbeauty_desktop/providers/auth_provider.dart';
-import 'package:bookbeauty_desktop/providers/service_provider.dart';
 import 'package:bookbeauty_desktop/providers/user_provider.dart';
 import 'package:bookbeauty_desktop/screens/home_screen.dart';
+import 'package:bookbeauty_desktop/utils.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -53,8 +50,8 @@ class LoginScreen extends StatelessWidget {
 
                         print(
                             "credentials: ${_usernameController.text} : ${_passwordController.text}");
-                        AuthProvider.username = _usernameController.text;
-                        AuthProvider.password = _passwordController.text;
+                        Authorization.username = _usernameController.text;
+                        Authorization.password = _passwordController.text;
 
                         if (_usernameController.text.trim() == "" ||
                             _passwordController.text.trim() == "") {
@@ -73,9 +70,8 @@ class LoginScreen extends StatelessWidget {
                                   ));
                         }
                         try {
-                          User data = await provider.authenticate(
-                              _usernameController.text,
-                              _passwordController.text);
+                          var data = await provider.authenticate(
+                              Authorization.username!, Authorization.password!);
                           var roles = await provider.getRoles(data.userId!);
                           bool isAdmin = roles
                               .where(

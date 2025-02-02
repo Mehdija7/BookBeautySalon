@@ -102,6 +102,11 @@ namespace bookBeauty.Services.Services
             return Mapper.Map<List<AppointmentGetRequest>>(list);
         }
 
-
+        public  List<Model.Model.Appointment> Get()
+        {
+            var list = Context.Appointments.Include(a => a.Service).
+                OrderByDescending(a => a.DateTime).ToList();
+            return Mapper.Map<List<Model.Model.Appointment>>(list);
+        }
     }
 }

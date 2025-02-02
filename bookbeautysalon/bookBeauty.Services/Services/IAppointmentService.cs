@@ -13,5 +13,6 @@ namespace bookBeauty.Services.Services
     {
         public List<TimeOnly> GetAvailableAppointments(AppointmentInsertRequest request);
         public List<AppointmentGetRequest> GetAppointmentsByUser(int userId);
+        public List<Model.Model.Appointment> Get();
     }
 }

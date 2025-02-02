@@ -1,3 +1,6 @@
+/*import 'package:bookbeauty_desktop/providers/appointment_provider.dart';
+import 'package:provider/provider.dart';
+
 import '../../utils.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -17,11 +20,12 @@ class _TableEventsState extends State<TableEvents> {
   DateTime? _selectedDay;
   DateTime? _rangeStart;
   DateTime? _rangeEnd;
+  late AppointmentProvider _appointmentProvider;
 
   @override
   void initState() {
     super.initState();
-
+    _appointmentProvider = context.read<AppointmentProvider>();
     _selectedDay = _focusedDay;
     _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
   }
@@ -151,3 +155,4 @@ class _TableEventsState extends State<TableEvents> {
     );
   }
 }
+*/

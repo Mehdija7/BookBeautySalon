@@ -13,14 +13,5 @@ namespace bookBeauty.API.Controllers
         {
         }
 
-
-        [Authorize]
-        [HttpGet("getGenders")]
-        public List<Gender> GetGenders()
-        {
-            return ((IGenderService)_service).GetGenders();
-        }
-
-
     }
 }

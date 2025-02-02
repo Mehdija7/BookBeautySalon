@@ -18,14 +18,14 @@ namespace bookBeauty.API.Controllers
         }
 
         [AllowAnonymous]
-        public override Task<User> Insert(UserInsertRequest request)
+        public override Task<User> Insert([FromBody] UserInsertRequest request)
         {
             return base.Insert(request);
         }
 
         [HttpPost("Authenticate")]
         [AllowAnonymous]
-        public async Task<User> Login(LoginInsertRequest req)
+        public async Task<User> Login([FromBody]LoginInsertRequest req)
         {
             return await ((IUserService)_service).Login(req);
 
@@ -46,7 +46,7 @@ namespace bookBeauty.API.Controllers
         }
 
         [HttpGet("{id}/GetRoles")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Frizer")]
         public List<UserRoles> GetUserRoles(int id)
         {
             return ((IUserService)_service).GetUserRoles(id);
@@ -66,7 +66,7 @@ namespace bookBeauty.API.Controllers
         }
 
         [HttpGet("/GetHairdressersMobile")]
-        [AllowAnonymous]
+        [Authorize]
         public List<HairdresserGetRequest> GetHairdressersMobile()
         {
             return ((IUserService)_service).GetHairdressersMobile();

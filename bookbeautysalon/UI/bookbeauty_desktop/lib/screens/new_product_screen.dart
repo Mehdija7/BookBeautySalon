@@ -4,7 +4,6 @@ import 'package:bookbeauty_desktop/models/category.dart';
 import 'package:bookbeauty_desktop/models/product.dart';
 import 'package:bookbeauty_desktop/providers/category_provider.dart';
 import 'package:bookbeauty_desktop/providers/product_provider.dart';
-import 'package:bookbeauty_desktop/providers/upload_provider.dart';
 import 'package:file_picker/file_picker.dart';
 import '../widgets/shared/main_title.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +25,6 @@ class _NewProductScreenState extends State<NewProductScreen> {
   final _categoryController = TextEditingController();
   File? _image;
   String? fileUrl;
-  final FileUploadService uploadService = FileUploadService();
   ProductProvider productProvider = ProductProvider();
 
   @override
@@ -62,15 +60,6 @@ class _NewProductScreenState extends State<NewProductScreen> {
         _image = File(result.files.single.path!);
         fileUrl = _image?.path;
       });
-    }
-  }
-
-  Future<void> _uploadFile(int id) async {
-    if (_image == null) return;
-    try {
-      await uploadService.uploadFileProduct(_image!, id);
-    } catch (e) {
-      print('Error upload product: $e');
     }
   }
 
@@ -126,7 +115,6 @@ class _NewProductScreenState extends State<NewProductScreen> {
   Future<void> _addProduct(Product newproduct) async {
     try {
       var id = await productProvider.insert(newproduct);
-      await _uploadFile(id.productId!);
       setState(() {
         _titleController.text = '';
         _priceController.text = '';

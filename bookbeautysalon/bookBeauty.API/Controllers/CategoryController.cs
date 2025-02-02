@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace bookBeauty.API.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
     public class CategoryController : BaseCRUDController<Category, CategorySearchObject, CategoryUpsertRequest, CategoryUpsertRequest>
 
     {

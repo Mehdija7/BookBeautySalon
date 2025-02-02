@@ -10,7 +10,6 @@ namespace bookBeauty.Services.Services
 {
     public interface IServiceService : ICRUDService<Service, Model.SearchObjects.ServiceSearchObject, ServiceInsertRequest, ServiceUpdateRequest>
     {
-        public Task<List<Service>> GetMobile();
 
     }
 }

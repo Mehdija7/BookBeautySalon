@@ -3,6 +3,7 @@ import 'package:book_beauty/models/user.dart';
 import 'package:book_beauty/providers/base_provider.dart';
 import 'package:flutter/material.dart';
 import '../providers/auth_provider.dart';
+import 'package:http/http.dart' as http;
 
 class UserProvider extends BaseProvider<User> {
   UserProvider() : super("User");
@@ -33,7 +34,7 @@ class UserProvider extends BaseProvider<User> {
     print('*****   URI HEADERS    ******** $headers');
     print('*****   BODY    ******** $body');
 
-    var response = await http!.post(uri, headers: headers, body: body);
+    var response = await http.post(uri, headers: headers, body: body);
 
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
@@ -61,7 +62,7 @@ class UserProvider extends BaseProvider<User> {
     final url = Uri.parse('${BaseProvider.baseUrl}GetHairdressersMobile');
     var headers = createHeaders();
 
-    final response = await http!.get(url, headers: headers);
+    final response = await http.get(url, headers: headers);
 
     print('Status Code: ${response.statusCode}');
     print('Response Body: ${response.body}');

@@ -1,30 +1,87 @@
 import 'dart:convert';
-
 import 'package:bookbeauty_desktop/models/search_result.dart';
-import 'package:bookbeauty_desktop/providers/auth_provider.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 
+import '../utils.dart';
+
 abstract class BaseProvider<T> with ChangeNotifier {
-  static String? _baseUrl;
+  static String? baseUrl;
   String _endpoint = "";
 
   BaseProvider(String endpoint) {
     _endpoint = endpoint;
-    _baseUrl = const String.fromEnvironment("baseUrl",
-        defaultValue: "http://localhost:5273/");
+    baseUrl = const String.fromEnvironment("baseUrl",
+        defaultValue: "http://localhost:5266/");
   }
-  static String get baseUrl => _baseUrl!;
 
   Future<SearchResult<T>> get({dynamic filter}) async {
-    var url = "$_baseUrl$_endpoint";
+    var url = "$baseUrl$_endpoint";
 
     if (filter != null) {
-      var queryString = getQueryString(filter);
-      url = "$url?$queryString";
+      var querryString = getQueryString(filter);
+      url = "$url?$querryString";
     }
 
+    var uri = Uri.parse(url);
+    var headers = createHeaders();
+
+    print("--------- base url----------");
+    print(uri);
+    print(headers.toString());
+    var response = await http.get(uri, headers: headers);
+
+    if (isValidResponse(response)) {
+      var data = jsonDecode(response.body);
+
+      var result = SearchResult<T>();
+      print(response.statusCode);
+      print(data);
+      result.count = data['count'];
+      print(result.count);
+      for (var item in data['resultList']) {
+        result.result.add(fromJson(item));
+      }
+      print(result.result);
+      return result;
+    } else {
+      throw new Exception("Upps, something went wrong");
+    }
+  }
+
+  Future<SearchResult<T>> getRecommended(int id) async {
+    var url = "$baseUrl$_endpoint/$id/recommend";
+
+    var uri = Uri.parse(url);
+    var headers = createHeaders();
+
+    var response = await http.get(uri, headers: headers);
+
+    if (response.body == "") {
+      SearchResult<T> newList = SearchResult();
+      return newList;
+    }
+
+    if (isValidResponse(response)) {
+      var data = jsonDecode(response.body);
+
+      var result = SearchResult<T>();
+
+      result.count = 3;
+
+      for (var item in data) {
+        result.result.add(fromJson(item));
+      }
+
+      return result;
+    } else {
+      throw new Exception("Upps, something went wrong");
+    }
+  }
+
+  Future<T> getById(int id) async {
+    var url = "$baseUrl$_endpoint/$id";
     var uri = Uri.parse(url);
     var headers = createHeaders();
 
@@ -32,56 +89,34 @@ abstract class BaseProvider<T> with ChangeNotifier {
 
     if (isValidResponse(response)) {
       var data = jsonDecode(response.body);
-
-      var result = SearchResult<T>();
-
-      result.count = data['count'];
-
-      for (var item in data['resultList']) {
-        print(item);
-        print(fromJson(item));
-        result.result.add(fromJson(item));
-      }
-      print("RESULTSSS ${result.result}");
-      return result;
+      return fromJson(data);
     } else {
-      print("*************** ERROR OCCURED DURING GET METHOD ****************");
-      throw Exception("Unknown error");
+      throw new Exception("Unknown error");
     }
   }
 
   Future<T> insert(dynamic request) async {
-    var url = "$_baseUrl$_endpoint";
+    var url = "$baseUrl$_endpoint";
     var uri = Uri.parse(url);
     var headers = createHeaders();
 
-    print(
-        "-----------------------------    URI    ----------------------------------------------- ");
-    print(uri);
-
-    print(
-        "-----------------------------  HEADERS ----------------------------------------------- ");
-    print(headers);
-
     var jsonRequest = jsonEncode(request);
-
-    print(
-        "-----------------------------  REQUEST ----------------------------------------------- ");
-    print(request);
-
     var response = await http.post(uri, headers: headers, body: jsonRequest);
 
-    print("||||||||||||||||||||| RESPONSE |||||||||||||||||||||||||");
     if (isValidResponse(response)) {
       var data = jsonDecode(response.body);
       return fromJson(data);
     } else {
-      throw Exception("Unknown error");
+      throw new Exception("Unknown error");
     }
   }
 
+  T fromJson(data) {
+    throw Exception("Method not implemented");
+  }
+
   Future<T> update(int id, [dynamic request]) async {
-    var url = "$_baseUrl$_endpoint/$id";
+    var url = "$baseUrl$_endpoint/$id";
     var uri = Uri.parse(url);
     var headers = createHeaders();
 
@@ -92,30 +127,37 @@ abstract class BaseProvider<T> with ChangeNotifier {
       var data = jsonDecode(response.body);
       return fromJson(data);
     } else {
-      throw Exception("Unknown error");
+      throw new Exception("Unknown error");
     }
   }
 
-  T fromJson(data) {
-    throw Exception("Method not implemented");
+  Future<bool> delete(int id) async {
+    var url = "$baseUrl$_endpoint/$id";
+    var uri = Uri.parse(url);
+    var headers = createHeaders();
+
+    var response = await http.delete(uri, headers: headers);
+
+    if (isValidResponse(response)) {
+      return true;
+    } else {
+      throw new Exception("Unknown error");
+    }
   }
 
   bool isValidResponse(Response response) {
     if (response.statusCode < 299) {
       return true;
     } else if (response.statusCode == 401) {
-      throw Exception("Unauthorized");
+      throw new Exception("Unauthorised");
     } else {
-      print(response.body);
-      throw Exception("Something bad happened please try again");
+      throw new Exception("Upps, something went wrong");
     }
   }
 
   Map<String, String> createHeaders() {
-    String username = AuthProvider.username ?? "";
-    String password = AuthProvider.password ?? "";
-
-    print("passed creds: $username, $password");
+    String username = Authorization.username ?? "";
+    String password = Authorization.password ?? "";
 
     String basicAuth =
         "Basic ${base64Encode(utf8.encode('$username:$password'))}";
@@ -148,7 +190,7 @@ abstract class BaseProvider<T> with ChangeNotifier {
         }
         query += '$prefix$key=$encoded';
       } else if (value is DateTime) {
-        query += '$prefix$key=${(value).toIso8601String()}';
+        query += '$prefix$key=${(value as DateTime).toIso8601String()}';
       } else if (value is List || value is Map) {
         if (value is List) value = value.asMap();
         value.forEach((k, v) {
@@ -158,50 +200,5 @@ abstract class BaseProvider<T> with ChangeNotifier {
       }
     });
     return query;
-  }
-
-  Future<T?> getById(int id) async {
-    final url = '$_baseUrl$_endpoint/$id';
-    print("//////////// URL FROM BASE PROVIDER /////////////// $url");
-    try {
-      var uri = Uri.parse(url);
-      var headers = createHeaders();
-
-      var response = await http.get(uri, headers: headers);
-
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> data = json.decode(response.body);
-        print(data);
-        return fromJson(data);
-      } else {
-        debugPrint(
-            'Failed to load entity. Status code: ${response.statusCode}');
-        return null;
-      }
-    } catch (e) {
-      debugPrint('Error fetching entity: $e');
-      return null;
-    }
-  }
-
-  Future<T?> delete(int id) async {
-    final url = Uri.parse('$baseUrl$_endpoint?id=$id');
-    print(url);
-    var headers = createHeaders();
-
-    try {
-      final response = await http.delete(url, headers: headers);
-
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> responseBody = jsonDecode(response.body);
-        return fromJson(responseBody);
-      } else {
-        print('Failed to delete entity: ${response.body}');
-        return null;
-      }
-    } catch (e) {
-      print('Error deleting entity: $e');
-      return null;
-    }
   }
 }

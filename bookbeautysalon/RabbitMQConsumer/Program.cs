@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using RabbitMQConsumer  ;
+using RabbitMQConsumer;
 
 class Program
 {
@@ -19,7 +19,7 @@ class Program
 
         var rabbitMQConsumer = new RabbitMQConsumer.RabbitMQConsumer (configuration, emailService);
         rabbitMQConsumer.SendEmail();
-        Console.WriteLine("Reservation Email Consumer started");
+        Console.WriteLine("RabbitMQ Consumer started");
         Thread.Sleep(Timeout.Infinite);
     }
 }

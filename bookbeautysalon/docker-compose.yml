@@ -9,10 +9,10 @@ services:
     restart: unless-stopped
     environment:
       - ACCEPT_EULA=Y
-      - MS_PASSWORD=${SQL_PASSWORD}
+      - SA_PASSWORD=${SQL_PASSWORD}
       - MSSQL_PID=Developer
     ports:
-      - ${SQL_PORT}:1433
+       - ${SQL_PORT}:1433
     expose:
       - 1433
     networks:

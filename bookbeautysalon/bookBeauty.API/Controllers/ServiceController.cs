@@ -17,13 +17,6 @@ namespace bookBeauty.API.Controllers
         {
         }
 
-
-        [Authorize]
-        public override Task<PagedResult<Service>> GetList([FromQuery] ServiceSearchObject searchObject)
-        {
-            return base.GetList(searchObject);
-        }
-
         [Authorize(Roles = "Admin, Frizer")]
         public override Task<Service> Insert([FromBody] ServiceInsertRequest request)
         {

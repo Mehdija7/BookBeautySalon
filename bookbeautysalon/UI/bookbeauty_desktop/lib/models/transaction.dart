@@ -1,3 +1,4 @@
+import 'package:bookbeauty_desktop/models/order.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'transaction.g.dart';
@@ -9,9 +10,15 @@ class Transaction {
   int? orderId;
   double? price;
   String? status;
+  Order? order;
 
   Transaction(
-      {this.transactionId, this.name, this.orderId, this.price, this.status});
+      {this.transactionId,
+      this.name,
+      this.orderId,
+      this.price,
+      this.status,
+      this.order});
 
   factory Transaction.fromJson(Map<String, dynamic> json) =>
       _$TransactionFromJson(json);

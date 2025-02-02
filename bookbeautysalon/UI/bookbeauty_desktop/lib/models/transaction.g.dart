@@ -12,6 +12,9 @@ Transaction _$TransactionFromJson(Map<String, dynamic> json) => Transaction(
       orderId: (json['orderId'] as num?)?.toInt(),
       price: (json['price'] as num?)?.toDouble(),
       status: json['status'] as String?,
+      order: json['order'] == null
+          ? null
+          : Order.fromJson(json['order'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$TransactionToJson(Transaction instance) =>
@@ -21,4 +24,5 @@ Map<String, dynamic> _$TransactionToJson(Transaction instance) =>
       'orderId': instance.orderId,
       'price': instance.price,
       'status': instance.status,
+      'order': instance.order,
     };

@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace bookBeauty.API.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
     public class NewsController : BaseCRUDController<Model.Model.News, BaseSearchObject, Model.Requests.NewsUpsertRequest, NewsUpsertRequest>
 
     {

@@ -1,4 +1,5 @@
 ﻿using bookBeauty.Model;
+using bookBeauty.Model.Model;
 using bookBeauty.Model.Requests;
 using bookBeauty.Model.SearchObjects;
 using bookBeauty.Services.Database;
@@ -67,5 +68,11 @@ namespace bookBeauty.Services.Services
             await base.BeforeInsert(request, entity);
         }
 
+        public override IQueryable<Database.Review> AddInclude(IQueryable<Database.Review> query, ReviewSearchObject? search = null)
+        {
+            query = query.Include("User");
+            query = query.Include("Product");
+            return base.AddInclude(query, search);
+        }
     }
 }
