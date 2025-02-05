@@ -10,31 +10,4 @@ class ServiceProvider extends BaseProvider<Service> {
   Service fromJson(data) {
     return Service.fromJson(data);
   }
-
-  Future<List<Service>> getMobile() async {
-    var uri = Uri.parse('${BaseProvider.baseUrl}Service/Mobile');
-
-    var headers = createHeaders();
-
-    print('****************** URI *******************************************');
-    print(uri);
-
-    var response = await http.get(uri, headers: headers);
-
-    if (isValidResponse(response)) {
-      print("response: ${response.request}");
-
-      print("RESPONSE BODYYYYYYYYYYYYYYYYYYYY");
-      print(" ${response.body}");
-      List<Service> services = (jsonDecode(response.body) as List)
-          .map((serviceJson) => Service.fromJson(serviceJson))
-          .toList();
-      print("++++++++++++++++++++++++ DATA +++++++++++++++++++++++++++++");
-      print(" ${services}");
-
-      return services;
-    } else {
-      throw new Exception("Unknown error");
-    }
-  }
 }

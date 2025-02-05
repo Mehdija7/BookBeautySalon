@@ -6,6 +6,6 @@ namespace bookBeauty.Services.Services
 {
     public interface IGenderService : ICRUDService<Gender, BaseSearchObject, GenderUpsertRequest, GenderUpsertRequest>
     {
-      
+        public List<Model.Model.Gender> Get();
     }
 }

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:book_beauty/models/service.dart';
 import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
@@ -26,11 +28,14 @@ class ServiceCard extends StatelessWidget {
           Hero(
             tag: UniqueKey(),
             child: FadeInImage(
-                placeholder: MemoryImage(kTransparentImage),
-                image: NetworkImage(service.image!),
-                fit: BoxFit.cover,
-                height: 150,
-                width: double.infinity),
+              placeholder: MemoryImage(kTransparentImage),
+              image: service.image != null
+                  ? MemoryImage(base64Decode(service.image!))
+                  : MemoryImage(kTransparentImage),
+              fit: BoxFit.cover,
+              height: 150,
+              width: double.infinity,
+            ),
           ),
           Positioned.fill(
             child: Container(

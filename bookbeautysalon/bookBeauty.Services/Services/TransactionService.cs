@@ -28,7 +28,10 @@ namespace bookBeauty.Services.Services
                 UserName = _username,
                 Password = _password
             };
+            Console.WriteLine("||||||||||||||||||||| TRYING TO CONNECT FROM TRANSACTION SERVICE ||||||||||||||||");
+
             var connection = factory.CreateConnection();
+            Console.WriteLine("||||||||||||||||||||   CONNECTED SUCCESFULLY FROM TRANSACTION SERVICE  ||||||||||||||||||||||||");
             _channel = connection.CreateModel();
             _channel.QueueDeclare(queue: "orderQueue",
                                  durable: false,
@@ -45,7 +48,7 @@ namespace bookBeauty.Services.Services
             var userEmail = customer.Email;
             if (!string.IsNullOrEmpty(userEmail))
             {
-                if (insert.Status.StartsWith('s'))
+                if (insert.Status.StartsWith('S'))
                 {
                     var message = $"Uspješno kreirana narudžba za {userEmail}";
                     var body = Encoding.UTF8.GetBytes(message);

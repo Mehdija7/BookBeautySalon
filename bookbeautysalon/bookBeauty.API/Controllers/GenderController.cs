@@ -13,5 +13,11 @@ namespace bookBeauty.API.Controllers
         {
         }
 
+        [AllowAnonymous]
+        [HttpGet("getGenders")]     
+        public Task<List<Model.Model.Gender>> Get()
+        {
+            return Task.FromResult(((IGenderService)_service).Get());
+        }
     }
 }

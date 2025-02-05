@@ -66,7 +66,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
     if (_selectedDate != null) {
       Appointment appointment = Appointment(
         dateTime: _selectedDate,
-        userId: 3,
+        userId: UserProvider.globalUserId,
         serviceId: widget.service.serviceId,
         hairdresserId: _selectedHairdresser,
         note: _noteController.text,
@@ -408,18 +408,25 @@ class _ReservationScreenState extends State<ReservationScreen> {
 
     var userid = UserProvider.getUserId;
 
+    String d = DateTime.parse(formattedDate).toIso8601String();
     print('&&&&&&&&&&&&&&&&&&&&& USER ID &&&&&&&&&&&&&&&&&&&&&&&&&');
     print(userid);
 
     Appointment appointment = Appointment(
-      dateTime: DateTime.parse(formattedDate),
+      dateTime: DateTime.parse(d),
       userId: userid,
       serviceId: widget.service.serviceId,
-      note: _noteController.text,
+      note:
+          _noteController.text.isEmpty ? 'bez napomene' : _noteController.text,
       hairdresserId: _selectedHairdresser,
     );
     print('&&& appointment &&&&');
     print(appointment);
+    print(appointment.dateTime);
+    print(appointment.userId);
+    print(appointment.serviceId);
+    print(appointment.note);
+    print(appointment.hairdresserId);
     var response = await appointmentProvider.insert(appointment);
 
     if (response != null) {

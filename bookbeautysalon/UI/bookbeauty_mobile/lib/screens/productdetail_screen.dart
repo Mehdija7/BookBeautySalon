@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:book_beauty/models/favoriteproduct.dart';
 import 'package:book_beauty/models/product.dart';
 import 'package:book_beauty/models/search_result.dart';
@@ -76,7 +78,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       var data = result.result;
 
       var item = data.first.favoriteProductsId;
-      await _favoriteProductProvider.delete(item);
+      await _favoriteProductProvider.delete(item!);
       await _favoriteProductProvider.toggleFavorite(false);
     } else {
       FavoriteProduct newFav = FavoriteProduct(
@@ -112,7 +114,20 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     MainTitle(title: widget.product.name!),
-                    Image.network(widget.product.image!),
+                    widget.product.image != null
+                        ? Image.memory(
+                            base64Decode(widget.product
+                                .image!), // Assuming it's a Uint8List if not null
+                            width: 100,
+                            height: 200,
+                            fit: BoxFit.cover,
+                          )
+                        : Image.asset(
+                            "assets/images/logoBB.png", // Fallback asset image when image is null
+                            width: 100,
+                            height: 200,
+                            fit: BoxFit.cover,
+                          ),
                     Padding(
                         padding: const EdgeInsets.all(5),
                         child: Row(

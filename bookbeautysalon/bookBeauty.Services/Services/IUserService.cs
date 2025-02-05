@@ -18,5 +18,6 @@ namespace bookBeauty.Services.Services
         List<User> GetHairdressers();
         void DeleteUserRoles(int userId);
         List<HairdresserGetRequest> GetHairdressersMobile();
+        Model.Model.User UserRegistration(UserInsertRequest requset);
     }
 }

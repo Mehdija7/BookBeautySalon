@@ -32,7 +32,10 @@ namespace RabbitMQConsumer
                 UserName = _username,
                 Password = _password
             };
+            Console.WriteLine("|||||||||||||||||||||| trying to connect 1FROM RABBIT MQ CONSUMER ||||||||||||");
             var connection = factory.CreateConnection();
+            Console.WriteLine("|||||||||||||||||||||| CONNECTION CREATED SUCCESSFULLY FROM RABBIT MQ CONSUMER ||||||||||||");
+   
             _channel = connection.CreateModel();
         }
 

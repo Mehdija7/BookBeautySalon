@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:book_beauty/models/product.dart';
 import 'package:book_beauty/providers/favoriteproduct_provider.dart';
 import 'package:book_beauty/providers/user_provider.dart';
@@ -47,12 +49,20 @@ class _ProductGridItemState extends State<ProductGridItem> {
                   color: Colors.white,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(0),
-                    child: Image.network(
-                      widget.product.image!,
-                      width: 120,
-                      height: 120,
-                      fit: BoxFit.cover,
-                    ),
+                    child: widget.product.image != null
+                        ? Image.memory(
+                            base64Decode(widget.product
+                                .image!), // Assuming it's a Uint8List if not null
+                            width: 100,
+                            height: 200,
+                            fit: BoxFit.cover,
+                          )
+                        : Image.asset(
+                            "assets/images/logoBB.png", // Fallback asset image when image is null
+                            width: 100,
+                            height: 200,
+                            fit: BoxFit.cover,
+                          ),
                   ),
                 ),
                 Positioned(

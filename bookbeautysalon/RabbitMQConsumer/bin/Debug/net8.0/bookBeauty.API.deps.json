@@ -1083,11 +1083,11 @@
         }
       },
       "System.IO.Pipelines/6.0.3": {},
-      "System.Linq.Dynamic.Core/1.3.10": {
+      "System.Linq.Dynamic.Core/1.6.0": {
         "runtime": {
           "lib/net8.0/System.Linq.Dynamic.Core.dll": {
-            "assemblyVersion": "1.3.10.0",
-            "fileVersion": "1.3.10.0"
+            "assemblyVersion": "1.6.0.0",
+            "fileVersion": "1.6.0.0"
           }
         }
       },
@@ -1273,7 +1273,7 @@
           "Microsoft.ML": "3.0.1",
           "Microsoft.ML.Recommender": "0.21.1",
           "Newtonsoft.Json": "13.0.3",
-          "System.Linq.Dynamic.Core": "1.3.10",
+          "System.Linq.Dynamic.Core": "1.6.0",
           "bookBeauty.Model": "1.0.0"
         },
         "runtime": {
@@ -1841,12 +1841,12 @@
       "path": "system.io.pipelines/6.0.3",
       "hashPath": "system.io.pipelines.6.0.3.nupkg.sha512"
     },
-    "System.Linq.Dynamic.Core/1.3.10": {
+    "System.Linq.Dynamic.Core/1.6.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-xkMCropqN0WTgPuPbIlYgXss1KAyjd+8VRbx/BFh57yUOi5LylljIpK0iGa58ziXr+xJqzmcaRGtKHlsI5C4tg==",
-      "path": "system.linq.dynamic.core/1.3.10",
-      "hashPath": "system.linq.dynamic.core.1.3.10.nupkg.sha512"
+      "sha512": "sha512-6xGWCu89VdrAYpw07KSbvVZC21XcJ5YSEzPEFbWBZsgeATTep5c5x/MQA/QS15HVHqoAtYIAHzr3ke6zCyOX7g==",
+      "path": "system.linq.dynamic.core/1.6.0",
+      "hashPath": "system.linq.dynamic.core.1.6.0.nupkg.sha512"
     },
     "System.Memory/4.5.5": {
       "type": "package",

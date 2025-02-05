@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 
 class CustomerInfoItem extends StatelessWidget {
-  const CustomerInfoItem({super.key, required this.title, required this.value});
+  const CustomerInfoItem(
+      {super.key,
+      required this.title,
+      required this.value,
+      required TextStyle titleStyle,
+      required TextStyle valueStyle});
 
   final String title;
   final String value;

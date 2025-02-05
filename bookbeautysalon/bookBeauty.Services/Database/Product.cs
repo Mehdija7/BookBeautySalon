@@ -17,9 +17,9 @@ public partial class Product
     public byte[]? Image { get; set; } 
     public virtual Category? Category { get; set; }
 
-    public virtual ICollection<FavoriteProduct> FavoriteProducts { get; set; } = [];
+    public virtual ICollection<FavoriteProduct>? FavoriteProducts { get; set; } = [];
 
-    public virtual ICollection<OrderItem> OrderItems { get; set; } = [];
+    public virtual ICollection<OrderItem>? OrderItems { get; set; } = [];
 
-    public virtual ICollection<Review> Reviews { get; set; } = [];
+    public virtual ICollection<Review>? Reviews { get; set; } = [];
 }

@@ -1,67 +1,68 @@
 import 'dart:convert';
 import 'package:book_beauty/models/search_result.dart';
-import 'package:book_beauty/providers/auth_provider.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:http/io_client.dart';
-import 'package:flutter/foundation.dart';
-import 'dart:io';
-import 'dart:async';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+
+import '../utils.dart';
 
 abstract class BaseProvider<T> with ChangeNotifier {
-  static String? _baseUrl;
+  static String? baseUrl;
   String _endpoint = "";
 
   BaseProvider(String endpoint) {
     _endpoint = endpoint;
-    _baseUrl = const String.fromEnvironment("baseUrl",
+    baseUrl = const String.fromEnvironment("baseUrl",
         defaultValue: "http://10.0.2.2:5266/");
   }
-  static String get baseUrl => _baseUrl!;
 
   Future<SearchResult<T>> get({dynamic filter}) async {
-    var url = "$_baseUrl$_endpoint";
+    var url = "$baseUrl$_endpoint";
 
     if (filter != null) {
-      var queryString = getQueryString(filter);
-      url = "$url?$queryString";
+      var querryString = getQueryString(filter);
+      url = "$url?$querryString";
     }
 
     var uri = Uri.parse(url);
     var headers = createHeaders();
 
-    print('****************** URI *******************************************');
+    print("--------- base url----------");
     print(uri);
-
+    print(headers.toString());
     var response = await http.get(uri, headers: headers);
 
     if (isValidResponse(response)) {
       var data = jsonDecode(response.body);
 
       var result = SearchResult<T>();
-
+      print(response.statusCode);
+      print(data);
       result.count = data['count'];
-
+      print(result.count);
       for (var item in data['resultList']) {
         result.result.add(fromJson(item));
       }
+      print(result.result);
       return result;
     } else {
-      throw new Exception("Unknown error");
+      throw new Exception("Upps, something went wrong");
     }
   }
 
   Future<SearchResult<T>> getRecommended(int id) async {
-    var url = "$_baseUrl$_endpoint/$id/recommend";
+    var url = "$baseUrl$_endpoint/$id/recommend";
 
     var uri = Uri.parse(url);
     var headers = createHeaders();
 
     var response = await http.get(uri, headers: headers);
+
     if (response.body == "") {
       SearchResult<T> newList = SearchResult();
       return newList;
     }
+
     if (isValidResponse(response)) {
       var data = jsonDecode(response.body);
 
@@ -80,31 +81,13 @@ abstract class BaseProvider<T> with ChangeNotifier {
   }
 
   Future<T> getById(int id) async {
-    var url = "$_baseUrl$_endpoint/$id";
+    var url = "$baseUrl$_endpoint/$id";
     var uri = Uri.parse(url);
     var headers = createHeaders();
 
     var response = await http.get(uri, headers: headers);
 
     if (isValidResponse(response)) {
-      print("response: ${response.request}");
-      var data = jsonDecode(response.body);
-      return fromJson(data);
-    } else {
-      throw new Exception("Failed to get item with ID $id");
-    }
-  }
-
-  Future<T> insert(dynamic request) async {
-    var url = "$_baseUrl$_endpoint";
-    var uri = Uri.parse(url);
-    var headers = createHeaders();
-
-    var jsonRequest = jsonEncode(request);
-    var response = await http.post(uri, headers: headers, body: jsonRequest);
-
-    if (isValidResponse(response)) {
-      print("response: ${response.request}");
       var data = jsonDecode(response.body);
       return fromJson(data);
     } else {
@@ -112,9 +95,31 @@ abstract class BaseProvider<T> with ChangeNotifier {
     }
   }
 
+  Future<T> insert(dynamic request) async {
+    var url = "$baseUrl$_endpoint";
+    var uri = Uri.parse(url);
+    var headers = createHeaders();
+
+    var jsonRequest = jsonEncode(request);
+    var response = await http.post(uri, headers: headers, body: jsonRequest);
+
+    print("|||||||||| RESPONSE ||||||||||||||||||||");
+    print(response.statusCode);
+    print(response.body);
+    if (isValidResponse(response)) {
+      var data = jsonDecode(response.body);
+      return fromJson(data);
+    } else {
+      throw new Exception("Unknown error");
+    }
+  }
+
+  T fromJson(data) {
+    throw Exception("Method not implemented");
+  }
+
   Future<T> update(int id, [dynamic request]) async {
-    var url = "$_baseUrl$_endpoint/$id";
-    print(url);
+    var url = "$baseUrl$_endpoint/$id";
     var uri = Uri.parse(url);
     var headers = createHeaders();
 
@@ -122,7 +127,6 @@ abstract class BaseProvider<T> with ChangeNotifier {
     var response = await http.put(uri, headers: headers, body: jsonRequest);
 
     if (isValidResponse(response)) {
-      print("response: ${response.request}");
       var data = jsonDecode(response.body);
       return fromJson(data);
     } else {
@@ -130,54 +134,33 @@ abstract class BaseProvider<T> with ChangeNotifier {
     }
   }
 
-  Future<T> delete(int? id) async {
-    var url = "$_baseUrl$_endpoint/?id=$id";
+  Future<bool> delete(int id) async {
+    var url = "$baseUrl$_endpoint/$id";
     var uri = Uri.parse(url);
     var headers = createHeaders();
 
     var response = await http.delete(uri, headers: headers);
 
     if (isValidResponse(response)) {
-      var data = jsonDecode(response.body);
-      return fromJson(data);
+      return true;
     } else {
-      throw new Exception("Failed to delete product with ID $id");
+      throw new Exception("Unknown error");
     }
   }
 
-  T fromJson(data) {
-    throw new Exception("Method not implemented");
-  }
-
-  bool isValidResponse(http.Response response) {
+  bool isValidResponse(Response response) {
     if (response.statusCode < 299) {
       return true;
     } else if (response.statusCode == 401) {
-      throw Exception("Unauthorized");
+      throw new Exception("Unauthorised");
     } else {
-      throw Exception("Something bad happened please try again");
-    }
-  }
-
-  Future<List<T>> recom(int id, [dynamic search]) async {
-    var url = Uri.parse("$_baseUrl$_endpoint/$id/Recommend");
-    Map<String, String> headers = createHeaders();
-    var response = await http.get(url, headers: headers);
-
-    if (isValidResponse(response)) {
-      var data = jsonDecode(response.body);
-      print(data);
-      return data.map((x) => fromJson(x)).cast<T>().toList();
-    } else {
-      throw Exception("Exception... handle this gracefully");
+      throw new Exception("Upps, something went wrong");
     }
   }
 
   Map<String, String> createHeaders() {
-    String username = AuthProvider.username ?? "";
-    String password = AuthProvider.password ?? "";
-
-    print("passed creds: $username, $password");
+    String username = Authorization.username ?? "";
+    String password = Authorization.password ?? "";
 
     String basicAuth =
         "Basic ${base64Encode(utf8.encode('$username:$password'))}";
@@ -186,6 +169,7 @@ abstract class BaseProvider<T> with ChangeNotifier {
       "Content-Type": "application/json",
       "Authorization": basicAuth
     };
+
     return headers;
   }
 
@@ -219,21 +203,5 @@ abstract class BaseProvider<T> with ChangeNotifier {
       }
     });
     return query;
-  }
-
-  Future<dynamic> SignUp(dynamic body) async {
-    var url = "$_baseUrl$_endpoint";
-    var uri = Uri.parse(url);
-    var jsonRequest = jsonEncode(body);
-
-    var response = await http.post(uri,
-        headers: {'Content-type': 'application/json'}, body: jsonRequest);
-
-    if (isValidResponse(response)) {
-      var data = jsonDecode(response.body);
-      return fromJson(data) as T;
-    } else {
-      return null;
-    }
   }
 }

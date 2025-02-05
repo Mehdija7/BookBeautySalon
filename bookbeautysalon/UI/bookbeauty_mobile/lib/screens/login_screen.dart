@@ -1,6 +1,7 @@
 import 'package:book_beauty/providers/auth_provider.dart';
 import 'package:book_beauty/providers/service_provider.dart';
 import 'package:book_beauty/screens/home_screen.dart';
+import 'package:book_beauty/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:blur/blur.dart';
 import '../screens/registration_screen.dart';
@@ -101,6 +102,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () async {
+                      print(
+                          "credentials: ${_usernameController.text} : ${_passwordController.text}");
+                      Authorization.username = _usernameController.text;
+                      Authorization.password = _passwordController.text;
                       if (_usernameController.value.text.trim().isEmpty ||
                           _passwordController.value.text.trim().isEmpty) {
                         showDialog(
@@ -122,8 +127,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           print(
                               '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ${_usernameController.text}  ${_passwordController.text} ++++++++++++++++++++++++++++++++++++++++');
                           var data = await _userProvider.authenticate(
-                              _usernameController.text,
-                              _passwordController.text);
+                              Authorization.username!, Authorization.password!);
 
                           Navigator.of(context).push(
                             MaterialPageRoute(

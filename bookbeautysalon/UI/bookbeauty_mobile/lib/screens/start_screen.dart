@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:book_beauty/models/order_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
@@ -25,9 +27,10 @@ class _StartScreenState extends State<StartScreen> {
   Future<void> _fetchProducts(List<OrderItem> orderItems) async {
     try {
       if (orderItems.isEmpty) {
-        final products = await productProvider.getMobile();
+        final products = await productProvider.get();
+        var p = products.result;
         setState(() {
-          _allProducts = products.take(3).toList();
+          _allProducts = p.take(3).toList();
           _isLoading = false;
         });
       } else {
@@ -129,7 +132,8 @@ class _StartScreenState extends State<StartScreen> {
                                         ),
                                       ),
                                       control: const SwiperControl(
-                                          color: Colors.blueGrey),
+                                          color: Color.fromARGB(
+                                              255, 70, 107, 126)),
                                       itemBuilder: (context, index) {
                                         return Card(
                                           elevation: 4,
@@ -140,12 +144,22 @@ class _StartScreenState extends State<StartScreen> {
                                           child: ClipRRect(
                                             borderRadius:
                                                 BorderRadius.circular(12),
-                                            child: Image.network(
-                                              _allProducts[index].image!,
-                                              fit: BoxFit.cover,
-                                              width: double.infinity,
-                                              height: double.infinity,
-                                            ),
+                                            child: _allProducts[index].image !=
+                                                    null
+                                                ? Image.memory(
+                                                    base64Decode(
+                                                        _allProducts[index]
+                                                            .image!),
+                                                    width: 100,
+                                                    height: 200,
+                                                    fit: BoxFit.cover,
+                                                  )
+                                                : Image.asset(
+                                                    "assets/images/logoBB.png",
+                                                    width: 100,
+                                                    height: 200,
+                                                    fit: BoxFit.cover,
+                                                  ),
                                           ),
                                         );
                                       },

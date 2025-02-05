@@ -41,6 +41,12 @@ namespace bookBeauty.Services.Services
 
         public override Task<Model.Model.Appointment> Insert(AppointmentInsertRequest insert)
         {
+            Console.WriteLine(" console from insert appoiintment service");
+            Console.WriteLine(insert.UserId);
+            Console.WriteLine(insert.HairdresserId);
+            Console.WriteLine(insert.ServiceId);
+            Console.WriteLine(insert.DateTime);
+            Console.WriteLine(insert.Note);
             return base.Insert(insert);
         }
 

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:book_beauty/models/order_item.dart';
 import 'package:book_beauty/models/product.dart';
 import 'package:book_beauty/providers/order_item_provider.dart';
@@ -40,12 +42,20 @@ class CartCard extends StatelessWidget {
               ],
             ),
           ),
-          Image.network(
-            product.product!.image!,
-            width: 100,
-            height: 80,
-            fit: BoxFit.cover,
-          ),
+          product.product!.image != null
+              ? Image.memory(
+                  base64Decode(product.product!
+                      .image!), 
+                  width: 100,
+                  height: 200,
+                  fit: BoxFit.cover,
+                )
+              : Image.asset(
+                  "assets/images/logoBB.png", 
+                  width: 100,
+                  height: 200,
+                  fit: BoxFit.cover,
+                ),
           Padding(
             padding: const EdgeInsets.only(right: 5),
             child: Row(
@@ -59,7 +69,6 @@ class CartCard extends StatelessWidget {
                     provider.decreaseQuantity(product.productId!);
                   },
                 ),
-                // Using Consumer to update only the quantity text when changed
                 Consumer<OrderItemProvider>(
                   builder: (context, provider, child) {
                     final quantity = provider.getQuantity(product.productId!);

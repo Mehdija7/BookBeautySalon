@@ -22,7 +22,6 @@ namespace bookBeauty.Model.Requests
 
         [Compare("Password", ErrorMessage = "Lozinke se ne podudaraju")]
         public string? PasswordConfirmed { get; set; }
-        public bool? Status { get; set; }
     }
 
 }

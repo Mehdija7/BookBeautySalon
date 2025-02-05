@@ -13,10 +13,11 @@ class ReviewProvider extends BaseProvider<Review> {
 
   Future<double> getAverageRating(int productId) async {
     try {
-      var url =
-          Uri.parse('${BaseProvider.baseUrl}GetAverage/?productId=$productId');
-      var response = await http.get(url);
+      var uri =
+          Uri.parse('${BaseProvider.baseUrl}GetAverage?productId=$productId');
+      var headers = createHeaders();
 
+      var response = await http.get(uri, headers: headers);
       if (response.statusCode == 200) {
         return double.parse(response.body);
       } else {

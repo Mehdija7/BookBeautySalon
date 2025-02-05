@@ -26,12 +26,13 @@ class _ServicesScreenState extends State<ServicesScreen> {
 
   Future<void> _fetchServices() async {
     try {
-      List<Service> result = await serviceProvider.getMobile();
+      var result = await serviceProvider.get();
+      List<Service> list = result.result;
       print(
           '                             result                                                      ');
-      print(result);
+      print(list);
       setState(() {
-        _registeredServices = result;
+        _registeredServices = list;
         isLoading = false;
       });
       print(_registeredServices);

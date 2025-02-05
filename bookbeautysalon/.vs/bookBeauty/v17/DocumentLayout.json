@@ -3,20 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\elmin\\Desktop\\BookBeautySalon\\bookbeautysalon\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{950FA877-044B-466D-9D60-769963CD44C7}|bookBeauty.API\\bookBeauty.API.csproj|c:\\users\\elmin\\desktop\\bookbeautysalon\\bookbeautysalon\\bookbeauty.api\\controllers\\appointmentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{950FA877-044B-466D-9D60-769963CD44C7}|bookBeauty.API\\bookBeauty.API.csproj|solutionrelative:bookbeauty.api\\controllers\\appointmentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{950FA877-044B-466D-9D60-769963CD44C7}|bookBeauty.API\\bookBeauty.API.csproj|c:\\users\\elmin\\desktop\\bookbeautysalon\\bookbeautysalon\\bookbeauty.api\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{950FA877-044B-466D-9D60-769963CD44C7}|bookBeauty.API\\bookBeauty.API.csproj|solutionrelative:bookbeauty.api\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{84629801-9861-44C5-9DC7-0B10EE58C1B5}|bookBeauty.Services\\bookBeauty.Services.csproj|c:\\users\\elmin\\desktop\\bookbeautysalon\\bookbeautysalon\\bookbeauty.services\\services\\appointmentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{84629801-9861-44C5-9DC7-0B10EE58C1B5}|bookBeauty.Services\\bookBeauty.Services.csproj|solutionrelative:bookbeauty.services\\services\\appointmentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{84629801-9861-44C5-9DC7-0B10EE58C1B5}|bookBeauty.Services\\bookBeauty.Services.csproj|c:\\users\\elmin\\desktop\\bookbeautysalon\\bookbeautysalon\\bookbeauty.services\\services\\transactionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{84629801-9861-44C5-9DC7-0B10EE58C1B5}|bookBeauty.Services\\bookBeauty.Services.csproj|solutionrelative:bookbeauty.services\\services\\transactionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{84629801-9861-44C5-9DC7-0B10EE58C1B5}|bookBeauty.Services\\bookBeauty.Services.csproj|c:\\users\\elmin\\desktop\\bookbeautysalon\\bookbeautysalon\\bookbeauty.services\\services\\iappointmentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{84629801-9861-44C5-9DC7-0B10EE58C1B5}|bookBeauty.Services\\bookBeauty.Services.csproj|solutionrelative:bookbeauty.services\\services\\iappointmentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{84629801-9861-44C5-9DC7-0B10EE58C1B5}|bookBeauty.Services\\bookBeauty.Services.csproj|c:\\users\\elmin\\desktop\\bookbeautysalon\\bookbeautysalon\\bookbeauty.services\\services\\baseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{84629801-9861-44C5-9DC7-0B10EE58C1B5}|bookBeauty.Services\\bookBeauty.Services.csproj|solutionrelative:bookbeauty.services\\services\\baseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{950FA877-044B-466D-9D60-769963CD44C7}|bookBeauty.API\\bookBeauty.API.csproj|c:\\users\\elmin\\desktop\\bookbeautysalon\\bookbeautysalon\\bookbeauty.api\\controllers\\transactioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{950FA877-044B-466D-9D60-769963CD44C7}|bookBeauty.API\\bookBeauty.API.csproj|solutionrelative:bookbeauty.api\\controllers\\transactioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,57 +22,44 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "IAppointmentService.cs",
-              "DocumentMoniker": "C:\\Users\\elmin\\Desktop\\BookBeautySalon\\bookbeautysalon\\bookBeauty.Services\\Services\\IAppointmentService.cs",
-              "RelativeDocumentMoniker": "bookBeauty.Services\\Services\\IAppointmentService.cs",
-              "ToolTip": "C:\\Users\\elmin\\Desktop\\BookBeautySalon\\bookbeautysalon\\bookBeauty.Services\\Services\\IAppointmentService.cs",
-              "RelativeToolTip": "bookBeauty.Services\\Services\\IAppointmentService.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-02T12:13:32.241Z"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "AppointmentController.cs",
-              "DocumentMoniker": "C:\\Users\\elmin\\Desktop\\BookBeautySalon\\bookbeautysalon\\bookBeauty.API\\Controllers\\AppointmentController.cs",
-              "RelativeDocumentMoniker": "bookBeauty.API\\Controllers\\AppointmentController.cs",
-              "ToolTip": "C:\\Users\\elmin\\Desktop\\BookBeautySalon\\bookbeautysalon\\bookBeauty.API\\Controllers\\AppointmentController.cs",
-              "RelativeToolTip": "bookBeauty.API\\Controllers\\AppointmentController.cs",
-              "ViewState": "AQIAACoAAAAAAAAAAADwv0AAAAAAAAAA",
+              "Title": "UserController.cs",
+              "DocumentMoniker": "C:\\Users\\elmin\\Desktop\\BookBeautySalon\\bookbeautysalon\\bookBeauty.API\\Controllers\\UserController.cs",
+              "RelativeDocumentMoniker": "bookBeauty.API\\Controllers\\UserController.cs",
+              "ToolTip": "C:\\Users\\elmin\\Desktop\\BookBeautySalon\\bookbeautysalon\\bookBeauty.API\\Controllers\\UserController.cs",
+              "RelativeToolTip": "bookBeauty.API\\Controllers\\UserController.cs",
+              "ViewState": "AQIAADkAAAAAAAAAAAAmwD8AAAATAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-02T12:12:43.489Z",
+              "WhenOpened": "2025-02-05T19:21:20.444Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "AppointmentService.cs",
-              "DocumentMoniker": "C:\\Users\\elmin\\Desktop\\BookBeautySalon\\bookbeautysalon\\bookBeauty.Services\\Services\\AppointmentService.cs",
-              "RelativeDocumentMoniker": "bookBeauty.Services\\Services\\AppointmentService.cs",
-              "ToolTip": "C:\\Users\\elmin\\Desktop\\BookBeautySalon\\bookbeautysalon\\bookBeauty.Services\\Services\\AppointmentService.cs",
-              "RelativeToolTip": "bookBeauty.Services\\Services\\AppointmentService.cs",
-              "ViewState": "AQIAAFgAAAAAAAAAAAAcwHAAAAAAAAAA",
+              "Title": "TransactionService.cs",
+              "DocumentMoniker": "C:\\Users\\elmin\\Desktop\\BookBeautySalon\\bookbeautysalon\\bookBeauty.Services\\Services\\TransactionService.cs",
+              "RelativeDocumentMoniker": "bookBeauty.Services\\Services\\TransactionService.cs",
+              "ToolTip": "C:\\Users\\elmin\\Desktop\\BookBeautySalon\\bookbeautysalon\\bookBeauty.Services\\Services\\TransactionService.cs",
+              "RelativeToolTip": "bookBeauty.Services\\Services\\TransactionService.cs",
+              "ViewState": "AQIAAC0AAAAAAAAAAAAowDMAAAARAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-02T12:09:22.429Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-05T16:31:13.894Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "BaseService.cs",
-              "DocumentMoniker": "C:\\Users\\elmin\\Desktop\\BookBeautySalon\\bookbeautysalon\\bookBeauty.Services\\Services\\BaseService.cs",
-              "RelativeDocumentMoniker": "bookBeauty.Services\\Services\\BaseService.cs",
-              "ToolTip": "C:\\Users\\elmin\\Desktop\\BookBeautySalon\\bookbeautysalon\\bookBeauty.Services\\Services\\BaseService.cs",
-              "RelativeToolTip": "bookBeauty.Services\\Services\\BaseService.cs",
-              "ViewState": "AQIAAAwAAAAAAAAAAAAAAA8AAABBAAAA",
+              "DocumentIndex": 2,
+              "Title": "TransactionController.cs",
+              "DocumentMoniker": "C:\\Users\\elmin\\Desktop\\BookBeautySalon\\bookbeautysalon\\bookBeauty.API\\Controllers\\TransactionController.cs",
+              "RelativeDocumentMoniker": "bookBeauty.API\\Controllers\\TransactionController.cs",
+              "ToolTip": "C:\\Users\\elmin\\Desktop\\BookBeautySalon\\bookbeautysalon\\bookBeauty.API\\Controllers\\TransactionController.cs",
+              "RelativeToolTip": "bookBeauty.API\\Controllers\\TransactionController.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAABMAAABJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-02T11:53:56.83Z"
+              "WhenOpened": "2025-02-05T16:13:36.683Z"
             }
           ]
         }

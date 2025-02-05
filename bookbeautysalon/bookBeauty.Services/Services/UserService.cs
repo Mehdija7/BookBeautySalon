@@ -198,5 +198,44 @@ namespace bookBeauty.Services.Services
             Context.SaveChanges();
         }
 
+        public Model.Model.User UserRegistration(UserInsertRequest request)
+        {
+            if (request.Password != null)
+            {
+                if (request.Password != request.PasswordConfirmed)
+                {
+                    throw new UserException("Password i PasswordPotvrda moraju biti iste");
+                }
+                var salt = GenerateSalt();
+                var hash = GenerateHash(salt, request.Password);
+                Database.User user = new Database.User
+                {
+                    FirstName = request.FirstName,
+                    LastName = request.LastName,
+                    GenderId = request.GenderId??1,
+                    Address = request.Address,
+                    Username = request.Username,
+                    PasswordSalt = salt,
+                    PasswordHash = hash,
+                    Phone = request.Phone
+                };
+                Context.Add(user);
+                Context.SaveChanges();
+                var role = Context.Roles.FirstOrDefault(x => x.Name.ToLower() == "kupac"); 
+                UserRole newrole = new UserRole
+                {
+                    ChangedDate = DateTime.Now,
+                    UserId = user.UserId,
+                    RoleId = role.RoleId
+                };
+                Context.UserRoles.Add(newrole);
+                Context.SaveChanges();
+                return Mapper.Map<Model.Model.User>(user);
+            }
+            else
+            {
+                throw new UserException("Obavezna polja");
+            }
+        }
     }
 }

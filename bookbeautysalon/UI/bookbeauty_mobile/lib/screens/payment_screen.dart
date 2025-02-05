@@ -238,7 +238,7 @@ class SuccessScreen extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
-                            HomeScreen(user: UserProvider.user!)),
+                            HomeScreen(user: UserProvider.globaluser!)),
                   );
                 },
                 style: ElevatedButton.styleFrom(
@@ -284,7 +284,7 @@ class CancelScreen extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
-                            HomeScreen(user: UserProvider.user!)),
+                            HomeScreen(user: UserProvider.globaluser!)),
                   );
                 },
                 style: ElevatedButton.styleFrom(

@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:book_beauty/models/service.dart';
 import 'package:book_beauty/screens/reservation_screen.dart';
 import 'package:book_beauty/widgets/main_title.dart';
 import 'package:flutter/material.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class ServiceDetailScreen extends StatelessWidget {
   const ServiceDetailScreen({super.key, required this.service});
@@ -30,12 +33,20 @@ class ServiceDetailScreen extends StatelessWidget {
             const SizedBox(height: 14),
             Hero(
               tag: UniqueKey(),
-              child: Image.network(
-                service.image!,
-                height: 300,
-                width: double.infinity,
-                fit: BoxFit.cover,
-              ),
+              child: service.image != null
+                  ? Image.memory(
+                      base64Decode(service
+                          .image!), // Assuming it's a Uint8List if not null
+                      width: 100,
+                      height: 200,
+                      fit: BoxFit.cover,
+                    )
+                  : Image.asset(
+                      "assets/images/logoBB.png", // Fallback asset image when image is null
+                      width: 100,
+                      height: 200,
+                      fit: BoxFit.cover,
+                    ),
             ),
             Container(
               color: const Color.fromARGB(255, 231, 228, 213),

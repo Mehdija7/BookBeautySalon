@@ -17,16 +17,7 @@ namespace bookBeauty.API.Controllers
 
         }
 
-        [Authorize]
-        public override Task<Appointment> Insert(AppointmentInsertRequest request)
-        {
-            Console.WriteLine("-------------- REQUEST ------------------");
-            Console.WriteLine(request.Note);
-            Console.WriteLine(request.DateTime);
-            Console.WriteLine(request.UserId);
-            return base.Insert(request);
-        }
-
+     
 
         [Authorize]
         [HttpPost("availableAppointments")]

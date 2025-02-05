@@ -13,9 +13,9 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
-  late List<Gender> _registeredGenders = [];
-  final UserProvider _userProvider = UserProvider();
   final GenderProvider _genderProvider = GenderProvider();
+  List<Gender> genderOptions = [];
+  final UserProvider _userProvider = UserProvider();
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
@@ -25,13 +25,28 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
-
+  final TextEditingController genderController = TextEditingController();
   String? _selectedGender;
 
   @override
   void initState() {
-    _fetchGender();
+    _fetchGenders();
     super.initState();
+  }
+
+  Future<void> _fetchGenders() async {
+    try {
+      var result = await _genderProvider.fetchGenders();
+      setState(() {
+        genderOptions = result;
+        if (genderOptions.isNotEmpty) {
+          _selectedGender = genderOptions[0].genderId.toString();
+        }
+      });
+    } catch (e) {
+      print(
+          "*****************************ERROR MESSAGE $e ***********************************");
+    }
   }
 
   @override
@@ -45,13 +60,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     _passwordController.dispose();
     _confirmPasswordController.dispose();
     super.dispose();
-  }
-
-  Future<void> _fetchGender() async {
-    var result = await _genderProvider.get();
-    setState(() {
-      _registeredGenders = result.result;
-    });
   }
 
   void _showErrorDialog(String message) {
@@ -83,7 +91,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     final String phone = _phoneController.text;
     final String password = _passwordController.text;
     final String confirmPassword = _confirmPasswordController.text;
-    final String? gender = _selectedGender;
+    final selectedGenderId = int.tryParse(_selectedGender!) ?? 1;
 
     if (firstName.isEmpty ||
         lastName.isEmpty ||
@@ -93,7 +101,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         phone.isEmpty ||
         password.isEmpty ||
         confirmPassword.isEmpty) {
-      _showErrorDialog('Sva polja je obavezno ipuniti');
+      _showErrorDialog('Sva polja je obavezno ispuniti');
     } else if (password != confirmPassword) {
       _showErrorDialog('Lozinke se ne podudaraju');
     } else {
@@ -103,10 +111,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           address: address,
           phone: phone,
           email: email,
+          genderId: selectedGenderId,
           username: username,
           password: password,
           passwordConfirmed: confirmPassword);
-      await _userProvider.insert(newUser);
+      var u = await _userProvider.registrate(newUser);
+
+      // var ur = await _userProvider.addRole(u.userId!, 'Korisnik');
+      print(u.username);
       Navigator.of(context)
           .push(MaterialPageRoute(builder: (ctx) => const LoginScreen()));
     }
@@ -145,7 +157,31 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     _buildLabel('Prezime'),
                     _buildTextField(_lastNameController),
                     _buildLabel('Spol'),
-                    _buildDropdownField(_registeredGenders),
+                    genderOptions.isEmpty
+                        ? const Text(" ")
+                        : Padding(
+                            padding: const EdgeInsets.only(left: 20, top: 15),
+                            child: DropdownButton<String>(
+                              focusColor: Colors.transparent,
+                              value: _selectedGender,
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  _selectedGender = newValue!;
+                                  genderController.text = _selectedGender!;
+                                  print(
+                                      "Gender CONTROLLER: ${genderController.text}");
+                                });
+                              },
+                              items: genderOptions.map((Gender gender) {
+                                return DropdownMenuItem<String>(
+                                  value: gender.genderId.toString(),
+                                  child: Text(gender.name!),
+                                );
+                              }).toList(),
+                              dropdownColor:
+                                  const Color.fromARGB(255, 209, 203, 203),
+                            ),
+                          ),
                     _buildLabel('Adresa'),
                     _buildTextField(_addressController),
                     _buildLabel('Email'),

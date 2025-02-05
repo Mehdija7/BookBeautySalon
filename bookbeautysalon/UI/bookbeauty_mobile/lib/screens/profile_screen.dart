@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:book_beauty/models/product.dart';
 import 'package:book_beauty/models/search_result.dart';
 import 'package:book_beauty/models/user.dart';
@@ -5,10 +6,7 @@ import 'package:book_beauty/providers/order_item_provider.dart';
 import 'package:book_beauty/providers/product_provider.dart';
 import 'package:book_beauty/providers/recommend_result_provider.dart';
 import 'package:book_beauty/providers/user_provider.dart';
-import 'package:flutter/material.dart';
 import 'package:book_beauty/widgets/customer_info_item.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -33,9 +31,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
     int id = p.productId!;
     try {
       if (list.isEmpty) {
-        final products = await productProvider.getMobile();
+        final result = await productProvider.get();
+        var p = result.result;
         setState(() {
-          _allProducts = products;
+          _allProducts = p;
         });
       } else {
         var recommendResult = await recommendResultProvider.get();
@@ -92,141 +91,172 @@ class _ProfileScreenState extends State<ProfileScreen> {
     super.initState();
   }
 
-  Widget generateProductCard(Product product) {
-    return Card(
-      elevation: 4,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(12),
-        child: Image.network(
-          product.image!,
-          fit: BoxFit.cover,
-          width: double.infinity,
-          height: double.infinity,
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
-    User user = UserProvider.user ?? User();
+    User user = UserProvider.globaluser ?? User();
     const Color dustyBlue = Color(0xFF748CAB);
     const Color goldGrey = Color(0xFFC1A57B);
     const Color backgroundGrey = Color(0xFFF2F2F2);
 
     return Scaffold(
       backgroundColor: backgroundGrey,
-      body: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const SizedBox(height: 30),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 15),
-              child: ClipOval(
-                child: Image.asset(
-                  'assets/images/user.jpg',
-                  width: 150,
-                  height: 150,
-                  fit: BoxFit.cover,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const SizedBox(height: 30),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 15),
+                child: ClipOval(
+                  child: Image.asset(
+                    'assets/images/user.jpg',
+                    width: 150,
+                    height: 150,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 10),
-            Text(
-              "${user.firstName} ${user.lastName}",
-              style: const TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: dustyBlue,
+              const SizedBox(height: 10),
+              Text(
+                "${user.firstName} ${user.lastName}",
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: dustyBlue,
+                ),
               ),
-            ),
-            const SizedBox(height: 40),
-            CustomerInfoItem(
-              title: 'Ime:',
-              value: user.firstName ?? '',
-              titleStyle: const TextStyle(
-                color: dustyBlue,
-                fontWeight: FontWeight.bold,
+              Row(
+                children: [
+                  IconButton(
+                    icon: const Icon(
+                      Icons.edit,
+                      color: dustyBlue,
+                    ),
+                    onPressed: () {},
+                  ),
+                ],
               ),
-              valueStyle: const TextStyle(
-                color: goldGrey,
+              const SizedBox(height: 40),
+              CustomerInfoItem(
+                title: 'Ime:',
+                value: user.firstName ?? '',
+                titleStyle: const TextStyle(
+                  color: dustyBlue,
+                  fontWeight: FontWeight.bold,
+                ),
+                valueStyle: const TextStyle(
+                  color: goldGrey,
+                ),
               ),
-            ),
-            CustomerInfoItem(
-              title: 'Prezime:',
-              value: user.lastName ?? '',
-              titleStyle: const TextStyle(
-                color: dustyBlue,
-                fontWeight: FontWeight.bold,
+              CustomerInfoItem(
+                title: 'Prezime:',
+                value: user.lastName ?? '',
+                titleStyle: const TextStyle(
+                  color: dustyBlue,
+                  fontWeight: FontWeight.bold,
+                ),
+                valueStyle: const TextStyle(
+                  color: goldGrey,
+                ),
               ),
-              valueStyle: const TextStyle(
-                color: goldGrey,
+              CustomerInfoItem(
+                title: 'Grad:',
+                value: user.address ?? '',
+                titleStyle: const TextStyle(
+                  color: dustyBlue,
+                  fontWeight: FontWeight.bold,
+                ),
+                valueStyle: const TextStyle(
+                  color: goldGrey,
+                ),
               ),
-            ),
-            CustomerInfoItem(
-              title: 'Grad:',
-              value: user.address ?? '',
-              titleStyle: const TextStyle(
-                color: dustyBlue,
-                fontWeight: FontWeight.bold,
+              CustomerInfoItem(
+                title: 'Broj telefona:',
+                value: user.phone ?? '',
+                titleStyle: const TextStyle(
+                  color: dustyBlue,
+                  fontWeight: FontWeight.bold,
+                ),
+                valueStyle: const TextStyle(
+                  color: goldGrey,
+                ),
               ),
-              valueStyle: const TextStyle(
-                color: goldGrey,
+              const SizedBox(height: 40),
+
+              // My Orders Card
+              Card(
+                elevation: 4,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            "My Orders",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const Divider(),
+                      // Order History Content
+                      Text("Order History goes here."),
+                    ],
+                  ),
+                ),
               ),
-            ),
-            CustomerInfoItem(
-              title: 'Broj telefona:',
-              value: user.phone ?? '',
-              titleStyle: const TextStyle(
-                color: dustyBlue,
-                fontWeight: FontWeight.bold,
+              const SizedBox(height: 20),
+
+              // My Appointments Card
+              Card(
+                elevation: 4,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            "My Appointments",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
+                          ),
+                          IconButton(
+                            icon: const Icon(
+                              Icons.book,
+                              color: dustyBlue,
+                            ),
+                            onPressed: () {
+                              // Add your edit logic here
+                            },
+                          ),
+                        ],
+                      ),
+                      const Divider(),
+                      // Appointments History Content
+                      Text("Appointment History goes here."),
+                    ],
+                  ),
+                ),
               ),
-              valueStyle: const TextStyle(
-                color: goldGrey,
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
-    );
-  }
-}
-
-class CustomerInfoItem extends StatelessWidget {
-  final String title;
-  final String value;
-  final TextStyle? titleStyle;
-  final TextStyle? valueStyle;
-
-  const CustomerInfoItem({
-    super.key,
-    required this.title,
-    required this.value,
-    this.titleStyle,
-    this.valueStyle,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            title,
-            style: titleStyle ??
-                const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ),
-          Text(
-            value,
-            style: valueStyle ?? const TextStyle(fontSize: 16),
-          ),
-        ],
       ),
     );
   }

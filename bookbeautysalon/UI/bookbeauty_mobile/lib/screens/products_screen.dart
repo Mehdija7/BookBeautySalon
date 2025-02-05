@@ -55,7 +55,8 @@ class _ProductsScreenState extends State<ProductsScreen> {
             await _favoriteProductProvider.get(filter: filter);
         _allProducts = result.result.map((item) => item.product!).toList();
       } else {
-        _allProducts = await productProvider.getMobile();
+        var result = await productProvider.get();
+        _allProducts = result.result;
       }
       _filteredProducts = _allProducts;
     } catch (e) {

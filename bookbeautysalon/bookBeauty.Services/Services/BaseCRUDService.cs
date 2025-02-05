@@ -20,7 +20,9 @@ namespace bookBeauty.Services.Services
             TDbEntity entity = Mapper.Map<TDbEntity>(request!);
 
             await BeforeInsert(request, entity);
-
+            Console.WriteLine(" console from insert base crud service");
+            Console.WriteLine(request);
+            Console.WriteLine(entity);
             Context.Add(entity);
             Context.SaveChanges();
 

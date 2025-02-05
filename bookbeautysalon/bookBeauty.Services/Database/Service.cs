@@ -12,5 +12,5 @@ public partial class Service
     public float Price { get; set; }
     public int Duration { get; set; }
     public string? Image { get; set; }
-    public virtual ICollection<Appointment> Appointments { get; set; } = [];
+    public virtual ICollection<Appointment>? Appointments { get; set; } = [];
 }

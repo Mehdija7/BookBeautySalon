@@ -15,11 +15,11 @@ public partial class Order
 
     public string? OrderNumber { get; set; }
 
-    public virtual User Customer { get; set; } = null!;
+    public virtual User? Customer { get; set; } = null!;
 
     public string? Status { get; set; }
 
-    public virtual ICollection<OrderItem> OrderItems { get; set; } = [];
+    public virtual ICollection<OrderItem>? OrderItems { get; set; } = [];
 
-    public virtual ICollection<Transaction> Transactions { get; set; } = [];
+    public virtual ICollection<Transaction>? Transactions { get; set; } = [];
 }
