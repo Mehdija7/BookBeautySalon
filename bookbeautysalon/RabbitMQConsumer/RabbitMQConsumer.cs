@@ -64,7 +64,7 @@ namespace RabbitMQConsumer
                                  consumer: consumer);
         }
 
-        private static string ExtractEmailFromMessage(string message)
+        private  string ExtractEmailFromMessage(string message)
         {
             var parts = message.Split(' ');
             return parts.Length > 3 ? parts[3] : string.Empty;

@@ -130,9 +130,12 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print("----- ORDER ID ------- ");
+    print(widget.order.orderId);
     Transaction newTransaction = Transaction(
         orderId: widget.order.orderId,
         price: widget.order.totalPrice,
+        name: 'transaction',
         status: 'Created');
     final _orderItemProvider =
         Provider.of<OrderItemProvider>(context, listen: false);

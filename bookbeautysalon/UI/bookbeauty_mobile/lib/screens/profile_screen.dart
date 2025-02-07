@@ -4,7 +4,6 @@ import 'package:book_beauty/models/search_result.dart';
 import 'package:book_beauty/models/user.dart';
 import 'package:book_beauty/providers/order_item_provider.dart';
 import 'package:book_beauty/providers/product_provider.dart';
-import 'package:book_beauty/providers/recommend_result_provider.dart';
 import 'package:book_beauty/providers/user_provider.dart';
 import 'package:book_beauty/widgets/customer_info_item.dart';
 
@@ -16,78 +15,11 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  late List<Product> _allProducts = [];
   final ProductProvider productProvider = ProductProvider();
   final OrderItemProvider orderItemProvider = OrderItemProvider();
-  final RecommendResultProvider recommendResultProvider =
-      RecommendResultProvider();
-  List<Product> dataRecomm = [];
-  SearchResult<Product>? result;
-  SearchResult<Product>? resultRecomm;
-
-  Future<void> _fetchProducts() async {
-    var list = orderItemProvider.orderItems;
-    Product p = list[0].product!;
-    int id = p.productId!;
-    try {
-      if (list.isEmpty) {
-        final result = await productProvider.get();
-        var p = result.result;
-        setState(() {
-          _allProducts = p;
-        });
-      } else {
-        var recommendResult = await recommendResultProvider.get();
-        var filteredRecommendation =
-            recommendResult.result.where((x) => x.productId == id).toList();
-        if (filteredRecommendation.isNotEmpty) {
-          var matchingRecommendation = filteredRecommendation.first;
-
-          print(recommendResult);
-
-          int firstProductID = matchingRecommendation.firstproductId!;
-          int secondProductID = matchingRecommendation.secondproductId!;
-          int thirdProductID = matchingRecommendation.thirdproductId!;
-
-          var firstRecommendProduct =
-              await productProvider.getById(firstProductID);
-          var secondRecommendedProduct =
-              await productProvider.getById(secondProductID);
-          var thirdRecommendedProduct =
-              await productProvider.getById(thirdProductID);
-
-          setState(() {
-            List<Product> list = [];
-            list.addAll([
-              firstRecommendProduct,
-              secondRecommendedProduct,
-              thirdRecommendedProduct
-            ]);
-            _allProducts = list;
-            resultRecomm = SearchResult<Product>()
-              ..result = [
-                firstRecommendProduct,
-                secondRecommendedProduct,
-                thirdRecommendedProduct
-              ]
-              ..count = 3;
-          });
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text("No matching recommendations found"),
-          ));
-        }
-      }
-    } on Exception catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text("Something bad happened."),
-      ));
-    }
-  }
 
   @override
   void initState() {
-    _fetchProducts();
     super.initState();
   }
 

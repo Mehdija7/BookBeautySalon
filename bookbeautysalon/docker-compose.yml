@@ -25,7 +25,7 @@ services:
     environment:
       - ConnectionStrings:DefaultConnection=Server=${SQL_HOST}, 1433;Database=${SQL_DATABASE};User Id=${SQL_USER};Password=${SQL_PASSWORD};TrustServerCertificate=True
       - ASPNETCORE_ENVIRONMENT=Development
-      - RABBITMQ_HOST= ebookbeauty-rabbitmq
+      - RABBITMQ_HOST=ebookbeauty-rabbitmq
       - RABBITMQ_USERNAME=${RABBITMQ_USERNAME}
       - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
       - RABBITMQ_VIRTUALHOST=/
@@ -42,7 +42,7 @@ services:
   # RabbitMQ
    ebookbeauty-rabbitmq:
     image: rabbitmq:3.8-management-alpine
-    hostname:  ebookbeauty-rabbitmq
+    hostname: ebookbeauty-rabbitmq
     restart: unless-stopped
     ports:
       - 5672:5672  

@@ -57,9 +57,10 @@ class CartScreen extends StatelessWidget {
       }
       var res = await _orderProvider.update(response.orderId!, newOrder);
 
+      Order o = res;
       Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (ctx) => PaymentScreen(order: newOrder),
+          builder: (ctx) => PaymentScreen(order: o),
         ),
       );
     }

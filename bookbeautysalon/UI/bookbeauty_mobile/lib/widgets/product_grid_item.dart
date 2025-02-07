@@ -51,14 +51,13 @@ class _ProductGridItemState extends State<ProductGridItem> {
                     borderRadius: BorderRadius.circular(0),
                     child: widget.product.image != null
                         ? Image.memory(
-                            base64Decode(widget.product
-                                .image!), // Assuming it's a Uint8List if not null
+                            base64Decode(widget.product.image!),
                             width: 100,
                             height: 200,
                             fit: BoxFit.cover,
                           )
                         : Image.asset(
-                            "assets/images/logoBB.png", // Fallback asset image when image is null
+                            "assets/images/logoBB.png",
                             width: 100,
                             height: 200,
                             fit: BoxFit.cover,

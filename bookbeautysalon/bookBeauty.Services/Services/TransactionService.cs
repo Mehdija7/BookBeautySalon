@@ -42,30 +42,30 @@ namespace bookBeauty.Services.Services
 
         public override async Task BeforeInsert(TransactionInsertRequest insert, Database.Transaction db)
         {
+            Console.WriteLine(" id in the transaction");
 
-            var customer = await _context.Users.Include("Order").FirstOrDefaultAsync(x => x.UserId == db.Order.CustomerId);
+            Console.WriteLine(insert.Name);
+            Console.WriteLine(insert.OrderId);
 
+           
+            var order = await _context.Orders.FirstOrDefaultAsync(x=>x.OrderId==insert.OrderId);    
+
+
+            var customer = await _context.Users.FirstOrDefaultAsync(x => x.UserId == order.CustomerId);
+       
+            Console.WriteLine(customer.Email);
             var userEmail = customer.Email;
             if (!string.IsNullOrEmpty(userEmail))
             {
-                if (insert.Status.StartsWith('S'))
-                {
-                    var message = $"Uspješno kreirana narudžba za {userEmail}";
+              
+                    var message = $"Order created for {userEmail}";
                     var body = Encoding.UTF8.GetBytes(message);
                     _channel.BasicPublish(exchange: "",
                                           routingKey: "orderQueue",
                                           basicProperties: null,
                                           body: body);
-                }
-                else
-                {
-                    var message = $"Greška prilikom transakcije, pokušajte ponovo {userEmail}";
-                    var body = Encoding.UTF8.GetBytes(message);
-                    _channel.BasicPublish(exchange: "",
-                                          routingKey: "orderQueue",
-                                          basicProperties: null,
-                                          body: body);
-                }
+                
+     
               
             }
             await base.BeforeInsert(insert,db);

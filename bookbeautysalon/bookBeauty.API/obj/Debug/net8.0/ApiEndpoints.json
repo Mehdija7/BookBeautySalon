@@ -1800,7 +1800,7 @@
     ]
   },
   {
-    "ContainingType": "bookBeauty.API.Controllers.UserController",
+    "ContainingType": "bookBeauty.API.Controllers.BaseCRUDController\u00604[[bookBeauty.Model.Model.User, bookBeauty.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[bookBeauty.Model.SearchObjects.UserSearchObject, bookBeauty.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[bookBeauty.Model.Requests.UserInsertRequest, bookBeauty.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[bookBeauty.Model.Requests.UserUpdateRequest, bookBeauty.Model, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
     "Method": "Insert",
     "RelativePath": "User",
     "HttpMethod": "POST",

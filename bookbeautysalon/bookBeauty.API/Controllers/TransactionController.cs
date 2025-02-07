@@ -16,8 +16,7 @@ namespace bookBeauty.API.Controllers
         }
 
         [Authorize]
-        [HttpPost]
-        public override Task<Transaction> Insert(TransactionInsertRequest request)
+        public override Task<Transaction> Insert([FromBody]TransactionInsertRequest request)
         {
             return base.Insert(request);
         }

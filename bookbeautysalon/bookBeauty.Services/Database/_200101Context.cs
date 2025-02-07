@@ -267,7 +267,7 @@ public partial class _200101Context : DbContext
                 .ValueGeneratedOnAdd()
                 .HasColumnName("UserID");
             entity.Property(e => e.Address).HasMaxLength(50);
-            entity.Property(e => e.Email).HasMaxLength(50);
+            entity.Property(e => e.Email).HasMaxLength(100);
             entity.Property(e => e.FirstName).HasMaxLength(50);
             entity.Property(e => e.GenderId).HasColumnName("GenderID");
             entity.Property(e => e.LastName).HasMaxLength(50);

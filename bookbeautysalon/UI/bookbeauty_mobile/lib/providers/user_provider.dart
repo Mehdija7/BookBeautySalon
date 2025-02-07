@@ -128,7 +128,7 @@ class UserProvider extends BaseProvider<User> {
 
   Future<void> deleteUserRoles(int id) async {
     final url = Uri.parse('${BaseProvider.baseUrl}DeleteUserRoles?userId=$id');
-    print("DLETE URL");
+    print("DELETE URL");
     print(url);
     var headers = createHeaders();
     try {
@@ -147,10 +147,15 @@ class UserProvider extends BaseProvider<User> {
   }
 
   Future<User> registrate(User u) async {
+    print(u.username);
+    print(u.genderId);
+    print(u.email);
+
     try {
       String jsonBody = json.encode(u.toJson());
+      var headers = {"Content-Type": "application/json"};
       var uri = Uri.parse('${BaseProvider.baseUrl}User/UserRegistration');
-      var response = await http.post(uri, body: jsonBody);
+      var response = await http.post(uri, headers: headers, body: jsonBody);
 
       print(response.statusCode);
       if (response.statusCode == 200) {
