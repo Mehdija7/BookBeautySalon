@@ -17,7 +17,6 @@ namespace bookBeauty.API.Controllers
 
     
         [Authorize]
-        [HttpPost]
         public override Task<Model.Model.FavoriteProduct> Insert(FavoritesUpsertRequest request)
         {
             return base.Insert(request);

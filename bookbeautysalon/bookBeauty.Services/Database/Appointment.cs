@@ -7,9 +7,9 @@ public partial class Appointment
 {
     public int AppointmentId { get; set; }
 
-    public DateTime? DateTime { get; set; }
+    public DateTime DateTime { get; set; }
 
-    public int? UserId { get; set; }
+    public int UserId { get; set; }
 
     public int HairdresserId { get; set; } 
 

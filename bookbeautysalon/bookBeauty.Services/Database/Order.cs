@@ -13,11 +13,11 @@ public partial class Order
 
     public int CustomerId { get; set; }
 
-    public string? OrderNumber { get; set; }
+    public required string OrderNumber { get; set; }
 
     public virtual User? Customer { get; set; } = null!;
 
-    public string? Status { get; set; }
+    public required string Status { get; set; }
 
     public virtual ICollection<OrderItem>? OrderItems { get; set; } = [];
 

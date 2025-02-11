@@ -11,6 +11,6 @@ namespace bookBeauty.Model.Requests
         public float Price { get; set; }
         public string? ShortDescription { get; set; }
         public string? LongDescription { get; set; }
-        public string? Image { get; set; }
+        public byte[]? Image { get; set; }
     }
 }

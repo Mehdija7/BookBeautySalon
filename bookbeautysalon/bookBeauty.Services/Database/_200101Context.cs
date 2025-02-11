@@ -21,13 +21,12 @@ public partial class _200101Context : DbContext
 
     public virtual DbSet<FavoriteProduct> FavoriteProducts { get; set; }
 
-    public virtual DbSet<Gender> Genders { get; set; }
-
     public virtual DbSet<Order> Orders { get; set; }
 
     public virtual DbSet<OrderItem> OrderItems { get; set; }
 
     public virtual DbSet<Product> Products { get; set; }
+
     public virtual DbSet<Review> Reviews { get; set; }
 
     public virtual DbSet<Role> Roles { get; set; }
@@ -42,7 +41,8 @@ public partial class _200101Context : DbContext
 
     public virtual DbSet<News>News { get; set; }
 
-  
+    public virtual DbSet<CommentProduct> CommentProduct { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Appointment>(entity =>
@@ -105,6 +105,29 @@ public partial class _200101Context : DbContext
 
         });
 
+        modelBuilder.Entity<CommentProduct>(entity =>
+        {
+            entity.HasKey(e => e.CommentProductId);
+
+            entity.Property(e => e.CommentProductId)
+                 .ValueGeneratedOnAdd()
+                .HasColumnName("CommentProductID");
+            entity.Property(e => e.CommentDate).HasColumnType("datetime");
+            entity.Property(e => e.ProductId).HasColumnName("ProductID");
+
+            entity.Property(e => e.UserId).HasColumnName("UserID");
+
+            entity.HasOne(d => d.Product).WithMany(p => p.CommentProducts)
+                .HasForeignKey(d => d.ProductId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_CommentProducts_Product");
+
+            entity.HasOne(d => d.User).WithMany(p => p.CommentProducts)
+                .HasForeignKey(d => d.UserId)
+                .HasConstraintName("FK_CommentProducts_User");
+        });
+
+
         modelBuilder.Entity<FavoriteProduct>(entity =>
         {
             entity.HasKey(e => e.FavoriteProductsId);
@@ -128,14 +151,7 @@ public partial class _200101Context : DbContext
                 .HasConstraintName("FK_FavoriteProducts_User");
         });
 
-        modelBuilder.Entity<Gender>(entity =>
-        {
-            entity.ToTable("Gender");   
-            entity.Property(e => e.GenderId)
-                .HasColumnName("GenderID")
-                .ValueGeneratedOnAdd();
-            entity.Property(e => e.Name).HasMaxLength(50);
-        });
+      
 
        
 
@@ -175,6 +191,7 @@ public partial class _200101Context : DbContext
             entity.HasOne(d => d.Product).WithMany(p => p.OrderItems)
                 .HasForeignKey(d => d.ProductId)
                 .HasConstraintName("FK_OrderItem_Product");
+            entity.Property(e => e.Quantity);
         });
 
         modelBuilder.Entity<Product>(entity =>
@@ -191,7 +208,7 @@ public partial class _200101Context : DbContext
             entity.Property(e => e.Name).HasMaxLength(50);
             entity.Property(e => e.Price).HasColumnType("real");
             entity.Property(e => e.StateMachine).HasMaxLength(50);
-
+            entity.Property(e => e.Image).HasColumnName("image");
             entity.HasOne(d => d.Category).WithMany(p => p.Products)
                 .HasForeignKey(d => d.CategoryId)
                 .HasConstraintName("FK_Product_Category");
@@ -241,6 +258,9 @@ public partial class _200101Context : DbContext
             entity.Property(e => e.LongDescription);
             entity.Property(e => e.Name).HasMaxLength(50);
             entity.Property(e => e.ShortDescription);
+            entity.Property(e => e.Image).HasColumnType("image");
+            entity.Property(e => e.Duration);
+            entity.Property(e => e.Price).HasColumnType("real");
         });
 
         modelBuilder.Entity<Transaction>(entity =>
@@ -269,16 +289,13 @@ public partial class _200101Context : DbContext
             entity.Property(e => e.Address).HasMaxLength(50);
             entity.Property(e => e.Email).HasMaxLength(100);
             entity.Property(e => e.FirstName).HasMaxLength(50);
-            entity.Property(e => e.GenderId).HasColumnName("GenderID");
             entity.Property(e => e.LastName).HasMaxLength(50);
             entity.Property(e => e.PasswordHash).HasMaxLength(50);
             entity.Property(e => e.PasswordSalt).HasMaxLength(50);
             entity.Property(e => e.Phone).HasMaxLength(50);
             entity.Property(e => e.Username).HasMaxLength(50);
-
-            entity.HasOne(d => d.Gender).WithMany(p => p.Users)
-                .HasForeignKey(d => d.GenderId)
-                .HasConstraintName("FK_User_Gender");
+            entity.Property(e => e.UserImage).HasColumnType("image");
+           
         });
 
         modelBuilder.Entity<UserRole>(entity =>

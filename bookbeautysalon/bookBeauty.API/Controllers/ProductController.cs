@@ -36,6 +36,15 @@ namespace bookBeauty.API.Controllers
         }
 
         [Authorize(Roles = "Admin,Frizer")]
+        [HttpPut("{id}/edit")]
+        public virtual async Task<Product> Edit(int id)
+        {
+            return await (_service as IProductService).Edit(id);
+        }
+
+
+
+        [Authorize(Roles = "Admin,Frizer")]
         [HttpGet("{id}/allowedActions")]
         public virtual async Task<List<string>> AllowedActions(int id)
         {
@@ -48,6 +57,12 @@ namespace bookBeauty.API.Controllers
         public List<Product> Recommend(int id)
         {
             return (_service as IProductService).Recommended(id);
+        }
+
+        [Authorize]
+        public override Task<Product> Update(int id,[FromBody]ProductUpdateRequest request)
+        {
+            return  _service.Update(id, request);
         }
     }
 }

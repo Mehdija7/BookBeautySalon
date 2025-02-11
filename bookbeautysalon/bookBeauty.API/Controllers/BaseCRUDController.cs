@@ -21,13 +21,13 @@ namespace bookBeauty.API.Controllers
         }
 
         [Authorize]
-        [HttpPost]
+        [HttpPost()]
         public virtual async Task<TModel> Insert(TInsert request)
         {
             return await _service.Insert(request);
         }
 
-       [Authorize]
+        [Authorize]
         [HttpPut("{id}")]
         public virtual async Task<TModel> Update(int id, TUpdate request)
         {

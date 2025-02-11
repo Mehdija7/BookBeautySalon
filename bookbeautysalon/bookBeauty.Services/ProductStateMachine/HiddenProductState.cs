@@ -28,6 +28,7 @@ namespace bookBeauty.Services.ProductStateMachine
            
         }
 
+
         public override  async Task<List<string>> AllowedActions(Database.Product entity)
         {
             return [nameof(Edit)];

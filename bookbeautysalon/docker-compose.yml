@@ -85,6 +85,8 @@ services:
       - FromEmail=${FROM_EMAIL}
       - SmtpPass=${SMTP_PASSWORD}
       - SmtpUser=${SMTP_USERNAME}
+      - SmtpServer=${SMTP_SERVER}
+      - SmtpPort=${SMTP_PORT}
     depends_on:
        ebookbeauty-rabbitmq:
         condition: service_healthy

@@ -10,10 +10,10 @@ namespace bookBeauty.Model.Requests
     {
         public int OrderId { get; set; }
 
-        public float? Price { get; set; }
+        public float Price { get; set; }
 
-        public string? Status { get; set; }
+        public string Status { get; set; } = null!;
 
-        public string? Name { get; set; }
+        public string Name { get; set; } = null!;
     }
 }

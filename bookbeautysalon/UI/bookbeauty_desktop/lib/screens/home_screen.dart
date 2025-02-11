@@ -2,8 +2,8 @@ import 'package:bookbeauty_desktop/models/order.dart';
 import 'package:bookbeauty_desktop/screens/appointment_screen.dart';
 import 'package:bookbeauty_desktop/screens/categories_screen.dart';
 import 'package:bookbeauty_desktop/screens/hairdresser_screen.dart';
+import 'package:bookbeauty_desktop/screens/news_screen.dart';
 import 'package:bookbeauty_desktop/screens/orders_screen.dart';
-import 'package:bookbeauty_desktop/screens/proba.dart';
 import 'package:bookbeauty_desktop/screens/products_screen.dart';
 import 'package:bookbeauty_desktop/screens/reports_screen.dart';
 import 'package:bookbeauty_desktop/screens/services_screen.dart';
@@ -39,6 +39,7 @@ class _HomeScreen extends State<HomeScreen> {
     const ProductsScreen(),
     const ServicesScreen(),
     const CategoriesScreen(),
+    const NewsScreen(),
     const HairdresserScreen(),
   ];
 

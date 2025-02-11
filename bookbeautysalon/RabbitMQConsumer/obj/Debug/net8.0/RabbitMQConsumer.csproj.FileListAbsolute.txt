@@ -68,7 +68,6 @@ C:\Users\elmin\Desktop\BookBeautySalon\bookbeautysalon\RabbitMQConsumer\bin\Debu
 C:\Users\elmin\Desktop\BookBeautySalon\bookbeautysalon\RabbitMQConsumer\bin\Debug\net8.0\System.CodeDom.dll
 C:\Users\elmin\Desktop\BookBeautySalon\bookbeautysalon\RabbitMQConsumer\bin\Debug\net8.0\System.Configuration.ConfigurationManager.dll
 C:\Users\elmin\Desktop\BookBeautySalon\bookbeautysalon\RabbitMQConsumer\bin\Debug\net8.0\System.Drawing.Common.dll
-C:\Users\elmin\Desktop\BookBeautySalon\bookbeautysalon\RabbitMQConsumer\bin\Debug\net8.0\System.Formats.Asn1.dll
 C:\Users\elmin\Desktop\BookBeautySalon\bookbeautysalon\RabbitMQConsumer\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
 C:\Users\elmin\Desktop\BookBeautySalon\bookbeautysalon\RabbitMQConsumer\bin\Debug\net8.0\System.IO.Pipelines.dll
 C:\Users\elmin\Desktop\BookBeautySalon\bookbeautysalon\RabbitMQConsumer\bin\Debug\net8.0\System.Linq.Dynamic.Core.dll

@@ -10,12 +10,13 @@ class ProductGridItem extends StatelessWidget {
       {super.key,
       required this.product,
       required this.activeProduct,
-      required this.hideProduct});
+      required this.hideProduct,
+      required this.editProduct});
 
   final Product product;
   final void Function(Product product) activeProduct;
   final void Function(Product product) hideProduct;
-
+  final void Function(Product product) editProduct;
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -40,12 +41,6 @@ class ProductGridItem extends StatelessWidget {
                 color: Colors.white,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(0),
-                  /* child: Image.asset(
-                    "assets/images/logoBB.png",
-                    width: 100,
-                    height: 200,
-                    fit: BoxFit.cover,
-                  ),*/
                   child: product.image != null
                       ? Image.memory(
                           base64Decode(product
@@ -68,10 +63,10 @@ class ProductGridItem extends StatelessWidget {
                 right: 0,
                 child: Center(
                   child: ProductText(
-                    product: product,
-                    activeProduct: activeProduct,
-                    hideProduct: hideProduct,
-                  ),
+                      product: product,
+                      activeProduct: activeProduct,
+                      hideProduct: hideProduct,
+                      editProduct: editProduct),
                 ),
               ),
             ],

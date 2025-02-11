@@ -17,7 +17,6 @@ namespace bookBeauty.API.Controllers
         {
         }
 
-
         [HttpPost("Authenticate")]
         [AllowAnonymous]
         public async Task<User> Login([FromBody] LoginInsertRequest req)
@@ -72,6 +71,12 @@ namespace bookBeauty.API.Controllers
         public Model.Model.User UserRegistration([FromBody]UserInsertRequest request)
         {
             return ((IUserService)_service).UserRegistration(request);
+        }
+
+        [Authorize]
+        public override Task<Model.Model.User> Update(int id, [FromBody] UserUpdateRequest update)
+        {
+            return base.Update(id, update);
         }
     }
 }

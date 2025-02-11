@@ -117,6 +117,7 @@ class _ProductTextState extends State<ProductText> {
                   children: [
                     Text(
                       widget.product.name!,
+                      overflow: TextOverflow.ellipsis,
                       style: const TextStyle(fontSize: 16, color: Colors.black),
                     ),
                   ],

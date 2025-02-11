@@ -9,19 +9,42 @@ namespace bookBeauty.Model.Requests
 {
     public  class UserInsertRequest
     {
-        public string? FirstName { get; set; }
-        public string?  LastName{ get; set; }
-        public string? Email { get; set; }
-        public string? Phone { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "This field can not be empty.")]
+        [MinLength(2, ErrorMessage = "The user name can't be less than 2 characters.")]
+        [MaxLength(50, ErrorMessage = "The user name can't be more than 50 characters.")]
+        public string FirstName { get; set; } = null!;
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "This field can not be empty.")]
+        [MinLength(2, ErrorMessage = "The user lastname can't be less than 2 characters.")]
+        [MaxLength(50, ErrorMessage = "The user lastname can't be more than 50 characters.")]
+        public string LastName { get; set; } = null!;
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "This field can not be empty.")]
+        [EmailAddress(ErrorMessage = "The email needs to be in a valid format")]
+        public string Email { get; set; } = null!;
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "This field can not be empty.")]
+        [Phone(ErrorMessage = "The phone needs to be in a valid format")]
+        public string Phone { get; set; } = null!;
         public string? Address { get; set; }
-        public int? GenderId { get; set; }
-        public string? Username { get; set; }
 
+        [Required]
+        public int GenderId { get; set; }
+
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "This field can not be empty.")]
+        [MinLength(2, ErrorMessage = "The username can't be less than 2 characters.")]
+        [MaxLength(50, ErrorMessage = "The username can't be more than 50 characters.")]
+        public string Username { get; set; } = null!;
+        public byte[]? UserImage { get; set; }
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "This field can not be empty.")]
         [Compare ("PasswordConfirmed", ErrorMessage = "Lozinke se ne podudaraju")]
-        public string? Password { get; set; }
+        public string Password { get; set; } = null!;
 
+        [Required(AllowEmptyStrings = false, ErrorMessage = "This field can not be empty.")]
         [Compare("Password", ErrorMessage = "Lozinke se ne podudaraju")]
-        public string? PasswordConfirmed { get; set; }
+        public string? PasswordConfirmed { get; set; } = null!;
     }
 
 }

@@ -1,6 +1,8 @@
-﻿using bookBeauty.Model.Requests;
+﻿using Azure.Core;
+using bookBeauty.Model.Requests;
 using bookBeauty.Model.SearchObjects;
 using bookBeauty.Services.Database;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace bookBeauty.API.Controllers
@@ -13,5 +15,17 @@ namespace bookBeauty.API.Controllers
         {
         }
 
+        [Authorize(Roles = "Admin,Frizer")]
+        public override Task<Model.Model.News> Insert([FromBody] NewsUpsertRequest request)
+        {
+
+            return base.Insert(request);
+        }
+
+        [Authorize(Roles = "Admin,Frizer")]
+        public override Task<IActionResult> Delete(int id)
+        {
+            return base.Delete(id);
+        }
     }
 }

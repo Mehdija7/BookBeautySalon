@@ -96,13 +96,18 @@ abstract class BaseProvider<T> with ChangeNotifier {
   }
 
   Future<T> insert(dynamic request) async {
+    print("}}}}}}}}}}} REQUEST {{[[]]}}");
+    print(request);
     var url = "$baseUrl$_endpoint";
     var uri = Uri.parse(url);
     var headers = createHeaders();
-
+    print("}}}}}}}}}}} URI {{[[]]}}");
+    print(uri);
     var jsonRequest = jsonEncode(request);
     var response = await http.post(uri, headers: headers, body: jsonRequest);
-
+    print("}}}}}}}}}}} RESPONSE {{[[]]}}");
+    print(response.statusCode);
+    print(jsonDecode(response.body));
     if (isValidResponse(response)) {
       var data = jsonDecode(response.body);
       return fromJson(data);
@@ -120,14 +125,27 @@ abstract class BaseProvider<T> with ChangeNotifier {
     var uri = Uri.parse(url);
     var headers = createHeaders();
 
+    // Log the URI to ensure it's correct
+    print("|||||||||||||| URI |||||||||||||||||");
+    print(uri);
+
+    // Log the request body to check its content
+    print("|||||||||||||| Request Body |||||||||||||||||");
+    print(jsonEncode(request));
+
     var jsonRequest = jsonEncode(request);
     var response = await http.put(uri, headers: headers, body: jsonRequest);
+
+    // Log status code and response body
+    print("STATUS CODE: ${response.statusCode}");
+    print("Response Body: ${response.body}");
 
     if (isValidResponse(response)) {
       var data = jsonDecode(response.body);
       return fromJson(data);
     } else {
-      throw new Exception("Unknown error");
+      // Handle 400 or other errors gracefully
+      throw Exception("Error: ${response.statusCode}, ${response.body}");
     }
   }
 

@@ -11,9 +11,9 @@ public partial class Transaction
 
     public float Price { get; set; }
 
-    public string? Status { get; set; }
+    public required string Status { get; set; }
 
-    public string? Name { get; set; }
+    public required string Name { get; set; }
 
     public virtual Order? Order { get; set; }
 }

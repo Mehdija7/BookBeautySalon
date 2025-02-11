@@ -112,34 +112,36 @@ class _AppointmentScreen extends State<AppointmentScreen> {
               },
               startingDayOfWeek: StartingDayOfWeek.monday,
               daysOfWeekVisible: true,
-
               onDaySelected: (DateTime selectDay, DateTime focusDay) {
                 setState(() {
-                  selectedDay = DateTime(
-                      selectDay.year, selectedDay.month, selectDay.day);
-                  focusedDay = DateTime(
-                      focusedDay.year, focusedDay.month, focusedDay.day);
+                  selectedDay = selectDay;
+                  focusedDay = focusDay;
                 });
-                print("Selected Day: $selectedDay");
                 _filterAppointments();
               },
               selectedDayPredicate: (DateTime date) {
                 return isSameDay(selectedDay, date);
               },
-
               eventLoader: _getEventsfromDay,
-
-              // To style the Calendar
               calendarStyle: CalendarStyle(
                 isTodayHighlighted: true,
                 selectedDecoration: BoxDecoration(
-                  color: Colors.blueGrey,
-                  shape: BoxShape.circle,
+                  color: Colors.blueGrey, // Circle for selected day
+                  shape: BoxShape.circle, // Ensure circle shape
                 ),
                 selectedTextStyle: TextStyle(color: Colors.white),
                 todayDecoration: BoxDecoration(
                   color: const Color.fromARGB(255, 105, 108, 110),
-                  shape: BoxShape.circle,
+                  shape: BoxShape.circle, // Ensure circle shape for today
+                ),
+                defaultDecoration: BoxDecoration(
+                  shape: BoxShape.circle, // Circle shape for all days
+                  color: const Color.fromARGB(
+                      255, 179, 209, 216), // Make sure it's not filled
+                ),
+                weekendDecoration: BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  borderRadius: BorderRadius.circular(5.0),
                 ),
               ),
               headerStyle: HeaderStyle(
@@ -157,26 +159,27 @@ class _AppointmentScreen extends State<AppointmentScreen> {
             ),
             ..._getEventsfromDay(selectedDay).map(
               (Event event) => ListTile(
-                  title: Card(
-                color: const Color.fromARGB(255, 235, 235, 235),
-                elevation: 3,
-                margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                child: Padding(
-                  padding: EdgeInsets.all(15),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        event.title,
-                        style: TextStyle(
-                          color: const Color.fromARGB(255, 44, 43, 43),
-                          fontSize: 18,
+                title: Card(
+                  color: const Color.fromARGB(255, 235, 235, 235),
+                  elevation: 3,
+                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                  child: Padding(
+                    padding: EdgeInsets.all(15),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          event.title,
+                          style: TextStyle(
+                            color: const Color.fromARGB(255, 44, 43, 43),
+                            fontSize: 18,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              )),
+              ),
             ),
           ],
         ),

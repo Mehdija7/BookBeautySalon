@@ -36,9 +36,8 @@ builder.Services.AddTransient<IFavoritesService, FavoritesService>();
 builder.Services.AddTransient<ITransactionService, TransactionService>();
 builder.Services.AddTransient<IServiceService, ServiceService>();
 builder.Services.AddTransient<IAppointmentService, AppointmentService>();
-builder.Services.AddTransient<IGenderService, GenderService>();
 builder.Services.AddTransient<INewsService, NewsService>();
-
+builder.Services.AddTransient<ICommentProductService, CommentProductService>();
 
 builder.Services.AddTransient<BaseProductState>();
 builder.Services.AddTransient<InitialProductState>();
@@ -138,11 +137,7 @@ using (var scope = app.Services.CreateScope())
         );
         dataContext.SaveChanges();
 
-        dataContext.Genders.AddRange(
-          new Gender { Name = "Ženski" },
-          new Gender {  Name = "Muški" }
-      );
-        dataContext.SaveChanges();
+      
 
 
         dataContext.Products.AddRange(new Product
@@ -306,7 +301,7 @@ using (var scope = app.Services.CreateScope())
         dataContext.Users.AddRange(
             new User
             {
-                GenderId =1,
+             
                 FirstName = "Admin",
                 LastName = "Admin",
                 Username = "admin",
@@ -317,7 +312,7 @@ using (var scope = app.Services.CreateScope())
                 Address = "ADMIN"
             },
                new User
-               {   GenderId = 2,
+               {   
                    FirstName = "Frizer",
                    LastName = "Frizer",
                    Username = "frizer",
@@ -329,7 +324,7 @@ using (var scope = app.Services.CreateScope())
                },
                  new User
                  {
-                     GenderId = 1,
+                    
                      FirstName = "Lejla",
                      LastName = "Kovacevic",
                      Username = "lejlakovacevic",
@@ -340,7 +335,7 @@ using (var scope = app.Services.CreateScope())
                      Address = "Zelenih beretki, Sarajevo"
                  },
         new User
-        {   GenderId = 1,
+        {  
             FirstName = "Meliha",
             LastName = "Kazic",
             Username = "melihakazic",
@@ -351,7 +346,7 @@ using (var scope = app.Services.CreateScope())
             Address = "Branilaca, Sarajevo"
         },
         new User
-        {   GenderId = 1,
+        { 
             FirstName = "Selma",
             LastName = "Mehmedovic",
             Username = "selmamehmedovic",
@@ -364,7 +359,7 @@ using (var scope = app.Services.CreateScope())
         },
       
         new User
-        {   GenderId = 2,
+        {   
             FirstName = "Korisnik",
             LastName = "Korisnik",
             Username = "korisnik",
@@ -376,7 +371,7 @@ using (var scope = app.Services.CreateScope())
         },   
         new User
         {
-            GenderId = 1,
+          
             FirstName = "Zehra",
             LastName = "Sekic",
             Username = "zehrasekic",
@@ -387,7 +382,7 @@ using (var scope = app.Services.CreateScope())
             Address = "Kijevo, Sanski Most"
         },
          new User
-         {   GenderId = 1,
+         { 
              FirstName = "Adna",
              LastName = "Burnic",
              Username = "adnaburnic",
@@ -444,6 +439,71 @@ using (var scope = app.Services.CreateScope())
 
     );
         dataContext.SaveChanges();
+
+
+
+        dataContext.CommentProduct.AddRange(
+            new CommentProduct
+            {
+                CommentDate = DateTime.Now,
+                CommentText = "Super proizvod",
+                UserId = 6,
+                ProductId =2
+            },
+            new CommentProduct
+            {
+                CommentDate = DateTime.Now,
+                CommentText = "Kosa mirise lijepo",
+                UserId = 6,
+                ProductId = 4
+            },
+            new CommentProduct
+            {
+                CommentDate = DateTime.Now,
+                CommentText = "Super proizvod",
+                UserId = 6,
+                ProductId = 1
+            },
+            new CommentProduct
+            {
+                CommentDate = DateTime.Now,
+                CommentText = "Super proizvod",
+                UserId = 6,
+                ProductId = 5
+            },
+            new CommentProduct
+            {
+                CommentDate = DateTime.Now,
+                CommentText = "Super proizvod",
+                UserId = 6,
+                ProductId = 3
+            }
+            );
+
+        dataContext.SaveChanges();
+
+
+        
+        dataContext.News.AddRange(
+        new News
+         {
+        Title = "Vitamini za zdravu kosu",
+        Text = "Vitamini su kljuèni za zdravlje kose. Neke od najvažnijih vrsta ukljuèuju biotin, vitamin E, vitamin A i vitamin D. Ovi vitamini pomažu u jaèanju kose, sprjeèavanju opadanja i poboljšanju njenog zdravlja.",
+        HairdresserId = 2,
+        DateTime = DateTime.Now
+        },
+         new News
+         {
+        Title = "Popularne frizure ovog mjeseca",
+        Text = "Ovaj mjesec su popularne kratke frizure i valovite šiške. Ako želite nešto modernije, bob frizura s volumenom na vrhu je hit. Takoðe, prirodne teksture kose su u trendu.",
+        HairdresserId = 3,
+        DateTime = new DateTime(year: 2025, month: 2, day: 8, hour: 10, minute: 0, second: 0)
+         }
+         );
+
+
+        dataContext.SaveChanges();
+
 
 
         dataContext.Appointments.AddRange(

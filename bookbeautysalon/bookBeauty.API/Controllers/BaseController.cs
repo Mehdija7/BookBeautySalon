@@ -22,8 +22,8 @@ namespace bookBeauty.API.Controllers
         }
 
         [Authorize]
-        [HttpGet]
-        public async Task<PagedResult<TModel>> GetList([FromQuery] TSearch searchObject)
+        [HttpGet()]
+        public async Task<PagedResult<TModel>> GetList([FromQuery] TSearch? searchObject)
         {
             return await _service.GetPaged(searchObject);
         }

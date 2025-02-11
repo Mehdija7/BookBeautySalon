@@ -10,9 +10,9 @@ namespace bookBeauty.Model.Requests
     public class OrderUpdateRequest
     {
         
-        public float? TotalPrice { get; set; }
+        public float TotalPrice { get; set; }
         public List<OrderItem>? OrderItems { get; set; }
-        public string? Status { get; set; }
+        public string Status { get; set; } = null!;
         public DateTime? DateTime { get; set; }
 
     }

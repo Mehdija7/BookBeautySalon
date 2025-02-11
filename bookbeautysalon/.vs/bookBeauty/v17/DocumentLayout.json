@@ -3,12 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\elmin\\Desktop\\BookBeautySalon\\bookbeautysalon\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{3F2D30FC-57B9-4D06-AAD7-765790F8D3A4}|RabbitMQConsumer\\RabbitMQConsumer.csproj|c:\\users\\elmin\\desktop\\bookbeautysalon\\bookbeautysalon\\rabbitmqconsumer\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3F2D30FC-57B9-4D06-AAD7-765790F8D3A4}|RabbitMQConsumer\\RabbitMQConsumer.csproj|solutionrelative:rabbitmqconsumer\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{950FA877-044B-466D-9D60-769963CD44C7}|bookBeauty.API\\bookBeauty.API.csproj|c:\\users\\elmin\\desktop\\bookbeautysalon\\bookbeautysalon\\bookbeauty.api\\controllers\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{950FA877-044B-466D-9D60-769963CD44C7}|bookBeauty.API\\bookBeauty.API.csproj|solutionrelative:bookbeauty.api\\controllers\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3F2D30FC-57B9-4D06-AAD7-765790F8D3A4}|RabbitMQConsumer\\RabbitMQConsumer.csproj|c:\\users\\elmin\\desktop\\bookbeautysalon\\bookbeautysalon\\rabbitmqconsumer\\emailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3F2D30FC-57B9-4D06-AAD7-765790F8D3A4}|RabbitMQConsumer\\RabbitMQConsumer.csproj|solutionrelative:rabbitmqconsumer\\emailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{950FA877-044B-466D-9D60-769963CD44C7}|bookBeauty.API\\bookBeauty.API.csproj|c:\\users\\elmin\\desktop\\bookbeautysalon\\bookbeautysalon\\bookbeauty.api\\controllers\\commentproductcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{950FA877-044B-466D-9D60-769963CD44C7}|bookBeauty.API\\bookBeauty.API.csproj|solutionrelative:bookbeauty.api\\controllers\\commentproductcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{950FA877-044B-466D-9D60-769963CD44C7}|bookBeauty.API\\bookBeauty.API.csproj|c:\\users\\elmin\\desktop\\bookbeautysalon\\bookbeautysalon\\bookbeauty.api\\controllers\\newscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{950FA877-044B-466D-9D60-769963CD44C7}|bookBeauty.API\\bookBeauty.API.csproj|solutionrelative:bookbeauty.api\\controllers\\newscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{950FA877-044B-466D-9D60-769963CD44C7}|bookBeauty.API\\bookBeauty.API.csproj|c:\\users\\elmin\\desktop\\bookbeautysalon\\bookbeautysalon\\bookbeauty.api\\controllers\\categorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{950FA877-044B-466D-9D60-769963CD44C7}|bookBeauty.API\\bookBeauty.API.csproj|solutionrelative:bookbeauty.api\\controllers\\categorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0A7BCC01-90A2-4A33-A229-4B283BB7D0D8}|bookBeauty.Model\\bookBeauty.Model.csproj|c:\\users\\elmin\\desktop\\bookbeautysalon\\bookbeautysalon\\bookbeauty.model\\model\\commentproduct.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0A7BCC01-90A2-4A33-A229-4B283BB7D0D8}|bookBeauty.Model\\bookBeauty.Model.csproj|solutionrelative:bookbeauty.model\\model\\commentproduct.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -23,28 +35,64 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\elmin\\Desktop\\BookBeautySalon\\bookbeautysalon\\RabbitMQConsumer\\Program.cs",
-              "RelativeDocumentMoniker": "RabbitMQConsumer\\Program.cs",
-              "ToolTip": "C:\\Users\\elmin\\Desktop\\BookBeautySalon\\bookbeautysalon\\RabbitMQConsumer\\Program.cs",
-              "RelativeToolTip": "RabbitMQConsumer\\Program.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Title": "ProductController.cs",
+              "DocumentMoniker": "C:\\Users\\elmin\\Desktop\\BookBeautySalon\\bookbeautysalon\\bookBeauty.API\\Controllers\\ProductController.cs",
+              "RelativeDocumentMoniker": "bookBeauty.API\\Controllers\\ProductController.cs",
+              "ToolTip": "C:\\Users\\elmin\\Desktop\\BookBeautySalon\\bookbeautysalon\\bookBeauty.API\\Controllers\\ProductController.cs",
+              "RelativeToolTip": "bookBeauty.API\\Controllers\\ProductController.cs",
+              "ViewState": "AQIAACAAAAAAAAAAAAAwwAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-07T15:31:55.17Z",
+              "WhenOpened": "2025-02-10T22:37:33.275Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "EmailService.cs",
-              "DocumentMoniker": "C:\\Users\\elmin\\Desktop\\BookBeautySalon\\bookbeautysalon\\RabbitMQConsumer\\EmailService.cs",
-              "RelativeDocumentMoniker": "RabbitMQConsumer\\EmailService.cs",
-              "ToolTip": "C:\\Users\\elmin\\Desktop\\BookBeautySalon\\bookbeautysalon\\RabbitMQConsumer\\EmailService.cs",
-              "RelativeToolTip": "RabbitMQConsumer\\EmailService.cs",
-              "ViewState": "AQIAADYAAAAAAAAAAAAowAAAAAAAAAAA",
+              "Title": "CommentProductController.cs",
+              "DocumentMoniker": "C:\\Users\\elmin\\Desktop\\BookBeautySalon\\bookbeautysalon\\bookBeauty.API\\Controllers\\CommentProductController.cs",
+              "RelativeDocumentMoniker": "bookBeauty.API\\Controllers\\CommentProductController.cs",
+              "ToolTip": "C:\\Users\\elmin\\Desktop\\BookBeautySalon\\bookbeautysalon\\bookBeauty.API\\Controllers\\CommentProductController.cs",
+              "RelativeToolTip": "bookBeauty.API\\Controllers\\CommentProductController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABgAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-07T15:31:47.083Z",
+              "WhenOpened": "2025-02-09T21:09:52.071Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "NewsController.cs",
+              "DocumentMoniker": "C:\\Users\\elmin\\Desktop\\BookBeautySalon\\bookbeautysalon\\bookBeauty.API\\Controllers\\NewsController.cs",
+              "RelativeDocumentMoniker": "bookBeauty.API\\Controllers\\NewsController.cs",
+              "ToolTip": "C:\\Users\\elmin\\Desktop\\BookBeautySalon\\bookbeautysalon\\bookBeauty.API\\Controllers\\NewsController.cs",
+              "RelativeToolTip": "bookBeauty.API\\Controllers\\NewsController.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-09T21:09:36.829Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "CategoryController.cs",
+              "DocumentMoniker": "C:\\Users\\elmin\\Desktop\\BookBeautySalon\\bookbeautysalon\\bookBeauty.API\\Controllers\\CategoryController.cs",
+              "RelativeDocumentMoniker": "bookBeauty.API\\Controllers\\CategoryController.cs",
+              "ToolTip": "C:\\Users\\elmin\\Desktop\\BookBeautySalon\\bookbeautysalon\\bookBeauty.API\\Controllers\\CategoryController.cs",
+              "RelativeToolTip": "bookBeauty.API\\Controllers\\CategoryController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-09T21:09:23.093Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "CommentProduct.cs",
+              "DocumentMoniker": "C:\\Users\\elmin\\Desktop\\BookBeautySalon\\bookbeautysalon\\bookBeauty.Model\\Model\\CommentProduct.cs",
+              "RelativeDocumentMoniker": "bookBeauty.Model\\Model\\CommentProduct.cs",
+              "ToolTip": "C:\\Users\\elmin\\Desktop\\BookBeautySalon\\bookbeautysalon\\bookBeauty.Model\\Model\\CommentProduct.cs",
+              "RelativeToolTip": "bookBeauty.Model\\Model\\CommentProduct.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAABgAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-09T00:22:22.763Z"
             }
           ]
         }

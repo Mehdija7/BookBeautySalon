@@ -8,6 +8,6 @@ namespace bookBeauty.Model.Requests
 {
     public class CategoryUpsertRequest
     {
-        public string? Name { get; set; }
+        public string Name { get; set; } = null!;
     }
 }

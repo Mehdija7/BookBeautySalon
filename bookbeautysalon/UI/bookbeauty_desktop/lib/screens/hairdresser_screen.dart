@@ -37,13 +37,47 @@ class _HairdresserScreenState extends State<HairdresserScreen> {
   }
 
   void _deleteUser(int id) async {
+    setState(
+      () {
+        isLoading = true;
+      },
+    );
     try {
       await provider.deleteUserRoles(id);
       await provider.delete(id);
-      _fetchUsers();
     } catch (e) {
       print(e);
     }
+    _fetchUsers();
+  }
+
+  // Dialog function to confirm deletion
+  void _showDeleteDialog(int userId, String firstName) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Potvrda brisanja'),
+        content:
+            Text('Jeste li sigurni da želite obrisati frizera: $firstName?'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              // Dismiss dialog if user presses 'Ne'
+              Navigator.of(ctx).pop();
+            },
+            child: const Text('Ne'),
+          ),
+          TextButton(
+            onPressed: () {
+              // Call delete function if user presses 'Da'
+              _deleteUser(userId);
+              Navigator.of(ctx).pop();
+            },
+            child: const Text('Da'),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -82,8 +116,9 @@ class _HairdresserScreenState extends State<HairdresserScreen> {
                           DataCell(IconButton(
                             icon: const Icon(Icons.delete),
                             onPressed: () {
-                              _deleteUser(hairdresser.userId!);
-                              print('Delete ${hairdresser.firstName}');
+                              // Show delete confirmation dialog
+                              _showDeleteDialog(
+                                  hairdresser.userId!, hairdresser.firstName!);
                             },
                           )),
                         ]);

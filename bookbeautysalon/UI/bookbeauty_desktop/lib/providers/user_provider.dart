@@ -13,6 +13,12 @@ class UserProvider extends BaseProvider<User> {
     return User.fromJson(data);
   }
 
+  static int? globalUserId;
+  static User? globaluser;
+
+  static int? get getUserId => globalUserId;
+  static User? get getuser => globaluser;
+
   Future<User> authenticate(String username, String password) async {
     var uri = Uri.parse('${BaseProvider.baseUrl}User/Authenticate');
     print("************ URI ********** $uri");
@@ -33,6 +39,8 @@ class UserProvider extends BaseProvider<User> {
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
       User user = User.fromJson(data);
+      globaluser = user;
+      globalUserId = user.userId;
       return user;
     } else if (response.statusCode == 401) {
       throw Exception("Wrong username or password");

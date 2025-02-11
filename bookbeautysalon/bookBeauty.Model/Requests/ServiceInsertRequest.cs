@@ -8,12 +8,12 @@ namespace bookBeauty.Model.Requests
 {
     public class ServiceInsertRequest
     {
-        public string? Name { get; set; }
+        public string Name { get; set; } = null!;
         public float Price { get; set; }
-        public string? ShortDescription { get; set; }       
-        public string? LongDescription { get; set; }
+        public string ShortDescription { get; set; } = null!;
+        public string LongDescription { get; set; } = null!;
         public int Duration { get; set; }
-        public string? Image { get; set; }
+        public byte[]? Image { get; set; }
 
     }
 }

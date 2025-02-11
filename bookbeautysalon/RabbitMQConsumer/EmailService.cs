@@ -51,10 +51,12 @@ namespace RabbitMQConsumer
             try
             {
                 Console.WriteLine(" TRYING TO CONNECT SMTP");
-                client.Connect(emailConfig["SmtpServer"], int.Parse(emailConfig["SmtpPort"]), false);
+                var host = Environment.GetEnvironmentVariable("SmtpServer");
+                var port = Environment.GetEnvironmentVariable("SmtpPort");
+                client.Connect(host, int.Parse(port), false);
                 Console.WriteLine("CONNECTED TO SMTP");
-                var smtpPass = Environment.GetEnvironmentVariable("SMTP_PASSWORD");
-                var smtpUser = Environment.GetEnvironmentVariable("SMTP_USERNAME");
+                var smtpPass = Environment.GetEnvironmentVariable("SmtpPass");
+                var smtpUser = Environment.GetEnvironmentVariable("SmtpUser");
                 Console.WriteLine(smtpUser);
                 Console.WriteLine(smtpPass);
                 if (string.IsNullOrEmpty(smtpUser) || string.IsNullOrEmpty(smtpPass))

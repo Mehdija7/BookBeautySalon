@@ -52,4 +52,25 @@ class ProductProvider extends BaseProvider<Product> {
       throw Exception('Failed to activate product');
     }
   }
+
+  Future<Product> editProduct(int id) async {
+    var uri = Uri.parse('${BaseProvider.baseUrl}Product/$id/edit');
+    print("************ URI ********** $uri");
+
+    var headers = createHeaders();
+    print('*****   URI HEADERS    ******** $headers');
+
+    var response = await http.put(uri, headers: headers);
+    print(
+        '*****   URI RESPONSE STATUS CODE    ******** ${response.statusCode}');
+    print('*****   URI RESPONSE BODY    ******** ${response.body}');
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      print("PRODUCT FROM PRODUCT PROVIDER ${Product.fromJson(data)}");
+      return Product.fromJson(data);
+    } else {
+      throw Exception('Failed to put product in draft state');
+    }
+  }
 }

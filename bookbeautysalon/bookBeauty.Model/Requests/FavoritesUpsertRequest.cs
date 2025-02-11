@@ -8,10 +8,10 @@ namespace bookBeauty.Model.Requests
 {
     public class FavoritesUpsertRequest
     {
-        public DateTime AddingDate { get; set; }
+        public DateTime? AddingDate { get; set; }
 
-        public int? ProductId { get; set; }
+        public int ProductId { get; set; }
 
-        public int? UserId { get; set; }
+        public int UserId { get; set; }
     }
 }

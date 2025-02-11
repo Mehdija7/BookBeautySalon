@@ -1,9 +1,11 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:bookbeauty_desktop/models/category.dart';
 import 'package:bookbeauty_desktop/models/product.dart';
 import 'package:bookbeauty_desktop/providers/category_provider.dart';
 import 'package:bookbeauty_desktop/providers/product_provider.dart';
+import 'package:bookbeauty_desktop/utils.dart';
 import 'package:file_picker/file_picker.dart';
 import '../widgets/shared/main_title.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +28,8 @@ class _NewProductScreenState extends State<NewProductScreen> {
   File? _image;
   String? fileUrl;
   ProductProvider productProvider = ProductProvider();
+  String? base64Image;
+  late ImageProvider _productImage;
 
   @override
   void initState() {
@@ -52,11 +56,14 @@ class _NewProductScreenState extends State<NewProductScreen> {
   void _openFilePicker() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.image,
-      allowMultiple: false,
     );
 
     if (result != null) {
+      File file = File(result.files.single.path!);
+      final bytes = file.readAsBytesSync();
       setState(() {
+        base64Image = base64Encode(bytes);
+        _productImage = imageFromBase64String(base64Image!).image;
         _image = File(result.files.single.path!);
         fileUrl = _image?.path;
       });
@@ -108,7 +115,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
         price: enteredPrice,
         categoryId: selectedCategoryId,
         description: _descriptionController.text,
-        image: imagePath);
+        image: base64Image);
     _addProduct(newproduct);
   }
 

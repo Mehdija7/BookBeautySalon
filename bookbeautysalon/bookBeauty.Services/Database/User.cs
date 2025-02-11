@@ -19,17 +19,14 @@ public partial class User
 
     public string? Address { get; set; }
 
-    public int GenderId { get; set; }
-
     public string? PasswordHash { get; set; }
 
     public string? PasswordSalt { get; set; }
 
+    public byte[]? UserImage { get; set; }
     public virtual ICollection<Appointment> Appointments { get; set; } = [];
 
     public virtual ICollection<FavoriteProduct> FavoriteProducts { get; set; } = [];
-
-    public virtual Gender? Gender { get; set; }
 
     public virtual ICollection<Order> Orders { get; set; } = [];
 
@@ -37,4 +34,5 @@ public partial class User
 
     public virtual ICollection<UserRole> UserRoles { get; set; } = [];
     public virtual ICollection<News> News { get; set; } = [];
+    public virtual ICollection<CommentProduct> CommentProducts { get; set; } = [];
 }

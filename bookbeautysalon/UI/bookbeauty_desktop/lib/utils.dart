@@ -5,12 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-Uint8List _getImageBinary(dynamicList) {
-  List<int> intList = dynamicList.cast<int>().toList();
-  Uint8List data = Uint8List.fromList(intList);
-  return data;
-}
-
 class Authorization {
   static String? username;
   static String? password;

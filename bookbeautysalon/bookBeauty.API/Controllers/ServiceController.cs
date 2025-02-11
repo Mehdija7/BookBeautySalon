@@ -24,7 +24,6 @@ namespace bookBeauty.API.Controllers
         }
 
         [Authorize(Roles = "Admin, Frizer")]
-        [HttpPut("{id}")]
         public override  async Task<Service> Update(int id, ServiceUpdateRequest request)
         {
             return await _service.Update(id, request);

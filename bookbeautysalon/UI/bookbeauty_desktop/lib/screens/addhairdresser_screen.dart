@@ -1,6 +1,4 @@
-import 'package:bookbeauty_desktop/models/gender.dart';
 import 'package:bookbeauty_desktop/models/user.dart';
-import 'package:bookbeauty_desktop/providers/gender_provider.dart';
 import 'package:bookbeauty_desktop/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 
@@ -19,34 +17,12 @@ class _AddHairdresserScreenState extends State<AddHairdresserScreen> {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController genderController = TextEditingController();
-  String? selectedValue;
-  final GenderProvider _genderProvider = GenderProvider();
-  List<Gender> genderOptions = [];
 
   final UserProvider userProvider = UserProvider();
 
   @override
   void initState() {
     super.initState();
-    _fetchGenders();
-  }
-
-  Future<void> _fetchGenders() async {
-    try {
-      var result = await _genderProvider.get();
-
-      setState(() {
-        genderOptions = result.result;
-        if (genderOptions.isNotEmpty) {
-          // Assign the first genderId as the selectedValue
-          selectedValue = genderOptions[0].genderId.toString();
-        }
-      });
-    } catch (e) {
-      print(
-          "*****************************ERROR MESSAGE $e ***********************************");
-    }
   }
 
   void _showDialog() {
@@ -75,7 +51,6 @@ class _AddHairdresserScreenState extends State<AddHairdresserScreen> {
     String? phone = phoneController.text;
     String? address = addressController.text;
     String? password = passwordController.text;
-    final selectedGenderId = int.tryParse(selectedValue!) ?? 1;
 
     if (firstName.isEmpty ||
         lastName.isEmpty ||
@@ -93,7 +68,6 @@ class _AddHairdresserScreenState extends State<AddHairdresserScreen> {
         email: email,
         phone: phone,
         address: address,
-        genderId: selectedGenderId,
         password: password,
         passwordConfirmed: password,
       );
@@ -129,7 +103,6 @@ class _AddHairdresserScreenState extends State<AddHairdresserScreen> {
         phoneController.text = '';
         addressController.text = '';
         passwordController.text = '';
-        genderController.text = '';
       });
       _showSnackBar(
           "Korisnik uspješno dodan", const Color.fromARGB(255, 95, 167, 97));
@@ -144,14 +117,26 @@ class _AddHairdresserScreenState extends State<AddHairdresserScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Dodaj frizera'),
-        backgroundColor: const Color(0xFF607D8B), // Dusty blue
-      ),
+          // Dusty blue
+          ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Title Heading
+            Padding(
+              padding: const EdgeInsets.only(bottom: 16.0),
+              child: Text(
+                "Dodavanje novog frizera",
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: const Color(0xFF607D8B), // Dusty Blue for title
+                    ),
+              ),
+            ),
+
+            // Input Fields
             _buildTextField('Ime', firstNameController),
             _buildTextField('Prezime', lastNameController),
             _buildTextField('Korisnicko ime', usernameController),
@@ -159,36 +144,7 @@ class _AddHairdresserScreenState extends State<AddHairdresserScreen> {
             _buildTextField('Broj telefona', phoneController),
             _buildTextField('Adresa', addressController),
             _buildTextField('Lozinka', passwordController),
-            const SizedBox(height: 20),
-            const Text(
-              'Spol',
-              style: TextStyle(fontSize: 16, color: Color(0xFF455A64)), // Grey
-            ),
-            genderOptions.isEmpty
-                ? const Text(" ")
-                : Padding(
-                    padding: const EdgeInsets.only(left: 20, top: 15),
-                    child: DropdownButton<String>(
-                      focusColor: Colors.transparent,
-                      value: selectedValue,
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          selectedValue = newValue!;
-                          genderController.text = selectedValue!;
-                          print("Gender CONTROLLER: ${genderController.text}");
-                        });
-                      },
-                      items: genderOptions.map((Gender gender) {
-                        // Use genderId as the value
-                        return DropdownMenuItem<String>(
-                          value: gender.genderId.toString(),
-                          child: Text(gender.name!),
-                        );
-                      }).toList(),
-                      dropdownColor: const Color.fromARGB(255, 209, 203, 203),
-                    ),
-                  ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 16),
             Center(
               child: ElevatedButton(
                 onPressed: _submitdata,
@@ -196,8 +152,15 @@ class _AddHairdresserScreenState extends State<AddHairdresserScreen> {
                   backgroundColor: const Color(0xFF607D8B), // Dusty blue button
                   padding:
                       const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                  textStyle: const TextStyle(fontWeight: FontWeight.bold),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
                 ),
-                child: const Text('Dodaj frizera'),
+                child: const Text(
+                  'Dodaj frizera',
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
             ),
           ],
@@ -213,11 +176,15 @@ class _AddHairdresserScreenState extends State<AddHairdresserScreen> {
         controller: controller,
         decoration: InputDecoration(
           labelText: label,
-          labelStyle: const TextStyle(color: Color(0xFF455A64)), // Grey
-          border: const OutlineInputBorder(),
+          labelStyle: const TextStyle(
+              color: Color(0xFF607D8B)), // Dusty blue for labels
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: const BorderSide(
+                color: Color(0xFF607D8B)), // Dusty blue border color
+          ),
           focusedBorder: const OutlineInputBorder(
-            borderSide:
-                BorderSide(color: Color(0xFF607D8B)), // Dusty blue focus color
+            borderSide: BorderSide(color: Color(0xFF607D8B)),
           ),
         ),
       ),

@@ -7,12 +7,13 @@ class ProductText extends StatelessWidget {
       {super.key,
       required this.product,
       required this.activeProduct,
-      required this.hideProduct});
+      required this.hideProduct,
+      required this.editProduct});
 
   final Product product;
   final void Function(Product product) activeProduct;
   final void Function(Product product) hideProduct;
-
+  final void Function(Product product) editProduct;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -48,10 +49,10 @@ class ProductText extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               ButtonsList(
-                product: product,
-                activeProduct: activeProduct,
-                hideProduct: hideProduct,
-              )
+                  product: product,
+                  activeProduct: activeProduct,
+                  hideProduct: hideProduct,
+                  editProduct: editProduct)
             ],
           ),
         ),

@@ -82,6 +82,18 @@ class _ProductsListScreen extends State {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _fetchProducts();
+  }
+
+  Future<void> editProduct(Product product) async {
+    await productProvider.editProduct(product.productId!);
+    print("|||||||||||| SUCCEED CHANGE STATE OF PRODUCT ||||||||||||");
+    _fetchProducts();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Proizvodi")),
@@ -111,10 +123,23 @@ class _ProductsListScreen extends State {
                           ),
                           itemCount: _products.length,
                           itemBuilder: (context, index) {
-                            return ProductGridItem(
-                              product: _products[index],
-                              activeProduct: activeProduct,
-                              hideProduct: hideProduct,
+                            return GestureDetector(
+                              onTap: () {
+                                // Navigate to the ProductDetailScreen with the selected product
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ProductDetailScreen(
+                                        id: _products[index].productId!),
+                                  ),
+                                );
+                              },
+                              child: ProductGridItem(
+                                product: _products[index],
+                                activeProduct: activeProduct,
+                                hideProduct: hideProduct,
+                                editProduct: editProduct,
+                              ),
                             );
                           },
                         ),

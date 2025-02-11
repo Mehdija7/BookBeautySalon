@@ -16,9 +16,9 @@ namespace bookBeauty.Model.Model
 
         public int CustomerId { get; set; }
 
-        public string? OrderNumber { get; set; }
+        public string OrderNumber { get; set; } = null!;
 
-        public string? Status { get; set; }
+        public string Status { get; set; } = null!;
 
         public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 

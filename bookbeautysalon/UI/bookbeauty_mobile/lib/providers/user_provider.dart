@@ -148,7 +148,6 @@ class UserProvider extends BaseProvider<User> {
 
   Future<User> registrate(User u) async {
     print(u.username);
-    print(u.genderId);
     print(u.email);
 
     try {

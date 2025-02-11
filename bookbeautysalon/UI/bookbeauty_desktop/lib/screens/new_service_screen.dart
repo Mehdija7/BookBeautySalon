@@ -1,8 +1,7 @@
+import 'dart:convert';
 import 'dart:io';
 
-import 'package:bookbeauty_desktop/models/category.dart';
 import 'package:bookbeauty_desktop/models/service.dart';
-import 'package:bookbeauty_desktop/providers/category_provider.dart';
 import 'package:bookbeauty_desktop/providers/service_provider.dart';
 import 'package:file_picker/file_picker.dart';
 import '../widgets/shared/main_title.dart';
@@ -24,11 +23,14 @@ class _NewserviceScreenState extends State<NewserviceScreen> {
   File? _image;
   String? fileUrl;
   ServiceProvider serviceProvider = ServiceProvider();
+  String? base64Image;
 
-  @override
-  void initState() {
-    super.initState();
-  }
+  bool _isTitleEmpty = false;
+  bool _isPriceEmpty = false;
+  bool _isShortDescriptionEmpty = false;
+  bool _isLongDescriptionEmpty = false;
+  bool _isDurationEmpty = false;
+  bool _isImageEmpty = false;
 
   @override
   void dispose() {
@@ -43,34 +45,18 @@ class _NewserviceScreenState extends State<NewserviceScreen> {
   void _openFilePicker() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.image,
-      allowMultiple: false,
     );
 
     if (result != null) {
+      File file = File(result.files.single.path!);
+      final bytes = file.readAsBytesSync();
       setState(() {
+        base64Image = base64Encode(bytes);
         _image = File(result.files.single.path!);
         fileUrl = _image?.path;
+        _isImageEmpty = false;
       });
     }
-  }
-
-  void _showDialog() {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Neispravan unos'),
-        content: const Text(
-            'Molimo Vas unesite ispravna polja naziv, kratki opis, dugi opis, cijena, vrijeme trajanja te slika usluge .'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: const Text('OK'),
-          ),
-        ],
-      ),
-    );
   }
 
   void _showSnackBar(String message, Color backgroundColor) {
@@ -80,33 +66,6 @@ class _NewserviceScreenState extends State<NewserviceScreen> {
         backgroundColor: backgroundColor,
       ),
     );
-  }
-
-  void _submitData() {
-    final enteredPrice = double.tryParse(_priceController.text);
-    final duration = int.tryParse(_durationController.text);
-    final amountIsInvalid = enteredPrice == null || enteredPrice <= 0;
-    final timeIsInvalid = duration == null || duration <= 0;
-    String? imagePath = fileUrl;
-    if (_titleController.text.trim().isEmpty ||
-        amountIsInvalid ||
-        _titleController.text.trim().isEmpty ||
-        _shortDescriptionController.text.trim().isEmpty ||
-        _longDescriptionController.text.trim().isEmpty ||
-        _durationController.text.trim().isEmpty ||
-        imagePath == '' ||
-        timeIsInvalid) {
-      _showDialog();
-      return;
-    }
-    Service newservice = Service(
-        name: _titleController.text,
-        price: enteredPrice,
-        shortDescription: _shortDescriptionController.text,
-        longDescription: _longDescriptionController.text,
-        duration: duration,
-        image: imagePath);
-    _addservice(newservice);
   }
 
   Future<void> _addservice(Service newservice) async {
@@ -127,121 +86,251 @@ class _NewserviceScreenState extends State<NewserviceScreen> {
     }
   }
 
+  void _submitData() {
+    final enteredPrice = double.tryParse(_priceController.text);
+    final duration = int.tryParse(_durationController.text);
+    final amountIsInvalid = enteredPrice == null || enteredPrice <= 0;
+    final timeIsInvalid = duration == null || duration <= 0;
+
+    setState(() {
+      _isTitleEmpty = _titleController.text.trim().isEmpty;
+      _isPriceEmpty = _priceController.text.trim().isEmpty;
+      _isShortDescriptionEmpty =
+          _shortDescriptionController.text.trim().isEmpty;
+      _isLongDescriptionEmpty = _longDescriptionController.text.trim().isEmpty;
+      _isDurationEmpty = _durationController.text.trim().isEmpty;
+      _isImageEmpty = _image == null;
+    });
+
+    if (_isTitleEmpty ||
+        amountIsInvalid ||
+        _isPriceEmpty ||
+        _isShortDescriptionEmpty ||
+        _isLongDescriptionEmpty ||
+        _isDurationEmpty ||
+        _isImageEmpty ||
+        timeIsInvalid) {
+      return;
+    }
+
+    Service newservice = Service(
+        name: _titleController.text,
+        price: enteredPrice,
+        shortDescription: _shortDescriptionController.text,
+        longDescription: _longDescriptionController.text,
+        duration: duration,
+        image: base64Image);
+
+    _addservice(newservice);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const MainTitle(title: 'Dodavanje nove usluge'),
-      ),
-      body: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding:
-                      const EdgeInsets.only(right: 200, left: 20, bottom: 10),
-                  child: TextField(
-                    controller: _titleController,
-                    decoration: const InputDecoration(
-                      hintText: 'Naziv',
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.only(right: 200, left: 20, bottom: 20),
-                  child: TextField(
-                    controller: _priceController,
-                    decoration: const InputDecoration(
-                        hintText: 'Cijena', suffixText: 'BAM'),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 200, left: 20),
-                  child: TextField(
-                    controller: _shortDescriptionController,
-                    maxLines: 2,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Kratki opis ',
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 200, left: 20),
-                  child: TextField(
-                    controller: _longDescriptionController,
-                    maxLines: 3,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Duzi opis ',
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.only(right: 200, left: 20, bottom: 20),
-                  child: TextField(
-                    controller: _durationController,
-                    decoration: const InputDecoration(
-                        hintText: 'Vrijeme trajanja', suffixText: 'min'),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text('Slika: '),
-                Padding(
-                  padding: const EdgeInsets.only(top: 0, right: 0),
-                  child: GestureDetector(
-                    onTap: _openFilePicker,
-                    child: _image != null
-                        ? Image.file(
-                            _image!,
-                            width: 400,
-                            height: 400,
-                          )
-                        : Image.asset(
-                            'assets/images/pravaslika.png',
-                            width: 400,
-                            height: 400,
+      appBar: AppBar(),
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Left side for fields
+            Expanded(
+              flex: 3,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const MainTitle(title: 'Dodavanje nove usluge'),
+                  SizedBox(height: 20),
+                  // Title Field
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextField(
+                          controller: _titleController,
+                          decoration: const InputDecoration(
+                            labelText: 'Naziv',
+                            border: OutlineInputBorder(),
                           ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 500, top: 100),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      _submitData();
-                    },
-                    style: ButtonStyle(
-                      backgroundColor: WidgetStateProperty.resolveWith<Color?>(
-                        (Set<WidgetState> states) {
-                          if (states.contains(WidgetState.pressed)) {
-                            return const Color.fromARGB(255, 111, 160, 103);
-                          }
-                          return const Color.fromARGB(255, 150, 216, 156);
-                        },
-                      ),
-                      foregroundColor: WidgetStateProperty.all<Color>(
-                          const Color.fromARGB(255, 245, 245, 245)),
+                        ),
+                        if (_isTitleEmpty)
+                          Padding(
+                            padding: const EdgeInsets.only(top: 5),
+                            child: Text(
+                              'Obavezno polje',
+                              style: TextStyle(color: Colors.red, fontSize: 12),
+                            ),
+                          ),
+                      ],
                     ),
-                    child: const Text('Dodaj uslugu'),
                   ),
-                ),
-              ],
+                  // Price Field
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextField(
+                          controller: _priceController,
+                          decoration: const InputDecoration(
+                            labelText: 'Cijena',
+                            suffixText: 'BAM',
+                            border: OutlineInputBorder(),
+                          ),
+                        ),
+                        if (_isPriceEmpty)
+                          Padding(
+                            padding: const EdgeInsets.only(top: 5),
+                            child: Text(
+                              'Obavezno polje',
+                              style: TextStyle(color: Colors.red, fontSize: 12),
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                  // Short Description Field
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextField(
+                          controller: _shortDescriptionController,
+                          maxLines: 2,
+                          decoration: const InputDecoration(
+                            labelText: 'Kratki opis',
+                            border: OutlineInputBorder(),
+                          ),
+                        ),
+                        if (_isShortDescriptionEmpty)
+                          Padding(
+                            padding: const EdgeInsets.only(top: 5),
+                            child: Text(
+                              'Obavezno polje',
+                              style: TextStyle(color: Colors.red, fontSize: 12),
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                  // Long Description Field
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextField(
+                          controller: _longDescriptionController,
+                          maxLines: 3,
+                          decoration: const InputDecoration(
+                            labelText: 'Duži opis',
+                            border: OutlineInputBorder(),
+                          ),
+                        ),
+                        if (_isLongDescriptionEmpty)
+                          Padding(
+                            padding: const EdgeInsets.only(top: 5),
+                            child: Text(
+                              'Obavezno polje',
+                              style: TextStyle(color: Colors.red, fontSize: 12),
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                  // Duration Field
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextField(
+                          controller: _durationController,
+                          decoration: const InputDecoration(
+                            labelText: 'Vrijeme trajanja',
+                            suffixText: 'min',
+                            border: OutlineInputBorder(),
+                          ),
+                        ),
+                        if (_isDurationEmpty)
+                          Padding(
+                            padding: const EdgeInsets.only(top: 5),
+                            child: Text(
+                              'Obavezno polje',
+                              style: TextStyle(color: Colors.red, fontSize: 12),
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
-          )
-        ],
+            // Right side for image placeholder
+            Expanded(
+              flex: 2,
+              child: Padding(
+                padding: EdgeInsets.only(top: 40),
+                child: Column(
+                  children: [
+                    const Text('Slika:', style: TextStyle(fontSize: 16)),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: GestureDetector(
+                        onTap: _openFilePicker,
+                        child: _image != null
+                            ? Image.file(
+                                _image!,
+                                width: 350,
+                                height: 350,
+                                fit: BoxFit.cover,
+                              )
+                            : Image.asset(
+                                'assets/images/pravaslika.png',
+                                width: 350,
+                                height: 350,
+                                fit: BoxFit.cover,
+                              ),
+                      ),
+                    ),
+                    if (_isImageEmpty)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Text(
+                          'Obavezno polje',
+                          style: TextStyle(color: Colors.red, fontSize: 12),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(20),
+        child: ElevatedButton(
+          onPressed: _submitData,
+          style: ButtonStyle(
+            padding: WidgetStateProperty.all<EdgeInsets>(
+              const EdgeInsets.symmetric(vertical: 15),
+            ),
+            backgroundColor: WidgetStateProperty.resolveWith<Color?>(
+              (Set<WidgetState> states) {
+                if (states.contains(WidgetState.pressed)) {
+                  return const Color.fromARGB(255, 111, 160, 103);
+                }
+                return const Color.fromARGB(255, 150, 216, 156);
+              },
+            ),
+            foregroundColor: WidgetStateProperty.all<Color>(
+                const Color.fromARGB(255, 245, 245, 245)),
+          ),
+          child: const Text('Dodaj uslugu'),
+        ),
       ),
     );
   }

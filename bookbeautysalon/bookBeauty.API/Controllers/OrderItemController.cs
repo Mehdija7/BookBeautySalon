@@ -21,6 +21,8 @@ namespace bookBeauty.API.Controllers
         {
             return base.Insert(request);
         }
+
+        [Authorize]
         public override Task<IActionResult> Delete(int id)
         {
             return base.Delete(id);

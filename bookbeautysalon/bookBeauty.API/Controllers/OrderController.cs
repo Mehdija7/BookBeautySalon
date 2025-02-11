@@ -16,14 +16,12 @@ namespace bookBeauty.API.Controllers
         }
               
         [Authorize]
-        [HttpPost]
         public override async Task<Order> Insert(OrderInsertRequest request)
         {
             return await base.Insert(request);
         }
 
         [Authorize]
-        [HttpPut("{id}")]
         public override async Task<Order> Update(int id, [FromBody] OrderUpdateRequest request)
         {
             return await base.Update(id,request);
@@ -34,5 +32,6 @@ namespace bookBeauty.API.Controllers
         {
             return await base.Delete(id);
         }
+
     }
 }

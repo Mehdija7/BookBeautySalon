@@ -1,6 +1,4 @@
-import 'package:book_beauty/models/gender.dart';
 import 'package:book_beauty/models/user.dart';
-import 'package:book_beauty/providers/gender_provider.dart';
 import 'package:book_beauty/providers/user_provider.dart';
 import 'package:book_beauty/screens/login_screen.dart';
 import 'package:flutter/material.dart';
@@ -13,8 +11,6 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
-  final GenderProvider _genderProvider = GenderProvider();
-  List<Gender> genderOptions = [];
   final UserProvider _userProvider = UserProvider();
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
@@ -26,27 +22,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final TextEditingController _confirmPasswordController =
       TextEditingController();
   final TextEditingController genderController = TextEditingController();
-  String? _selectedGender;
 
   @override
   void initState() {
-    _fetchGenders();
     super.initState();
-  }
-
-  Future<void> _fetchGenders() async {
-    try {
-      var result = await _genderProvider.fetchGenders();
-      setState(() {
-        genderOptions = result;
-        if (genderOptions.isNotEmpty) {
-          _selectedGender = genderOptions[0].genderId.toString();
-        }
-      });
-    } catch (e) {
-      print(
-          "*****************************ERROR MESSAGE $e ***********************************");
-    }
   }
 
   @override
@@ -91,7 +70,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     final String phone = _phoneController.text;
     final String password = _passwordController.text;
     final String confirmPassword = _confirmPasswordController.text;
-    final selectedGenderId = int.tryParse(_selectedGender!) ?? 1;
 
     if (firstName.isEmpty ||
         lastName.isEmpty ||
@@ -111,7 +89,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           address: address,
           phone: phone,
           email: email,
-          genderId: selectedGenderId,
           username: username,
           password: password,
           passwordConfirmed: confirmPassword);
@@ -156,32 +133,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     _buildTextField(_firstNameController),
                     _buildLabel('Prezime'),
                     _buildTextField(_lastNameController),
-                    _buildLabel('Spol'),
-                    genderOptions.isEmpty
-                        ? const Text(" ")
-                        : Padding(
-                            padding: const EdgeInsets.only(left: 20, top: 15),
-                            child: DropdownButton<String>(
-                              focusColor: Colors.transparent,
-                              value: _selectedGender,
-                              onChanged: (String? newValue) {
-                                setState(() {
-                                  _selectedGender = newValue!;
-                                  genderController.text = _selectedGender!;
-                                  print(
-                                      "Gender CONTROLLER: ${genderController.text}");
-                                });
-                              },
-                              items: genderOptions.map((Gender gender) {
-                                return DropdownMenuItem<String>(
-                                  value: gender.genderId.toString(),
-                                  child: Text(gender.name!),
-                                );
-                              }).toList(),
-                              dropdownColor:
-                                  const Color.fromARGB(255, 209, 203, 203),
-                            ),
-                          ),
                     _buildLabel('Adresa'),
                     _buildTextField(_addressController),
                     _buildLabel('Email'),
@@ -277,31 +228,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           ),
         ),
       ),
-    );
-  }
-
-  Widget _buildDropdownField(List<Gender> options) {
-    return DropdownButtonFormField<String>(
-      value: _selectedGender,
-      decoration: InputDecoration(
-        fillColor: Colors.white.withOpacity(0.8),
-        filled: true,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide.none,
-        ),
-      ),
-      items: options.map((Gender option) {
-        return DropdownMenuItem<String>(
-          value: option.genderId.toString(),
-          child: Text(option.name!),
-        );
-      }).toList(),
-      onChanged: (String? newValue) {
-        setState(() {
-          _selectedGender = newValue;
-        });
-      },
     );
   }
 }

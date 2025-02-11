@@ -8,12 +8,13 @@ class ButtonsList extends StatefulWidget {
       {super.key,
       required this.product,
       required this.activeProduct,
-      required this.hideProduct});
+      required this.hideProduct,
+      required this.editProduct});
 
   final Product product;
   final void Function(Product product) activeProduct;
   final void Function(Product product) hideProduct;
-
+  final void Function(Product product) editProduct;
   @override
   State<ButtonsList> createState() => _ButtonsListState();
 }
@@ -75,21 +76,27 @@ class _ButtonsListState extends State<ButtonsList> {
         ),
       );
     } else if (widget.product.stateMachine == 'hidden') {
-      return TextButton(
-        onPressed: () {},
-        style: TextButton.styleFrom(
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
-          backgroundColor: const Color.fromARGB(255, 243, 205, 100),
-          foregroundColor: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
+      return Row(children: [
+        TextButton(
+          onPressed: () {
+            widget.editProduct(_product);
+            editingProduct();
+          },
+          style: TextButton.styleFrom(
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+            backgroundColor: const Color.fromARGB(255, 243, 205, 100),
+            foregroundColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+          child: const Text(
+            'Uredi',
+            textAlign: TextAlign.center,
           ),
         ),
-        child: const Text(
-          'Uredi',
-          textAlign: TextAlign.center,
-        ),
-      );
+        SizedBox(width: 10),
+      ]);
     } else {
       return TextButton(
         onPressed: () {

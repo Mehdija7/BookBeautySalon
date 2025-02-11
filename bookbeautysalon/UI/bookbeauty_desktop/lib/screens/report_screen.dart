@@ -4,6 +4,7 @@ import 'package:bookbeauty_desktop/models/product.dart';
 import 'package:bookbeauty_desktop/providers/category_provider.dart';
 import 'package:bookbeauty_desktop/providers/product_provider.dart';
 import 'package:bookbeauty_desktop/widgets/chart/chart.dart';
+import 'package:bookbeauty_desktop/widgets/shared/main_title.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -24,12 +25,13 @@ class _ReportScreenState extends State<ReportScreen> {
   CategoryProvider categoryProvider = CategoryProvider();
   ProductProvider productProvider = ProductProvider();
   bool isLoading = true;
-
+  late TextEditingController _textcontroller;
   @override
   void initState() {
     super.initState();
     _fetchCategories();
     _fetchProducts();
+    _textcontroller = TextEditingController();
   }
 
   Future<void> _fetchCategories() async {
@@ -103,12 +105,18 @@ class _ReportScreenState extends State<ReportScreen> {
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: const Text('Close'),
+              child: const Text('Zatvori'),
             ),
           ],
         );
       },
     );
+  }
+
+  @override
+  void dispose() {
+    _textcontroller.dispose();
+    super.dispose();
   }
 
   @override
@@ -122,20 +130,38 @@ class _ReportScreenState extends State<ReportScreen> {
           : Column(
               children: [
                 RepaintBoundary(
-                  key: _chartKey,
-                  child: Chart(
-                    products: _registeredProducts,
-                    categories: _registeredCategories,
-                  ),
-                ),
+                    key: _chartKey,
+                    child: Column(children: [
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            MainTitle(
+                                title:
+                                    "Graf najprodavanijih proizvoda po kategoriji"),
+                          ]),
+                      Chart(
+                        products: _registeredProducts,
+                        categories: _registeredCategories,
+                      ),
+                      TextField(
+                        readOnly: true,
+                        controller: _textcontroller
+                          ..text =
+                              'Ovaj graf predstavlja prodaju proizvoda po kategorijama. Trenutno je u radnji registrovano ${_registeredProducts.length} proizvoda, raspoređenih u ${_registeredCategories.length} kategorija. Na x osi se nalaze imena svake kategorije pojedinačno, a na y osi je simbolično prikazana prodaja, gdje broj na vrhu štapića predstavlja broj prodatih proizvoda za tu kategoriju.',
+                        maxLines: 3,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                    ])),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(right: 15),
+                      padding: const EdgeInsets.only(right: 15, top: 15),
                       child: ElevatedButton(
                         onPressed: () async {
-                          // Capture chart and show PDF in modal dialog
                           Uint8List chartImage = await _captureChartImage();
                           await _showPdfDialog(chartImage);
                         },
