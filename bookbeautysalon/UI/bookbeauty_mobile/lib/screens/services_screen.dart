@@ -48,18 +48,11 @@ class _ServicesScreenState extends State<ServicesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Naše usluge',
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-        ),
-        backgroundColor: const Color.fromARGB(255, 179, 196, 201),
-      ),
-      backgroundColor: const Color.fromARGB(255, 244, 252, 255),
+      backgroundColor: Color.fromARGB(255, 190, 187, 168).withOpacity(0.4),
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
           : _registeredServices.isEmpty
-              ? const Center(child: Text('No services available'))
+              ? const Center(child: Text('Nema dostupnih usluga'))
               : ListView.builder(
                   padding: const EdgeInsets.all(12),
                   itemCount: _registeredServices.length,

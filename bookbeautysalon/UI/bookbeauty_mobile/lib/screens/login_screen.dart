@@ -71,7 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   decoration: InputDecoration(
                     prefixIcon:
                         const Icon(Icons.person, color: Colors.blueGrey),
-                    labelText: "Username",
+                    labelText: "Korisnicko ime",
                     labelStyle: const TextStyle(color: Colors.blueGrey),
                     filled: true,
                     fillColor: Colors.white.withOpacity(0.8),
@@ -87,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   obscureText: true,
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.lock, color: Colors.blueGrey),
-                    labelText: "Password",
+                    labelText: "Lozinka",
                     labelStyle: const TextStyle(color: Colors.blueGrey),
                     filled: true,
                     fillColor: Colors.white.withOpacity(0.8),

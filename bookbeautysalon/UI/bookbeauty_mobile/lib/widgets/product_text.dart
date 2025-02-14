@@ -48,10 +48,10 @@ class _ProductTextState extends State<ProductText> {
           ),
           content: recommendProducts.isNotEmpty
               ? SizedBox(
-                  height: 220,
+                  height: 250, // Increased height to accommodate text
                   width: 342,
                   child: Swiper(
-                    itemCount: 3,
+                    itemCount: recommendProducts.length,
                     autoplay: true,
                     autoplayDelay: 5000,
                     pagination: SwiperPagination(
@@ -61,28 +61,45 @@ class _ProductTextState extends State<ProductText> {
                       ),
                     ),
                     control: const SwiperControl(
-                        color: Color.fromARGB(255, 70, 107, 126)),
+                      color: Color.fromARGB(255, 70, 107, 126),
+                    ),
                     itemBuilder: (context, index) {
                       return Card(
                         elevation: 4,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(12),
-                          child: recommendProducts[index].image != null
-                              ? Image.memory(
-                                  base64Decode(recommendProducts[index].image!),
-                                  width: 100,
-                                  height: 200,
-                                  fit: BoxFit.cover,
-                                )
-                              : Image.asset(
-                                  "assets/images/logoBB.png",
-                                  width: 100,
-                                  height: 200,
-                                  fit: BoxFit.cover,
-                                ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: recommendProducts[index].image != null
+                                  ? Image.memory(
+                                      base64Decode(
+                                          recommendProducts[index].image!),
+                                      width: 100,
+                                      height: 200,
+                                      fit: BoxFit.cover,
+                                    )
+                                  : Image.asset(
+                                      "assets/images/logoBB.png",
+                                      width: 100,
+                                      height: 200,
+                                      fit: BoxFit.cover,
+                                    ),
+                            ),
+                            const SizedBox(height: 8), // Add some spacing
+                            Text(
+                              recommendProducts[index]
+                                  .name!, // Display product name
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
                         ),
                       );
                     },
@@ -115,10 +132,14 @@ class _ProductTextState extends State<ProductText> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      widget.product.name!,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(fontSize: 16, color: Colors.black),
+                    Expanded(
+                      child: Text(
+                        widget.product.name!,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        style:
+                            const TextStyle(fontSize: 16, color: Colors.black),
+                      ),
                     ),
                   ],
                 ),

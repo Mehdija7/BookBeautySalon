@@ -90,20 +90,19 @@ class _ProductsScreenState extends State<ProductsScreen> {
     }
 
     return Scaffold(
-      backgroundColor: widget.favoritesOnly
+      backgroundColor: !widget.favoritesOnly
           ? const Color.fromARGB(255, 190, 187, 168).withOpacity(0.4)
-          : const Color.fromARGB(255, 218, 215, 201),
-      /*  appBar: AppBar(
-        title: widget.favoritesOnly
-            ? const Text("Favorites")
-            : const Text("Products"),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: _fetchProducts,
-          ),
-        ],
-      ),*/
+          : Color.fromARGB(255, 190, 187, 168),
+      appBar: widget.favoritesOnly
+          ? AppBar(
+              leading: IconButton(
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () {
+                  Navigator.of(context).pop(); // Go back to the previous screen
+                },
+              ),
+            )
+          : null,
       body: Column(
         children: [
           const SizedBox(height: 16),
@@ -111,22 +110,24 @@ class _ProductsScreenState extends State<ProductsScreen> {
           const SizedBox(height: 12),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            child: ProductSearchBox(
-              key: const Key("search-box"),
-              child: TextField(
-                controller: searchController,
-                decoration: const InputDecoration(
-                  hintText: "Trazi..",
-                ),
-              ),
-            ),
+            child: !widget.favoritesOnly
+                ? ProductSearchBox(
+                    key: const Key("search-box"),
+                    child: TextField(
+                      controller: searchController,
+                      decoration: const InputDecoration(
+                        hintText: "Trazi..",
+                      ),
+                    ),
+                  )
+                : const SizedBox(height: 10),
           ),
           const SizedBox(height: 10),
           Expanded(
             child: isLoading
                 ? const Center(child: CircularProgressIndicator())
                 : _filteredProducts.isEmpty
-                    ? const Center(child: Text("No products available."))
+                    ? const Center(child: Text("Nemate omiljenih proizvoda."))
                     : GridView.builder(
                         padding: const EdgeInsets.all(10),
                         gridDelegate:

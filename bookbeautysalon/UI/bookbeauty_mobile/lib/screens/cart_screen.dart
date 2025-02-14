@@ -4,7 +4,6 @@ import 'package:book_beauty/providers/order_item_provider.dart';
 import 'package:book_beauty/providers/order_provider.dart';
 import 'package:book_beauty/providers/user_provider.dart';
 import 'package:book_beauty/screens/payment_screen.dart';
-import 'package:book_beauty/widgets/buy_button.dart';
 import 'package:book_beauty/widgets/cart_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -26,8 +25,12 @@ class CartScreen extends StatelessWidget {
 
     Future<void> goToPayment() async {
       List<OrderItem> items = [];
+      print(UserProvider.globalUserId);
       Order newOrder = Order(customerId: UserProvider.globalUserId);
+      print('teststsetest');
+      print(newOrder.orderId);
       var response = await _orderProvider.insert(newOrder);
+      print(response);
       print("     RESPONSEEEE FROM INSERTING ORDDDEEEER    ");
       print(response.orderNumber);
       for (var item in _orderItems) {
@@ -51,10 +54,14 @@ class CartScreen extends StatelessWidget {
       newOrder.orderItems = items;
       newOrder.totalPrice = provider.totalSum;
       newOrder.dateTime = DateTime.now();
+      newOrder.status = 'Kreirana';
       for (var element in newOrder.orderItems!) {
         print("**** NEW ORDER  order item ****");
         print(element.orderItemId);
       }
+
+      print(newOrder.orderId);
+      print(response.orderId);
       var res = await _orderProvider.update(response.orderId!, newOrder);
 
       Order o = res;

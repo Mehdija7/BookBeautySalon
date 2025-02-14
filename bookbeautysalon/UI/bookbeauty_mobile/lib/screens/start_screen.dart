@@ -30,7 +30,7 @@ class StartScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     const Text(
-                      'Dobro dosli u aplikaciju BookBeauty, pogledajte nase usluge i proizvode.',
+                      'Pogledajte nase proizvode i usluge',
                       style: TextStyle(fontSize: 18),
                     ),
                     const HomeCard(

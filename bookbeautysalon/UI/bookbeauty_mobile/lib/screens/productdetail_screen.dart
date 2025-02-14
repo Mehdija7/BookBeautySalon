@@ -1,5 +1,7 @@
 import 'dart:convert';
-
+import 'package:book_beauty/models/commentproduct.dart';
+import 'package:book_beauty/providers/commentproduct_provider.dart';
+import 'package:flutter/material.dart';
 import 'package:book_beauty/models/favoriteproduct.dart';
 import 'package:book_beauty/models/product.dart';
 import 'package:book_beauty/models/search_result.dart';
@@ -29,10 +31,14 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       FavoriteProductProvider();
   late bool fav = false;
   bool isLoading = false;
+  final CommentProductProvider _commentProductProvider =
+      CommentProductProvider();
+  List<CommentProduct> commentProducts = [];
 
   @override
   void initState() {
     super.initState();
+    fetchComments();
     _fetchFavorite();
     _fetchAverage();
   }
@@ -93,6 +99,35 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       fav = FavoriteProductProvider.globalIsFavorite!;
       isLoading = false;
     });
+  }
+
+  fetchComments() async {
+    try {
+      var r = await _commentProductProvider.get();
+      var list = r.result
+          .where((comment) => comment.productId == widget.product.productId);
+      setState(() {
+        commentProducts = list.toList();
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> addComment(CommentProduct comment) async {
+    await _commentProductProvider.insert(comment);
+    await fetchComments();
+    setState(() {});
+  }
+
+  void _openAddCategoryOverlay() {
+    showModalBottomSheet(
+      useSafeArea: true,
+      isScrollControlled: true,
+      context: context,
+      builder: (ctx) =>
+          CommentsSection(addComment, widget.product, commentProducts),
+    );
   }
 
   @override
@@ -194,6 +229,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               style: TextStyle(fontSize: 18),
                             ),
                           ),
+                          IconButton(
+                            icon: Icon(Icons.comment,
+                                size: 20, color: Colors.grey),
+                            onPressed: () {
+                              _openAddCategoryOverlay();
+                            },
+                          ),
                         ],
                       ),
                     ),
@@ -202,5 +244,172 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               ),
             ),
           );
+  }
+}
+
+class CommentsSection extends StatefulWidget {
+  const CommentsSection(this.onAddComment, this.product, this.comments,
+      {super.key});
+
+  final void Function(CommentProduct comment) onAddComment;
+  final Product product;
+  final List<CommentProduct> comments;
+
+  @override
+  State<CommentsSection> createState() => _CommentsSectionState();
+}
+
+class _CommentsSectionState extends State<CommentsSection> {
+  final _titleController = TextEditingController();
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final keyboardSpace = MediaQuery.of(context).viewInsets.bottom;
+    return LayoutBuilder(
+      builder: (ctx, constraints) {
+        return SizedBox(
+          height: double.infinity,
+          child: Column(
+            children: [
+              const SizedBox(height: 16),
+              const Text(
+                "Komentari",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 16),
+              Expanded(
+                child: widget.comments.isNotEmpty
+                    ? ListView.builder(
+                        itemCount: widget.comments.length,
+                        itemBuilder: (ctx, index) {
+                          final comment = widget.comments[index];
+                          return Card(
+                            margin: const EdgeInsets.symmetric(
+                                vertical: 8, horizontal: 16),
+                            child: ListTile(
+                              title: Text(comment.commentText!),
+                              subtitle: Text(
+                                'By User ${comment.userId} on ${comment.commentDate!.toLocal()}'
+                                    .split('.')[0],
+                              ),
+                            ),
+                          );
+                        },
+                      )
+                    : const Center(child: Text("Nema komentara")),
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(16, 8, 16, keyboardSpace + 16),
+                child: Column(
+                  children: [
+                    const Divider(thickness: 1, color: Colors.grey),
+                    const SizedBox(height: 16),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            controller: _titleController,
+                            maxLength: 50,
+                            decoration: InputDecoration(
+                              labelText: 'Dodaj komentar',
+                              labelStyle: TextStyle(color: Colors.grey[700]),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide:
+                                    const BorderSide(color: Colors.grey),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide:
+                                    const BorderSide(color: Colors.grey),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide: const BorderSide(
+                                    color: Colors.blue, width: 2),
+                              ),
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 12, horizontal: 16),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    Row(
+                      children: [
+                        const Spacer(),
+                        TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: const Text('Odustani'),
+                        ),
+                        ElevatedButton(
+                          onPressed: () async {
+                            if (_titleController.text.trim().isEmpty) {
+                              showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                  title: const Text("Polje naziv je obavezno"),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () => Navigator.pop(context),
+                                      child: const Text("OK"),
+                                    )
+                                  ],
+                                ),
+                              );
+                            } else {
+                              try {
+                                CommentProduct newComment = CommentProduct(
+                                  commentDate: DateTime.now(),
+                                  userId: UserProvider.getUserId,
+                                  commentText: _titleController.text,
+                                  productId: widget.product.productId,
+                                );
+                                widget.onAddComment(newComment);
+
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text("Komentar uspješno dodan"),
+                                    backgroundColor: Colors.green,
+                                  ),
+                                );
+
+                                Navigator.pop(context);
+                              } catch (e) {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                    title: const Text("Desila se greska"),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () => Navigator.pop(context),
+                                        child: const Text("OK"),
+                                      )
+                                    ],
+                                    content: Text(e.toString()),
+                                  ),
+                                );
+                              }
+                            }
+                          },
+                          child: const Text('Spremi'),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 }

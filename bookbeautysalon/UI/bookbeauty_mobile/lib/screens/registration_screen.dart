@@ -93,7 +93,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           password: password,
           passwordConfirmed: confirmPassword);
       var u = await _userProvider.registrate(newUser);
-
+      print('MEHDIJA JE DUSA MOJA');
+      print(u.email);
       // var ur = await _userProvider.addRole(u.userId!, 'Korisnik');
       print(u.username);
       Navigator.of(context)

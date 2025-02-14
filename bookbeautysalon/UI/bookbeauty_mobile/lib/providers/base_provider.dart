@@ -99,8 +99,9 @@ abstract class BaseProvider<T> with ChangeNotifier {
     var url = "$baseUrl$_endpoint";
     var uri = Uri.parse(url);
     var headers = createHeaders();
-
+    print(request);
     var jsonRequest = jsonEncode(request);
+    print(jsonRequest);
     var response = await http.post(uri, headers: headers, body: jsonRequest);
 
     print("|||||||||| RESPONSE ||||||||||||||||||||");
@@ -124,6 +125,8 @@ abstract class BaseProvider<T> with ChangeNotifier {
     var headers = createHeaders();
 
     var jsonRequest = jsonEncode(request);
+    print('TEST');
+    print(jsonRequest);
     var response = await http.put(uri, headers: headers, body: jsonRequest);
 
     if (isValidResponse(response)) {

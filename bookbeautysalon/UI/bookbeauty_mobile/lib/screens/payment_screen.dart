@@ -11,7 +11,7 @@ import 'package:book_beauty/screens/products_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'package:uni_links/uni_links.dart';
+import 'package:app_links/app_links.dart';
 
 class PaymentScreen extends StatefulWidget {
   const PaymentScreen({super.key, required this.order});
@@ -50,8 +50,11 @@ class _PaymentScreenState extends State<PaymentScreen> {
   @override
   void initState() {
     super.initState();
+    addOrder();
     _initializePayment();
   }
+
+  void addOrder() {}
 
   Future<void> _initializePayment() async {
     try {

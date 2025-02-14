@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
 
 class CustomerInfoItem extends StatelessWidget {
-  const CustomerInfoItem(
-      {super.key,
-      required this.title,
-      required this.value,
-      required TextStyle titleStyle,
-      required TextStyle valueStyle});
+  const CustomerInfoItem({
+    super.key,
+    required this.title,
+    required this.value,
+    required this.titleStyle,
+    required this.valueStyle,
+    this.valueWidget,
+  });
 
   final String title;
   final String value;
+  final TextStyle titleStyle;
+  final TextStyle valueStyle;
+  final Widget? valueWidget;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -18,11 +24,19 @@ class CustomerInfoItem extends StatelessWidget {
         children: [
           Text(
             title,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+            style: titleStyle,
           ),
-          SizedBox(width: 10),
-          Text(value,
-              style: TextStyle(fontWeight: FontWeight.w400, fontSize: 20)),
+          const SizedBox(width: 10),
+          Expanded(
+            child:
+                valueWidget ?? // Use valueWidget if provided, otherwise fallback to default Text
+                    Text(
+                      value,
+                      style: valueStyle,
+                      overflow: TextOverflow.ellipsis,
+                      softWrap: false,
+                    ),
+          ),
         ],
       ),
     );

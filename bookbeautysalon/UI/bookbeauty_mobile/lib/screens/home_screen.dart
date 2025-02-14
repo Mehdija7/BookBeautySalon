@@ -1,7 +1,9 @@
 import 'package:book_beauty/models/user.dart';
 import 'package:book_beauty/screens/appointment_screen.dart';
+import 'package:book_beauty/screens/news_screen.dart';
 import 'package:book_beauty/screens/products_screen.dart';
 import 'package:book_beauty/screens/profile_screen.dart';
+import 'package:book_beauty/screens/services_screen.dart';
 import 'package:book_beauty/screens/start_screen.dart';
 import 'package:book_beauty/widgets/maindrawer.dart';
 import 'package:flutter/material.dart';
@@ -24,11 +26,13 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _widgetOptions = [
-      const StartScreen(),
+      const NewsScreen(),
       const ProductsScreen(
-        favoritesOnly: true,
+        favoritesOnly: false,
       ),
-      AppointmentScreen(userId: widget.user.userId!),
+      ServicesScreen(
+        mainTitle: 'Usluge',
+      ),
       const ProfileScreen()
     ];
   }
@@ -90,12 +94,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     icon: Icon(Icons.home_rounded, size: 30),
                     label: ''),
                 BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.favorite,
-                    ),
-                    label: ''),
+                    icon: Icon(Icons.shopping_bag), label: ''),
                 BottomNavigationBarItem(
-                    icon: Icon(Icons.calendar_month), label: ''),
+                    icon: Icon(Icons.content_cut), label: ''),
                 BottomNavigationBarItem(icon: Icon(Icons.person), label: ''),
               ]),
           Positioned(
