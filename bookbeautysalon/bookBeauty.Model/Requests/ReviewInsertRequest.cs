@@ -8,8 +8,8 @@ namespace bookBeauty.Model.Requests
 {
     public class ReviewInsertRequest
     {
-        public int Mark  { get; set;}
-        public int UserId { get; set; }
-        public int ProductId { get; set; }
+        public int? Mark  { get; set;}
+        public int? UserId { get; set; }
+        public int? ProductId { get; set; }
     }
 }

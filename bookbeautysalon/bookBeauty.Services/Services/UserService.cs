@@ -212,6 +212,7 @@ namespace bookBeauty.Services.Services
                 {
                     FirstName = request.FirstName,
                     LastName = request.LastName,
+                    Email = request.Email,
                     Address = request.Address,
                     Username = request.Username,
                     PasswordSalt = salt,

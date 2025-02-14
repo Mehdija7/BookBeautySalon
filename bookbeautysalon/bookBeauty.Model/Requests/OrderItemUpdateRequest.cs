@@ -8,6 +8,6 @@ namespace bookBeauty.Model.Requests
 {
     public class OrderItemUpdateRequest
     {
-        public int Quantity { get; set; }
+        public int? Quantity { get; set; }
     }
 }

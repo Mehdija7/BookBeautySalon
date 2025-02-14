@@ -258,7 +258,7 @@ public partial class _200101Context : DbContext
             entity.Property(e => e.LongDescription);
             entity.Property(e => e.Name).HasMaxLength(50);
             entity.Property(e => e.ShortDescription);
-            entity.Property(e => e.Image).HasColumnType("image");
+            entity.Property(e => e.Image).HasColumnType("VARBINARY(MAX)");
             entity.Property(e => e.Duration);
             entity.Property(e => e.Price).HasColumnType("real");
         });
@@ -294,7 +294,7 @@ public partial class _200101Context : DbContext
             entity.Property(e => e.PasswordSalt).HasMaxLength(50);
             entity.Property(e => e.Phone).HasMaxLength(50);
             entity.Property(e => e.Username).HasMaxLength(50);
-            entity.Property(e => e.UserImage).HasColumnType("image");
+            entity.Property(e => e.UserImage).HasColumnType("VARBINARY(MAX)");
            
         });
 

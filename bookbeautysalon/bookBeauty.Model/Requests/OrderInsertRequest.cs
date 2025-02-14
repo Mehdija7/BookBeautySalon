@@ -9,10 +9,10 @@ namespace bookBeauty.Model.Requests
 {
     public class OrderInsertRequest
     {
-        public float TotalPrice { get; set; }
+        public float? TotalPrice { get; set; }
         public DateTime? DateTime { get; set; }
-        public List<OrderItem> Items { get; set; } = null!;
-        public int CustomerId { get; set; }
-        public string OrderNumber { get; set; } = null!;
+        public List<OrderItem>? Items { get; set; }
+        public int? CustomerId { get; set; }
+        public string? OrderNumber { get; set; }
     }
 }

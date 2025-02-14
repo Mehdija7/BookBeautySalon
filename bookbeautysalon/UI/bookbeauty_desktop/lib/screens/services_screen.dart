@@ -94,7 +94,6 @@ class _ServicesScreenState extends State<ServicesScreen> {
         false;
 
     if (shouldDelete) {
-      await serviceProvider.delete(service.serviceId!); // Call delete method
       setState(() {
         _registeredServices.remove(service); // Remove from UI
       });
