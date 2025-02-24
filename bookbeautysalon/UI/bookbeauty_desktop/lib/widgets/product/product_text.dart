@@ -8,55 +8,61 @@ class ProductText extends StatelessWidget {
       required this.product,
       required this.activeProduct,
       required this.hideProduct,
-      required this.editProduct});
+      required this.editProduct,
+      required this.updateProduct
+     });
 
   final Product product;
   final void Function(Product product) activeProduct;
   final void Function(Product product) hideProduct;
   final void Function(Product product) editProduct;
+  final Future<Product> Function (Product product) updateProduct;
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 5),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                product.name!,
-                style: const TextStyle(fontSize: 16, color: Colors.black),
-              ),
-            ],
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 5),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  product.name!,
+                  style: const TextStyle(fontSize: 16, color: Colors.black),
+                ),
+              ],
+            ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 5),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text(
-                '${product.price!.toStringAsFixed(2)} BAM',
-                style:
-                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-            ],
+          Padding(
+            padding: const EdgeInsets.only(left: 5),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  '${product.price!.toStringAsFixed(2)} BAM',
+                  style:
+                      const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              ButtonsList(
-                  product: product,
-                  activeProduct: activeProduct,
-                  hideProduct: hideProduct,
-                  editProduct: editProduct)
-            ],
+          Padding(
+            padding: const EdgeInsets.only(left: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                ButtonsList(
+                    product: product,
+                    activeProduct: activeProduct,
+                    hideProduct: hideProduct,
+                    editProduct: editProduct,
+                    updateProduct: updateProduct,)
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

@@ -115,6 +115,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
         price: enteredPrice,
         categoryId: selectedCategoryId,
         description: _descriptionController.text,
+        stateMachine: 'Draft',
         image: base64Image);
     _addProduct(newproduct);
   }

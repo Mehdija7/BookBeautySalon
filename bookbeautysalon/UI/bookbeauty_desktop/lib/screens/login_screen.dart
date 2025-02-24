@@ -3,10 +3,19 @@ import 'package:bookbeauty_desktop/screens/home_screen.dart';
 import 'package:bookbeauty_desktop/utils.dart';
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   LoginScreen({super.key});
+
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  String? _usernameError;
+  String? _passwordError;
+  String? _generalError;
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +37,11 @@ class LoginScreen extends StatelessWidget {
                   ),
                   TextField(
                     controller: _usernameController,
-                    decoration: const InputDecoration(
-                        labelText: "Username", prefixIcon: Icon(Icons.email)),
+                    decoration: InputDecoration(
+                      labelText: "Korisnicko ime",
+                      prefixIcon: const Icon(Icons.email),
+                      errorText: _usernameError,
+                    ),
                   ),
                   const SizedBox(
                     height: 10,
@@ -37,76 +49,76 @@ class LoginScreen extends StatelessWidget {
                   TextField(
                     obscureText: true,
                     controller: _passwordController,
-                    decoration: const InputDecoration(
-                        labelText: "Password",
-                        prefixIcon: Icon(Icons.password)),
+                    decoration: InputDecoration(
+                      labelText: "Lozinka",
+                      prefixIcon: const Icon(Icons.password),
+                      errorText: _passwordError,
+                    ),
                   ),
                   const SizedBox(
                     height: 50,
                   ),
                   ElevatedButton(
-                      onPressed: () async {
-                        UserProvider provider = UserProvider();
+                    onPressed: () async {
+                      setState(() {
+                        _usernameError = null;
+                        _passwordError = null;
+                        _generalError = null;
+                      });
 
-                        print(
-                            "credentials: ${_usernameController.text} : ${_passwordController.text}");
-                        Authorization.username = _usernameController.text;
-                        Authorization.password = _passwordController.text;
+                      UserProvider provider = UserProvider();
+                      String username = _usernameController.text.trim();
+                      String password = _passwordController.text.trim();
 
-                        if (_usernameController.text.trim() == "" ||
-                            _passwordController.text.trim() == "") {
-                          showDialog(
-                              context: context,
-                              builder: (context) => AlertDialog(
-                                    title: const Text("Error"),
-                                    actions: [
-                                      TextButton(
-                                          onPressed: () =>
-                                              Navigator.pop(context),
-                                          child: const Text("OK"))
-                                    ],
-                                    content: const Text(
-                                        'Neispravni podaci za prijavu'),
-                                  ));
+                      if (username.isEmpty || password.isEmpty) {
+                        setState(() {
+                          if (username.isEmpty) _usernameError = "Username is required";
+                          if (password.isEmpty) _passwordError = "Password is required";
+                        });
+                        return;
+                      }
+
+                      Authorization.username = username;
+                      Authorization.password = password;
+
+                      try {
+                        var data = await provider.authenticate(
+                          Authorization.username!, Authorization.password!);
+                        var roles = await provider.getRoles(data.userId!);
+                        bool isAdmin = roles
+                            .where((r) => r.role!.name!.toLowerCase() == 'admin')
+                            .isNotEmpty;
+                        bool isHairdresser = roles
+                            .where((r) => r.role!.name!.toLowerCase() == 'frizer')
+                            .isNotEmpty;
+
+                        if (isAdmin || isHairdresser) {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => HomeScreen(isAdmin: isAdmin),
+                            ),
+                          );
+                        } else {
+                          setState(() {
+                            _generalError = "Neispravno korisnicko ime ili lozinka";
+                          });
                         }
-                        try {
-                          var data = await provider.authenticate(
-                              Authorization.username!, Authorization.password!);
-                          var roles = await provider.getRoles(data.userId!);
-                          bool isAdmin = roles
-                              .where(
-                                  (r) => r.role!.name!.toLowerCase() == 'admin')
-                              .isNotEmpty;
-                          bool isHairdresser = roles
-                              .where((r) =>
-                                  r.role!.name!.toLowerCase() == 'frizer')
-                              .isNotEmpty;
-                          if (isAdmin || isHairdresser) {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => HomeScreen(
-                                  isAdmin: isAdmin,
-                                ),
-                              ),
-                            );
-                          } else {
-                            showDialog(
-                                context: context,
-                                builder: (context) => AlertDialog(
-                                      title: const Text("Greška"),
-                                      actions: [
-                                        TextButton(
-                                            onPressed: () =>
-                                                Navigator.pop(context),
-                                            child: const Text("OK"))
-                                      ],
-                                      content: const Text(
-                                          'Neispravni podaci za prijavu'),
-                                    ));
-                          }
-                        } on Exception catch (e) {}
-                      },
-                      child: const Text("Login"))
+                      } on Exception catch (e) {
+                        setState(() {
+                          _generalError = "Ne postoji takav korisnik ";
+                        });
+                      }
+                    },
+                    child: const Text("Prijavi se"),
+                  ),
+                  if (_generalError != null)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: Text(
+                        _generalError!,
+                        style: TextStyle(color: Colors.red),
+                      ),
+                    ),
                 ],
               ),
             ),

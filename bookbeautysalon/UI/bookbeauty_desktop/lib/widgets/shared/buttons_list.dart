@@ -9,12 +9,14 @@ class ButtonsList extends StatefulWidget {
       required this.product,
       required this.activeProduct,
       required this.hideProduct,
-      required this.editProduct});
+      required this.editProduct,
+      required this.updateProduct});
 
   final Product product;
   final void Function(Product product) activeProduct;
   final void Function(Product product) hideProduct;
   final void Function(Product product) editProduct;
+  final Future<Product> Function (Product product) updateProduct;
   @override
   State<ButtonsList> createState() => _ButtonsListState();
 }
@@ -26,19 +28,20 @@ class _ButtonsListState extends State<ButtonsList> {
   @override
   void initState() {
     super.initState();
-    _product = widget.product;
-    // _fetchProduct();
+    //_product = widget.product;
+    _fetchProduct();
   }
 
   Future<void> _fetchProduct() async {
     try {
       var result = await productProvider.getById(_product.productId!);
       setState(() {
-        _product = result as Product;
+        _product = result;
         isLoading = false;
       });
       print(_product);
     } catch (e) {
+      _product = widget.product;
       print(
           "*****************************ERROR MESSAGE $e ***********************************");
       setState(() {
@@ -52,28 +55,51 @@ class _ButtonsListState extends State<ButtonsList> {
     void editingProduct() {
       Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (ctx) => ProductDetailScreen(id: widget.product.productId!),
+          builder: (ctx) => ProductDetailScreen(id: widget.product.productId!,updateProduct: widget.updateProduct,),
         ),
       );
     }
 
     if (widget.product.stateMachine == 'draft') {
-      return TextButton(
-        onPressed: () {
-          widget.activeProduct(_product);
-        },
-        style: TextButton.styleFrom(
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
-          backgroundColor: const Color.fromARGB(255, 169, 243, 100),
-          foregroundColor: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
+      return Row(
+        children: [
+          TextButton(
+            onPressed: () {
+              widget.activeProduct(_product);
+            },
+            style: TextButton.styleFrom(
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+              backgroundColor: const Color.fromARGB(255, 169, 243, 100),
+              foregroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            child: const Text(
+              'Aktiviraj',
+              textAlign: TextAlign.center,
+            ),
+          ),
+               const   SizedBox(width: 10),
+            TextButton(
+          onPressed: () {
+            widget.editProduct(_product);
+            editingProduct();
+          },
+          style: TextButton.styleFrom(
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+            backgroundColor: const Color.fromARGB(255, 243, 205, 100),
+            foregroundColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+          child: const Text(
+            'Uredi',
+            textAlign: TextAlign.center,
           ),
         ),
-        child: const Text(
-          'Aktiviraj',
-          textAlign: TextAlign.center,
-        ),
+        ],
       );
     } else if (widget.product.stateMachine == 'hidden') {
       return Row(children: [
@@ -95,7 +121,7 @@ class _ButtonsListState extends State<ButtonsList> {
             textAlign: TextAlign.center,
           ),
         ),
-        SizedBox(width: 10),
+
       ]);
     } else {
       return TextButton(

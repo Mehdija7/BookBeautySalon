@@ -12,7 +12,6 @@ class User {
   String? email;
   String? phone;
   String? address;
-  int? genderId;
   List<UserRoles>? userroles;
   String? password;
   String? passwordConfirmed;
@@ -23,7 +22,6 @@ class User {
       this.username,
       this.email,
       this.phone,
-      this.genderId,
       this.address,
       this.userroles,
       this.password,

@@ -7,9 +7,10 @@ import 'package:bookbeauty_desktop/models/product.dart';
 import 'package:bookbeauty_desktop/providers/product_provider.dart';
 
 class ProductDetailScreen extends StatefulWidget {
-  const ProductDetailScreen({super.key, required this.id});
+  const ProductDetailScreen({super.key, required this.id, required  this.updateProduct});
 
   final int id;
+  final Future<Product> Function (Product product) updateProduct;
 
   @override
   State<ProductDetailScreen> createState() => _ProductDetailScreenState();
@@ -84,9 +85,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         if (_image != null) {
           _product!.image = base64Encode(await _image!.readAsBytes());
         }
-        var product =
-            await productProvider.update(_product!.productId!, _product);
-
+        
+      /* var product =
+            await productProvider.update(_product!.productId!, _product);*/
+        
+        var product = await widget.updateProduct!(_product!);
         setState(() {
           _product = product;
           isEditing = false;

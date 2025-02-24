@@ -11,12 +11,15 @@ class ProductGridItem extends StatelessWidget {
       required this.product,
       required this.activeProduct,
       required this.hideProduct,
-      required this.editProduct});
+      required this.editProduct,
+      required this.updateProduct
+     });
 
   final Product product;
   final void Function(Product product) activeProduct;
   final void Function(Product product) hideProduct;
   final void Function(Product product) editProduct;
+  final Future<Product> Function (Product product) updateProduct;
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -66,7 +69,9 @@ class ProductGridItem extends StatelessWidget {
                       product: product,
                       activeProduct: activeProduct,
                       hideProduct: hideProduct,
-                      editProduct: editProduct),
+                      editProduct: editProduct,
+                      updateProduct:updateProduct
+                     ),
                 ),
               ),
             ],

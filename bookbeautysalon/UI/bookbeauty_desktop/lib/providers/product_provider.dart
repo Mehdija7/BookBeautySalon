@@ -25,7 +25,7 @@ class ProductProvider extends BaseProvider<Product> {
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
-      print("PRODUCT FROM PRODUCT PROVIDER ${Product.fromJson(data)}");
+      print("PRODUCT FROM PRODUCT PROVIDER ACTIVE ${Product.fromJson(data)}");
       return Product.fromJson(data);
     } else {
       throw Exception('Failed to activate product');
@@ -46,7 +46,7 @@ class ProductProvider extends BaseProvider<Product> {
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
-      print("PRODUCT FROM PRODUCT PROVIDER ${Product.fromJson(data)}");
+      print("PRODUCT FROM PRODUCT PROVIDER HIDE ${Product.fromJson(data)}");
       return Product.fromJson(data);
     } else {
       throw Exception('Failed to activate product');
@@ -67,7 +67,7 @@ class ProductProvider extends BaseProvider<Product> {
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
-      print("PRODUCT FROM PRODUCT PROVIDER ${Product.fromJson(data)}");
+      print("PRODUCT FROM PRODUCT PROVIDER EDIT ${Product.fromJson(data)}");
       return Product.fromJson(data);
     } else {
       throw Exception('Failed to put product in draft state');

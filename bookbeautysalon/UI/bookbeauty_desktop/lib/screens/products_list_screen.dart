@@ -93,6 +93,12 @@ class _ProductsListScreen extends State {
     _fetchProducts();
   }
 
+  Future<Product> updateProduct(Product _product)async{
+     var product =  await productProvider.update(_product.productId!, _product);
+     _fetchProducts();
+      return product;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -125,12 +131,12 @@ class _ProductsListScreen extends State {
                           itemBuilder: (context, index) {
                             return GestureDetector(
                               onTap: () {
-                                // Navigate to the ProductDetailScreen with the selected product
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => ProductDetailScreen(
-                                        id: _products[index].productId!),
+                                        id: _products[index].productId!,
+                                        updateProduct: updateProduct,),
                                   ),
                                 );
                               },
@@ -139,6 +145,7 @@ class _ProductsListScreen extends State {
                                 activeProduct: activeProduct,
                                 hideProduct: hideProduct,
                                 editProduct: editProduct,
+                                updateProduct:  updateProduct,
                               ),
                             );
                           },

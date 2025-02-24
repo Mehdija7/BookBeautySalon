@@ -87,7 +87,7 @@ class MainDrawer extends StatelessWidget {
                 )
               : const SizedBox(height: 50),
           const SizedBox(
-            height: 100,
+            height: 60,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
