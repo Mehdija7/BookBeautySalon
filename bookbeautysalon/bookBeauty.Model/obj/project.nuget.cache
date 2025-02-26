@@ -1,12 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "R9PLC/6Jq3OunwwZPU3EdkpEwLyzXZpVLS3fS/iwPm/nXmXl98Ib7V7ZEx6QFelIhRDU5Z/16+53OSNPMc0SmA==",
+  "dgSpecHash": "iVqim6t/KJo=",
   "success": true,
-  "projectFilePath": "C:\\Users\\elmin\\Desktop\\BookBeautySalon\\bookbeautysalon\\bookBeauty.Model\\bookBeauty.Model.csproj",
+  "projectFilePath": "C:\\Users\\Dell\\Desktop\\BookBeautySalon\\bookbeautysalon\\bookBeauty.Model\\bookBeauty.Model.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\elmin\\.nuget\\packages\\microsoft.aspnetcore.http.features\\5.0.17\\microsoft.aspnetcore.http.features.5.0.17.nupkg.sha512",
-    "C:\\Users\\elmin\\.nuget\\packages\\microsoft.extensions.primitives\\5.0.1\\microsoft.extensions.primitives.5.0.1.nupkg.sha512",
-    "C:\\Users\\elmin\\.nuget\\packages\\system.io.pipelines\\5.0.2\\system.io.pipelines.5.0.2.nupkg.sha512"
+    "C:\\Users\\Dell\\.nuget\\packages\\microsoft.aspnetcore.http.features\\5.0.17\\microsoft.aspnetcore.http.features.5.0.17.nupkg.sha512",
+    "C:\\Users\\Dell\\.nuget\\packages\\microsoft.extensions.primitives\\5.0.1\\microsoft.extensions.primitives.5.0.1.nupkg.sha512",
+    "C:\\Users\\Dell\\.nuget\\packages\\system.io.pipelines\\5.0.2\\system.io.pipelines.5.0.2.nupkg.sha512"
   ],
   "logs": []
 }
