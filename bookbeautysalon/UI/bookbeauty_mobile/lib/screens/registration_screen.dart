@@ -2,6 +2,7 @@ import 'package:book_beauty/models/user.dart';
 import 'package:book_beauty/providers/user_provider.dart';
 import 'package:book_beauty/screens/login_screen.dart';
 import 'package:flutter/material.dart';
+import 'dart:core';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -22,11 +23,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final TextEditingController _confirmPasswordController =
       TextEditingController();
   final TextEditingController genderController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-  }
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -62,41 +59,22 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   }
 
   void _handleRegistration() async {
-    final String firstName = _firstNameController.text;
-    final String lastName = _lastNameController.text;
-    final String username = _usernameController.text;
-    final String address = _addressController.text;
-    final String email = _emailController.text;
-    final String phone = _phoneController.text;
-    final String password = _passwordController.text;
-    final String confirmPassword = _confirmPasswordController.text;
-
-    if (firstName.isEmpty ||
-        lastName.isEmpty ||
-        username.isEmpty ||
-        address.isEmpty ||
-        email.isEmpty ||
-        phone.isEmpty ||
-        password.isEmpty ||
-        confirmPassword.isEmpty) {
-      _showErrorDialog('Sva polja je obavezno ispuniti');
-    } else if (password != confirmPassword) {
-      _showErrorDialog('Lozinke se ne podudaraju');
-    } else {
-      User newUser = new User(
-          firstName: firstName,
-          lastName: lastName,
-          address: address,
-          phone: phone,
-          email: email,
-          username: username,
-          password: password,
-          passwordConfirmed: confirmPassword);
+    setState(() {});
+    if (_formKey.currentState!.validate()) {
+      User newUser = User(
+        firstName: _firstNameController.text,
+        lastName: _lastNameController.text,
+        address: _addressController.text,
+        phone: _phoneController.text,
+        email: _emailController.text,
+        username: _usernameController.text,
+        password: _passwordController.text,
+        passwordConfirmed: _confirmPasswordController.text,
+      );
       var u = await _userProvider.registrate(newUser);
-      print('MEHDIJA JE DUSA MOJA');
-      print(u.email);
-      // var ur = await _userProvider.addRole(u.userId!, 'Korisnik');
-      print(u.username);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Registracija uspješna!'), backgroundColor: Colors.green),
+      );
       Navigator.of(context)
           .push(MaterialPageRoute(builder: (ctx) => const LoginScreen()));
     }
@@ -123,76 +101,54 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             top: 200,
             child: Container(
               decoration: BoxDecoration(
-                color:
-                    const Color.fromARGB(255, 190, 187, 168).withOpacity(0.4),
+                color: const Color.fromARGB(255, 190, 187, 168).withOpacity(0.4),
               ),
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 16, left: 16, right: 16),
-                child: ListView(
-                  children: [
-                    _buildLabel('Ime'),
-                    _buildTextField(_firstNameController),
-                    _buildLabel('Prezime'),
-                    _buildTextField(_lastNameController),
-                    _buildLabel('Adresa'),
-                    _buildTextField(_addressController),
-                    _buildLabel('Email'),
-                    _buildTextField(_emailController),
-                    _buildLabel('Broj telefona'),
-                    _buildTextField(_phoneController),
-                    _buildLabel('Korisnicko ime'),
-                    _buildTextField(_usernameController),
-                    _buildLabel('Lozinka'),
-                    _buildTextField(_passwordController, obscureText: true),
-                    _buildLabel('Lozinka potvrda'),
-                    _buildTextField(_confirmPasswordController,
-                        obscureText: true),
-                    const SizedBox(height: 32),
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: _handleRegistration,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              const Color.fromARGB(255, 174, 185, 201),
-                          padding: const EdgeInsets.symmetric(vertical: 15),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                child: Form(
+                  key: _formKey,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  child: ListView(
+                    children: [
+                      _buildLabel('Ime'),
+                      _buildTextField(_firstNameController),
+                      _buildLabel('Prezime'),
+                      _buildTextField(_lastNameController),
+                      _buildLabel('Adresa'),
+                      _buildTextField(_addressController),
+                      _buildLabel('Email'),
+                      _buildTextField(_emailController, isEmail: true),
+                      _buildLabel('Broj telefona'),
+                      _buildTextField(_phoneController),
+                      _buildLabel('Korisnicko ime'),
+                      _buildTextField(_usernameController),
+                      _buildLabel('Lozinka'),
+                      _buildTextField(_passwordController, obscureText: true, isPassword: true),
+                      _buildLabel('Lozinka potvrda'),
+                      _buildTextField(_confirmPasswordController, obscureText: true, isPasswordConfirmed: true),
+                      const SizedBox(height: 32),
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: _handleRegistration,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color.fromARGB(255, 174, 185, 201),
+                            padding: const EdgeInsets.symmetric(vertical: 15),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
                           ),
-                        ),
-                        child: const Text(
-                          'Registruj se',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Color.fromARGB(255, 59, 60, 61),
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text(
-                          "Imate kreiran račun?",
-                          style: TextStyle(color: Colors.blueGrey),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (ctx) => const LoginScreen()));
-                          },
                           child: const Text(
-                            "Prijava",
+                            'Registruj se',
                             style: TextStyle(
-                              color: Color.fromARGB(255, 30, 121, 240),
-                              decoration: TextDecoration.underline,
+                              fontSize: 18,
+                              color: Color.fromARGB(255, 59, 60, 61),
                             ),
                           ),
                         ),
-                      ],
-                    ),
-                  ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -213,15 +169,30 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     );
   }
 
-  Widget _buildTextField(TextEditingController controller,
-      {bool obscureText = false}) {
+  Widget _buildTextField(TextEditingController controller, {bool obscureText = false, bool isEmail = false, bool isPassword = false, bool isPasswordConfirmed = false}) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
-      child: TextField(
+      child: TextFormField(
         controller: controller,
         obscureText: obscureText,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Polje je obavezno';
+          }
+          if (isEmail && !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
+            return 'Unesite ispravan email';
+          }
+          if (isPassword && !RegExp(r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}\$').hasMatch(value)) {
+            return 'Lozinka mora imati najmanje 8 karaktera i bar jedno slovo i broj';
+          }
+          if (isPasswordConfirmed && _confirmPasswordController.text != _passwordController.text) {
+            return 'Lozinke se ne podudaraju';
+          }
+          
+          return null;
+        },
         decoration: InputDecoration(
-          fillColor: Colors.white.withOpacity(0.8),
+          fillColor: Colors.white,
           filled: true,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),

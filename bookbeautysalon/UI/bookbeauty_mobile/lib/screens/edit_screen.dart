@@ -1,12 +1,11 @@
 import 'package:book_beauty/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:book_beauty/models/user.dart';
-import 'package:book_beauty/screens/profile_screen.dart';
 
 class EditScreen extends StatefulWidget {
   final User user;
 
-  EditScreen({super.key, required this.user});
+  const EditScreen({super.key, required this.user});
 
   @override
   State<EditScreen> createState() => _EditScreenState();

@@ -4,7 +4,6 @@ import 'package:book_beauty/models/service.dart';
 import 'package:book_beauty/screens/reservation_screen.dart';
 import 'package:book_beauty/widgets/main_title.dart';
 import 'package:flutter/material.dart';
-import 'package:transparent_image/transparent_image.dart';
 
 class ServiceDetailScreen extends StatelessWidget {
   const ServiceDetailScreen({super.key, required this.service});
@@ -102,7 +101,7 @@ class ServiceDetailScreen extends StatelessWidget {
                               (Set<WidgetState> states) {
                                 if (states.contains(WidgetState.hovered)) {
                                   return const Color.fromARGB(185, 48, 49, 49)
-                                      .withOpacity(0.04);
+                                      .withValues(alpha: 40);
                                 }
                                 if (states.contains(WidgetState.focused) ||
                                     states.contains(WidgetState.pressed)) {

@@ -1,11 +1,5 @@
 import 'dart:convert';
-import 'package:book_beauty/models/search_result.dart';
-import 'package:book_beauty/providers/auth_provider.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:http/io_client.dart';
-import 'package:flutter/foundation.dart';
-import 'dart:io';
 import 'dart:async';
 
 import 'package:http_auth/http_auth.dart';

@@ -1,12 +1,10 @@
 import 'package:book_beauty/models/user.dart';
-import 'package:book_beauty/screens/appointment_screen.dart';
 import 'package:book_beauty/screens/news_screen.dart';
 import 'package:book_beauty/screens/products_screen.dart';
 import 'package:book_beauty/screens/profile_screen.dart';
 import 'package:book_beauty/screens/services_screen.dart';
-import 'package:book_beauty/screens/start_screen.dart';
-import 'package:book_beauty/widgets/maindrawer.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key, required this.user});
@@ -37,27 +35,26 @@ class _HomeScreenState extends State<HomeScreen> {
     ];
   }
 
-  void _setScreen(String title, int index) {
-    setState(() {
-      maintitle = title;
-    });
-  }
+ 
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
         title: Center(
-          child: Image.asset(
-            'assets/images/logoBB3.jpg',
-            fit: BoxFit.cover,
-            width: MediaQuery.of(context).size.width,
-            height: 100,
-          ),
-        ),
-        backgroundColor: Color.fromARGB(255, 190, 187, 168).withOpacity(0.4),
+          child: Text(
+                    "Book Beauty Salon",
+                    style: GoogleFonts.bigShouldersDisplay(
+                      fontSize: screenWidth * 0.09, 
+                      fontWeight: FontWeight.w400,
+                      color: const Color.fromARGB(255, 63, 71, 83),
+                    ),
+                  ) ,),
+        backgroundColor: Color.fromARGB(255, 190, 187, 168),
         key: _scaffoldKey,
         automaticallyImplyLeading: false,
       ),
@@ -83,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomNavigationBar(
               onTap: _onItemTapped,
               currentIndex: _selectedIndex,
-              unselectedItemColor: const Color.fromARGB(255, 92, 110, 110),
+              unselectedItemColor: const Color.fromARGB(255, 83, 97, 109),
               selectedItemColor: Colors.white,
               type: BottomNavigationBarType.fixed,
               backgroundColor: const Color.fromARGB(255, 196, 189, 171),

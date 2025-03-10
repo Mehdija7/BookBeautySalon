@@ -2,7 +2,6 @@ import 'package:book_beauty/models/favoriteproduct.dart';
 import 'package:book_beauty/models/product.dart';
 import 'package:book_beauty/models/search_result.dart';
 import 'package:book_beauty/providers/favoriteproduct_provider.dart';
-import 'package:book_beauty/providers/order_item_provider.dart';
 import 'package:book_beauty/providers/product_provider.dart';
 import 'package:book_beauty/providers/user_provider.dart';
 import 'package:book_beauty/screens/productdetail_screen.dart';
@@ -91,7 +90,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
 
     return Scaffold(
       backgroundColor: !widget.favoritesOnly
-          ? const Color.fromARGB(255, 190, 187, 168).withOpacity(0.4)
+          ? const Color.fromARGB(255, 190, 187, 168).withValues(alpha:0.4)
           : Color.fromARGB(255, 190, 187, 168),
       appBar: widget.favoritesOnly
           ? AppBar(

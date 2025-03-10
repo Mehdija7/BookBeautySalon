@@ -10,7 +10,6 @@ import 'package:book_beauty/providers/order_item_provider.dart';
 import 'package:book_beauty/providers/review_provider.dart';
 import 'package:book_beauty/providers/user_provider.dart';
 import 'package:book_beauty/widgets/main_title.dart';
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../widgets/review_stars.dart';

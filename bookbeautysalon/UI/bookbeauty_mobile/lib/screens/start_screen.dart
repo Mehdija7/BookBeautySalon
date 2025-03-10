@@ -1,13 +1,4 @@
-import 'dart:convert';
-import 'package:book_beauty/models/order_item.dart';
-import 'package:book_beauty/models/search_result.dart';
-import 'package:book_beauty/providers/order_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
-import 'package:provider/provider.dart';
-import '../models/product.dart';
-import '../providers/order_item_provider.dart';
-import '../providers/product_provider.dart';
 import '../widgets/home_card.dart';
 
 class StartScreen extends StatelessWidget {

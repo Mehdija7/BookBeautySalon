@@ -20,9 +20,6 @@ class AppointmentProvider extends BaseProvider<Appointment> {
         Uri.parse('${BaseProvider.baseUrl}Appointment/availableAppointments');
     var headers = createHeaders();
 
-    print(
-        "------------------------------ DATE TIME OF THE APPOINTMENT --------------------------------");
-    print(appointment.dateTime);
     var body = jsonEncode({
       'UserId': appointment.userId,
       'HairdresserId': appointment.hairdresserId,
@@ -33,9 +30,6 @@ class AppointmentProvider extends BaseProvider<Appointment> {
       'Note': appointment.note
     });
 
-    print(
-        "------------------------------ BODY  --------------------------------");
-    print(body);
     final response = await http.post(url, headers: headers, body: body);
 
     if (response.statusCode == 200) {
@@ -60,7 +54,7 @@ class AppointmentProvider extends BaseProvider<Appointment> {
     var headers = createHeaders();
     final response = await http.get(url, headers: headers);
 
-    if (response!.statusCode == 200) {
+    if (response.statusCode == 200) {
       List<dynamic> jsonResponse = json.decode(response.body);
 
       List<Appointment> appointments = jsonResponse.map((json) {
@@ -77,9 +71,6 @@ class AppointmentProvider extends BaseProvider<Appointment> {
         );
       }).toList();
 
-      print(
-          "******************************************* RESULT ****************************");
-      print(appointments);
       return appointments;
     } else {
       throw Exception('Error loading appointments');

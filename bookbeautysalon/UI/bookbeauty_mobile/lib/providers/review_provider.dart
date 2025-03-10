@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:book_beauty/models/review.dart';
 import 'package:book_beauty/providers/base_provider.dart';
@@ -24,7 +23,6 @@ class ReviewProvider extends BaseProvider<Review> {
         throw Exception('Failed to load average rating');
       }
     } catch (e) {
-      print('Error in getAverageRating: $e');
       return 0.0;
     }
   }

@@ -310,6 +310,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_3d_controller:
+    dependency: "direct main"
+    description:
+      name: flutter_3d_controller
+      sha256: ff543e058827211622b11b1767d2cf123ad135519cf3d4a584fbfefc7c516f8f
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.0"
   flutter_form_builder:
     dependency: "direct main"
     description:

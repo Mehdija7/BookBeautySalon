@@ -1,14 +1,11 @@
-import 'dart:convert';
 import 'package:book_beauty/models/appointment.dart';
 import 'package:book_beauty/models/service.dart';
 import 'package:book_beauty/models/user.dart';
 import 'package:book_beauty/providers/appointment_provider.dart';
-import 'package:book_beauty/providers/auth_provider.dart';
 import 'package:book_beauty/providers/user_provider.dart';
 import 'package:book_beauty/widgets/main_title.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../widgets/time_widget.dart';
 
 final formater = DateFormat('dd/MM/yyyy');
 
@@ -429,7 +426,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
     print(appointment.hairdresserId);
     var response = await appointmentProvider.insert(appointment);
 
-    if (response != null) {
+    if (response.appointmentId!>0) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Uspješno ste rezervirali termin.'),

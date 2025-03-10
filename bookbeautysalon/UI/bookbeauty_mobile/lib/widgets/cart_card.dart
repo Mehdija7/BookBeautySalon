@@ -1,7 +1,5 @@
 import 'dart:convert';
-
 import 'package:book_beauty/models/order_item.dart';
-import 'package:book_beauty/models/product.dart';
 import 'package:book_beauty/providers/order_item_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

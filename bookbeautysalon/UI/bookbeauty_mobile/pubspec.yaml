@@ -48,13 +48,14 @@ dependencies:
   printing: ^5.13.2
   google_fonts: ^6.2.1
   transparent_image: ^2.0.1
-  webview_flutter: ^4.2.0
+  webview_flutter: ^4.4.1
   flutter_swiper_null_safety: ^1.0.2
   flutter_localization: ^0.3.1
   flutter_localizations:
     sdk: flutter
   http_auth: ^1.0.4
   app_links: 6.3.3
+  flutter_3d_controller: ^2.1.0
 
 dev_dependencies:
   flutter_test:
@@ -88,6 +89,10 @@ flutter:
     - assets/images/proizvodi.jpg
     - assets/images/user.jpg
     - assets/images/noimage.png
+    - assets/images/22.obj
+    - assets/images/scs.obj
+    - assets/images/newp.jpg
+    - assets/images/par.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

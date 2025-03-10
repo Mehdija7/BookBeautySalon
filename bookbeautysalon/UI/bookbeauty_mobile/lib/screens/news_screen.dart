@@ -14,7 +14,8 @@ class _NewsScreenState extends State<NewsScreen> {
   NewsProvider newsprovider = NewsProvider();
   List<News> newsList = [];
   bool isLoading = true;
-  PageController _pageController = PageController();
+  final PageController _pageController = PageController();
+  final ScrollController _scrollController = ScrollController();
 
   void fetchNews() async {
     try {
@@ -37,129 +38,128 @@ class _NewsScreenState extends State<NewsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Novosti'),
-        automaticallyImplyLeading: false,
-      ),
-      body: isLoading
-          ? Center(child: CircularProgressIndicator())
-          : SingleChildScrollView(
-              child: Column(
-                children: [
-                  SizedBox(
-                    // Use SizedBox instead of Expanded
-                    height: MediaQuery.of(context).size.height *
-                        0.7, // Adjust height as needed
-                    child: PageView.builder(
-                      controller: _pageController,
-                      itemCount: newsList.length,
-                      itemBuilder: (context, index) {
-                        var currentNews = newsList[index];
-                        return Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Card(
-                            elevation: 5,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Column(
-                              children: [
-                                Container(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.6,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(20),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.5),
-                                        spreadRadius: 2,
-                                        blurRadius: 5,
-                                        offset: Offset(0, 3),
-                                      ),
-                                    ],
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(16.0),
-                                        child: Text(
-                                          currentNews.title!,
-                                          style: TextStyle(
-                                            fontSize: 24,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(16.0),
-                                        child: Text(
-                                          currentNews.text!,
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            height: 1.5,
-                                          ),
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 5,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(16.0),
-                                  child: Text(
-                                    DateFormat('dd/MM/yyyy')
-                                        .format(currentNews.dateTime!),
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    ),
+      body: Stack(
+        children: [
+   
+          Positioned.fill(
+            child: AnimatedBuilder(
+              animation: _scrollController,
+              builder: (context, child) {
+                double offset = _scrollController.hasClients
+                    ? _scrollController.offset * 0.3
+                    : 0; 
+                return Transform.translate(
+                  offset: Offset(0, -offset),
+                  child: Image.asset(
+                    "assets/images/newp.jpg", 
+                    fit: BoxFit.cover,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        IconButton(
-                          icon: Icon(Icons.arrow_back),
-                          onPressed: () {
-                            if (_pageController.page! > 0) {
-                              _pageController.previousPage(
-                                duration: Duration(milliseconds: 300),
-                                curve: Curves.easeInOut,
-                              );
-                            }
-                          },
-                        ),
-                        SizedBox(width: 20),
-                        IconButton(
-                          icon: Icon(Icons.arrow_forward),
-                          onPressed: () {
-                            if (_pageController.page! < newsList.length - 1) {
-                              _pageController.nextPage(
-                                duration: Duration(milliseconds: 300),
-                                curve: Curves.easeInOut,
-                              );
-                            }
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+                );
+              },
             ),
+          ),
+
+          isLoading
+              ? const Center(child: CircularProgressIndicator())
+              : SingleChildScrollView(
+                  controller: _scrollController,
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.7,
+                        child: PageView.builder(
+                          controller: _pageController,
+                          itemCount: newsList.length,
+                          itemBuilder: (context, index) {
+                            var currentNews = newsList[index];
+                            return Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Card(
+                                color: const Color(0xFFF5F5DC), // Beige newspaper color
+                                elevation: 6,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        currentNews.title!,
+                                        style: const TextStyle(
+                                          fontSize: 26,
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: 'Georgia', // Classic newspaper font
+                                          color: Colors.black87,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 10),
+                                      Text(
+                                        currentNews.text!,
+                                        style: const TextStyle(
+                                          fontSize: 18,
+                                          fontFamily: 'Times New Roman',
+                                          height: 1.5,
+                                          color: Colors.black87,
+                                        ),
+                                        maxLines: 7,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      const Spacer(),
+                                      Align(
+                                        alignment: Alignment.bottomLeft,
+                                        child: Text(
+                                          DateFormat('dd/MM/yyyy')
+                                              .format(currentNews.dateTime!),
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                            fontStyle: FontStyle.italic,
+                                            color: Colors.black54,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          IconButton(
+                            icon: const Icon(Icons.arrow_back),
+                            onPressed: () {
+                              if (_pageController.page! > 0) {
+                                _pageController.previousPage(
+                                  duration: const Duration(milliseconds: 300),
+                                  curve: Curves.easeInOut,
+                                );
+                              }
+                            },
+                          ),
+                          const SizedBox(width: 20),
+                          IconButton(
+                            icon: const Icon(Icons.arrow_forward),
+                            onPressed: () {
+                              if (_pageController.page! < newsList.length - 1) {
+                                _pageController.nextPage(
+                                  duration: const Duration(milliseconds: 300),
+                                  curve: Curves.easeInOut,
+                                );
+                              }
+                            },
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+        ],
+      ),
     );
   }
 }

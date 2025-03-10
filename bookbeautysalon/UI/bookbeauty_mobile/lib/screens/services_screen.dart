@@ -1,6 +1,5 @@
-import 'package:book_beauty/models/service.dart';
+import 'package:book_beauty/models/service.dart'; 
 import 'package:book_beauty/providers/service_provider.dart';
-import 'package:book_beauty/widgets/main_title.dart';
 import 'package:book_beauty/widgets/service_card.dart';
 import 'package:flutter/material.dart';
 
@@ -28,14 +27,11 @@ class _ServicesScreenState extends State<ServicesScreen> {
     try {
       var result = await serviceProvider.get();
       List<Service> list = result.result;
-      print(
-          '                             result                                                      ');
-      print(list);
+     
       setState(() {
         _registeredServices = list;
         isLoading = false;
       });
-      print(_registeredServices);
     } catch (e) {
       print(
           "*****************************ERROR MESSAGE $e ***********************************");
@@ -49,18 +45,40 @@ class _ServicesScreenState extends State<ServicesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 190, 187, 168).withOpacity(0.4),
-      body: isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : _registeredServices.isEmpty
-              ? const Center(child: Text('Nema dostupnih usluga'))
-              : ListView.builder(
-                  padding: const EdgeInsets.all(12),
-                  itemCount: _registeredServices.length,
-                  itemBuilder: (context, index) {
-                    final service = _registeredServices[index];
-                    return ServiceCard(service: service);
-                  },
+      body: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Padding(
+              padding: EdgeInsets.only(left: 8.0, bottom: 8.0),
+              child: Text(
+                'Usluge',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
                 ),
+              ),
+            ),
+            Expanded(
+              child: isLoading
+                  ? const Center(child: CircularProgressIndicator())
+                  : _registeredServices.isEmpty
+                      ? const Center(child: Text('Nema dostupnih usluga'))
+                      : Center(
+                          child: ListView.builder(
+                            padding: const EdgeInsets.all(12),
+                            itemCount: _registeredServices.length,
+                            itemBuilder: (context, index) {
+                              final service = _registeredServices[index];
+                              return ServiceCard(service: service);
+                            },
+                          ),
+                        ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

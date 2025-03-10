@@ -1,7 +1,6 @@
 import 'package:book_beauty/models/product.dart';
 import 'package:book_beauty/providers/base_provider.dart';
 import 'package:book_beauty/models/order_item.dart';
-import 'package:flutter/material.dart';
 
 class OrderItemProvider extends BaseProvider<OrderItem> {
   OrderItemProvider() : super("OrderItem");
@@ -11,7 +10,7 @@ class OrderItemProvider extends BaseProvider<OrderItem> {
     return OrderItem.fromJson(data);
   }
 
-  List<OrderItem> _orderItems = [];
+  final List<OrderItem> _orderItems = [];
   double _totalSum = 0.0;
 
   List<OrderItem> get orderItems => _orderItems;
@@ -22,14 +21,12 @@ class OrderItemProvider extends BaseProvider<OrderItem> {
       var index = _orderItems.indexWhere((e) => e.productId == item.productId);
       var quantity = _orderItems[index].quantity!;
       _orderItems[index].quantity = quantity + 1;
-      print('OrderItem added successfully: ${item.name}');
     } else {
       OrderItem newitem = OrderItem();
       newitem.product = item;
       newitem.productId = item.productId;
       newitem.quantity = 1;
       _orderItems.add(newitem);
-      print('OrderItem added successfully: ${item.name}');
     }
     calculateTotal();
     notifyListeners();
