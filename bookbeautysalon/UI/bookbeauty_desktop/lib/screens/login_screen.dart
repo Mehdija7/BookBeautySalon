@@ -38,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   TextField(
                     controller: _usernameController,
                     decoration: InputDecoration(
-                      labelText: "Korisnicko ime",
+                      labelText: "Username",
                       prefixIcon: const Icon(Icons.email),
                       errorText: _usernameError,
                     ),
@@ -50,7 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     obscureText: true,
                     controller: _passwordController,
                     decoration: InputDecoration(
-                      labelText: "Lozinka",
+                      labelText: "Password",
                       prefixIcon: const Icon(Icons.password),
                       errorText: _passwordError,
                     ),
@@ -89,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             .where((r) => r.role!.name!.toLowerCase() == 'admin')
                             .isNotEmpty;
                         bool isHairdresser = roles
-                            .where((r) => r.role!.name!.toLowerCase() == 'frizer')
+                            .where((r) => r.role!.name!.toLowerCase() == 'hairdresser')
                             .isNotEmpty;
 
                         if (isAdmin || isHairdresser) {
@@ -100,16 +100,16 @@ class _LoginScreenState extends State<LoginScreen> {
                           );
                         } else {
                           setState(() {
-                            _generalError = "Neispravno korisnicko ime ili lozinka";
+                            _generalError = "Password or username was incorrect.";
                           });
                         }
                       } on Exception catch (e) {
                         setState(() {
-                          _generalError = "Ne postoji takav korisnik ";
+                          _generalError = "Error while login.";
                         });
                       }
                     },
-                    child: const Text("Prijavi se"),
+                    child: const Text("Log in"),
                   ),
                   if (_generalError != null)
                     Padding(

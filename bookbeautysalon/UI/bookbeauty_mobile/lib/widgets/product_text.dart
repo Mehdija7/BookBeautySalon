@@ -43,17 +43,17 @@ class _ProductTextState extends State<ProductText> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(
-            'Možda Vam se svidi i ovaj proizvod',
+            'We recommended these products: ',
             textAlign: TextAlign.center,
           ),
           content: recommendProducts.isNotEmpty
               ? SizedBox(
-                  height: 250, // Increased height to accommodate text
+                  height: 250, 
                   width: 342,
                   child: Swiper(
                     itemCount: recommendProducts.length,
                     autoplay: true,
-                    autoplayDelay: 5000,
+                    autoplayDelay: 4000,
                     pagination: SwiperPagination(
                       builder: DotSwiperPaginationBuilder(
                         activeColor: Colors.blueGrey,
@@ -89,10 +89,10 @@ class _ProductTextState extends State<ProductText> {
                                       fit: BoxFit.cover,
                                     ),
                             ),
-                            const SizedBox(height: 8), // Add some spacing
+                            const SizedBox(height: 8),
                             Text(
                               recommendProducts[index]
-                                  .name!, // Display product name
+                                  .name!, 
                               style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
@@ -105,11 +105,16 @@ class _ProductTextState extends State<ProductText> {
                     },
                   ),
                 )
-              : const Text("Nema proizvoda za prikazati"),
+              : const Text("There is no available products."),
           actions: <Widget>[
             Center(
               child: TextButton(
-                child: Text('OK'),
+                style: ButtonStyle(
+    backgroundColor: WidgetStateProperty.all<Color>(Color.fromARGB(255, 167, 160, 125)),
+  ),
+                child: Text('OK',style: TextStyle(
+                  color:const Color.fromARGB(255, 48, 48, 48)
+                ),),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -175,7 +180,7 @@ class _ProductTextState extends State<ProductText> {
                         ),
                       ),
                       child: const Text(
-                        'Kupi',
+                        'Buy',
                         textAlign: TextAlign.center,
                       ),
                     ),

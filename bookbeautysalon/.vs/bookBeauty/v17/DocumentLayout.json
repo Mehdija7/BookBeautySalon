@@ -3,20 +3,40 @@
   "WorkspaceRootPath": "C:\\Users\\Dell\\Desktop\\BookBeautySalon\\bookbeautysalon\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{3F2D30FC-57B9-4D06-AAD7-765790F8D3A4}|RabbitMQConsumer\\RabbitMQConsumer.csproj|c:\\users\\dell\\desktop\\bookbeautysalon\\bookbeautysalon\\rabbitmqconsumer\\emailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3F2D30FC-57B9-4D06-AAD7-765790F8D3A4}|RabbitMQConsumer\\RabbitMQConsumer.csproj|solutionrelative:rabbitmqconsumer\\emailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{84629801-9861-44C5-9DC7-0B10EE58C1B5}|bookBeauty.Services\\bookBeauty.Services.csproj|c:\\users\\dell\\desktop\\bookbeautysalon\\bookbeautysalon\\bookbeauty.services\\services\\baseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{84629801-9861-44C5-9DC7-0B10EE58C1B5}|bookBeauty.Services\\bookBeauty.Services.csproj|solutionrelative:bookbeauty.services\\services\\baseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3F2D30FC-57B9-4D06-AAD7-765790F8D3A4}|RabbitMQConsumer\\RabbitMQConsumer.csproj|c:\\users\\dell\\desktop\\bookbeautysalon\\bookbeautysalon\\rabbitmqconsumer\\rabbitmqconsumer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3F2D30FC-57B9-4D06-AAD7-765790F8D3A4}|RabbitMQConsumer\\RabbitMQConsumer.csproj|solutionrelative:rabbitmqconsumer\\rabbitmqconsumer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{950FA877-044B-466D-9D60-769963CD44C7}|bookBeauty.API\\bookBeauty.API.csproj|c:\\users\\dell\\desktop\\bookbeautysalon\\bookbeautysalon\\bookbeauty.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{950FA877-044B-466D-9D60-769963CD44C7}|bookBeauty.API\\bookBeauty.API.csproj|solutionrelative:bookbeauty.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3F2D30FC-57B9-4D06-AAD7-765790F8D3A4}|RabbitMQConsumer\\RabbitMQConsumer.csproj|c:\\users\\dell\\desktop\\bookbeautysalon\\bookbeautysalon\\rabbitmqconsumer\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3F2D30FC-57B9-4D06-AAD7-765790F8D3A4}|RabbitMQConsumer\\RabbitMQConsumer.csproj|solutionrelative:rabbitmqconsumer\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{950FA877-044B-466D-9D60-769963CD44C7}|bookBeauty.API\\bookBeauty.API.csproj|c:\\users\\dell\\desktop\\bookbeautysalon\\bookbeautysalon\\bookbeauty.api\\controllers\\favoriteproductcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{950FA877-044B-466D-9D60-769963CD44C7}|bookBeauty.API\\bookBeauty.API.csproj|solutionrelative:bookbeauty.api\\controllers\\favoriteproductcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3F2D30FC-57B9-4D06-AAD7-765790F8D3A4}|RabbitMQConsumer\\RabbitMQConsumer.csproj|c:\\users\\dell\\desktop\\bookbeautysalon\\bookbeautysalon\\rabbitmqconsumer\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{3F2D30FC-57B9-4D06-AAD7-765790F8D3A4}|RabbitMQConsumer\\RabbitMQConsumer.csproj|solutionrelative:rabbitmqconsumer\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{84629801-9861-44C5-9DC7-0B10EE58C1B5}|bookBeauty.Services\\bookBeauty.Services.csproj|c:\\users\\dell\\desktop\\bookbeautysalon\\bookbeautysalon\\bookbeauty.services\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{84629801-9861-44C5-9DC7-0B10EE58C1B5}|bookBeauty.Services\\bookBeauty.Services.csproj|solutionrelative:bookbeauty.services\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{84629801-9861-44C5-9DC7-0B10EE58C1B5}|bookBeauty.Services\\bookBeauty.Services.csproj|c:\\users\\dell\\desktop\\bookbeautysalon\\bookbeautysalon\\bookbeauty.services\\services\\favoritesservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{84629801-9861-44C5-9DC7-0B10EE58C1B5}|bookBeauty.Services\\bookBeauty.Services.csproj|solutionrelative:bookbeauty.services\\services\\favoritesservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{84629801-9861-44C5-9DC7-0B10EE58C1B5}|bookBeauty.Services\\bookBeauty.Services.csproj|c:\\users\\dell\\desktop\\bookbeautysalon\\bookbeautysalon\\bookbeauty.services\\services\\categoryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{84629801-9861-44C5-9DC7-0B10EE58C1B5}|bookBeauty.Services\\bookBeauty.Services.csproj|solutionrelative:bookbeauty.services\\services\\categoryservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{84629801-9861-44C5-9DC7-0B10EE58C1B5}|bookBeauty.Services\\bookBeauty.Services.csproj|c:\\users\\dell\\desktop\\bookbeautysalon\\bookbeautysalon\\bookbeauty.services\\services\\commentproductservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{84629801-9861-44C5-9DC7-0B10EE58C1B5}|bookBeauty.Services\\bookBeauty.Services.csproj|solutionrelative:bookbeauty.services\\services\\commentproductservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{950FA877-044B-466D-9D60-769963CD44C7}|bookBeauty.API\\bookBeauty.API.csproj|c:\\users\\dell\\desktop\\bookbeautysalon\\bookbeautysalon\\bookbeauty.api\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{950FA877-044B-466D-9D60-769963CD44C7}|bookBeauty.API\\bookBeauty.API.csproj|solutionrelative:bookbeauty.api\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{84629801-9861-44C5-9DC7-0B10EE58C1B5}|bookBeauty.Services\\bookBeauty.Services.csproj|c:\\users\\dell\\desktop\\bookbeautysalon\\bookbeautysalon\\bookbeauty.services\\services\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{84629801-9861-44C5-9DC7-0B10EE58C1B5}|bookBeauty.Services\\bookBeauty.Services.csproj|solutionrelative:bookbeauty.services\\services\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,59 +46,117 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\BookBeautySalon\\bookbeautysalon\\RabbitMQConsumer\\appsettings.json",
-              "RelativeDocumentMoniker": "RabbitMQConsumer\\appsettings.json",
-              "ToolTip": "C:\\Users\\Dell\\Desktop\\BookBeautySalon\\bookbeautysalon\\RabbitMQConsumer\\appsettings.json",
-              "RelativeToolTip": "RabbitMQConsumer\\appsettings.json",
+              "DocumentIndex": 0,
+              "Title": "BaseService.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\BookBeautySalon\\bookbeautysalon\\bookBeauty.Services\\Services\\BaseService.cs",
+              "RelativeDocumentMoniker": "bookBeauty.Services\\Services\\BaseService.cs",
+              "ToolTip": "C:\\Users\\Dell\\Desktop\\BookBeautySalon\\bookbeautysalon\\bookBeauty.Services\\Services\\BaseService.cs",
+              "RelativeToolTip": "bookBeauty.Services\\Services\\BaseService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-02-24T08:15:52.79Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "RabbitMQConsumer.cs",
-              "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\BookBeautySalon\\bookbeautysalon\\RabbitMQConsumer\\RabbitMQConsumer.cs",
-              "RelativeDocumentMoniker": "RabbitMQConsumer\\RabbitMQConsumer.cs",
-              "ToolTip": "C:\\Users\\Dell\\Desktop\\BookBeautySalon\\bookbeautysalon\\RabbitMQConsumer\\RabbitMQConsumer.cs",
-              "RelativeToolTip": "RabbitMQConsumer\\RabbitMQConsumer.cs",
-              "ViewState": "AgIAACYAAAAAAAAAAAAqwEAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-24T08:14:10.876Z",
+              "WhenOpened": "2025-04-10T13:50:08.899Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\BookBeautySalon\\bookbeautysalon\\RabbitMQConsumer\\Program.cs",
-              "RelativeDocumentMoniker": "RabbitMQConsumer\\Program.cs",
-              "ToolTip": "C:\\Users\\Dell\\Desktop\\BookBeautySalon\\bookbeautysalon\\RabbitMQConsumer\\Program.cs",
-              "RelativeToolTip": "RabbitMQConsumer\\Program.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAABcAAAAFAAAAAAAAAA==",
+              "Title": "FavoriteProductController.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\BookBeautySalon\\bookbeautysalon\\bookBeauty.API\\Controllers\\FavoriteProductController.cs",
+              "RelativeDocumentMoniker": "bookBeauty.API\\Controllers\\FavoriteProductController.cs",
+              "ToolTip": "C:\\Users\\Dell\\Desktop\\BookBeautySalon\\bookbeautysalon\\bookBeauty.API\\Controllers\\FavoriteProductController.cs",
+              "RelativeToolTip": "bookBeauty.API\\Controllers\\FavoriteProductController.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-24T08:13:35.921Z",
+              "WhenOpened": "2025-04-10T09:32:37.179Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "CategoryService.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\BookBeautySalon\\bookbeautysalon\\bookBeauty.Services\\Services\\CategoryService.cs",
+              "RelativeDocumentMoniker": "bookBeauty.Services\\Services\\CategoryService.cs",
+              "ToolTip": "C:\\Users\\Dell\\Desktop\\BookBeautySalon\\bookbeautysalon\\bookBeauty.Services\\Services\\CategoryService.cs",
+              "RelativeToolTip": "bookBeauty.Services\\Services\\CategoryService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-10T09:31:32.036Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "CommentProductService.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\BookBeautySalon\\bookbeautysalon\\bookBeauty.Services\\Services\\CommentProductService.cs",
+              "RelativeDocumentMoniker": "bookBeauty.Services\\Services\\CommentProductService.cs",
+              "ToolTip": "C:\\Users\\Dell\\Desktop\\BookBeautySalon\\bookbeautysalon\\bookBeauty.Services\\Services\\CommentProductService.cs",
+              "RelativeToolTip": "bookBeauty.Services\\Services\\CommentProductService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-10T09:31:28.508Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\BookBeautySalon\\bookbeautysalon\\bookBeauty.API\\Program.cs",
+              "RelativeDocumentMoniker": "bookBeauty.API\\Program.cs",
+              "ToolTip": "C:\\Users\\Dell\\Desktop\\BookBeautySalon\\bookbeautysalon\\bookBeauty.API\\Program.cs",
+              "RelativeToolTip": "bookBeauty.API\\Program.cs",
+              "ViewState": "AgIAADgAAAAAAAAAAAAmwPEAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T10:38:26.117Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "EmailService.cs",
-              "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\BookBeautySalon\\bookbeautysalon\\RabbitMQConsumer\\EmailService.cs",
-              "RelativeDocumentMoniker": "RabbitMQConsumer\\EmailService.cs",
-              "ToolTip": "C:\\Users\\Dell\\Desktop\\BookBeautySalon\\bookbeautysalon\\RabbitMQConsumer\\EmailService.cs",
-              "RelativeToolTip": "RabbitMQConsumer\\EmailService.cs",
-              "ViewState": "AgIAABgAAAAAAAAAAAAYwEcAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 4,
+              "Title": "FavoritesService.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\BookBeautySalon\\bookbeautysalon\\bookBeauty.Services\\Services\\FavoritesService.cs",
+              "RelativeDocumentMoniker": "bookBeauty.Services\\Services\\FavoritesService.cs",
+              "ToolTip": "C:\\Users\\Dell\\Desktop\\BookBeautySalon\\bookbeautysalon\\bookBeauty.Services\\Services\\FavoritesService.cs",
+              "RelativeToolTip": "bookBeauty.Services\\Services\\FavoritesService.cs",
+              "ViewState": "AgIAADgAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-24T08:12:53.552Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-10T09:31:14.065Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "UserController.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\BookBeautySalon\\bookbeautysalon\\bookBeauty.API\\Controllers\\UserController.cs",
+              "RelativeDocumentMoniker": "bookBeauty.API\\Controllers\\UserController.cs",
+              "ToolTip": "C:\\Users\\Dell\\Desktop\\BookBeautySalon\\bookbeautysalon\\bookBeauty.API\\Controllers\\UserController.cs",
+              "RelativeToolTip": "bookBeauty.API\\Controllers\\UserController.cs",
+              "ViewState": "AgIAABgAAAAAAAAAAAAYwB8AAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T13:42:05.264Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "UserService.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\BookBeautySalon\\bookbeautysalon\\bookBeauty.Services\\Services\\UserService.cs",
+              "RelativeDocumentMoniker": "bookBeauty.Services\\Services\\UserService.cs",
+              "ToolTip": "C:\\Users\\Dell\\Desktop\\BookBeautySalon\\bookbeautysalon\\bookBeauty.Services\\Services\\UserService.cs",
+              "RelativeToolTip": "bookBeauty.Services\\Services\\UserService.cs",
+              "ViewState": "AgIAAM4AAAAAAAAAAAAkwOEAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T13:37:31.025Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "IUserService.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\Desktop\\BookBeautySalon\\bookbeautysalon\\bookBeauty.Services\\Services\\IUserService.cs",
+              "RelativeDocumentMoniker": "bookBeauty.Services\\Services\\IUserService.cs",
+              "ToolTip": "C:\\Users\\Dell\\Desktop\\BookBeautySalon\\bookbeautysalon\\bookBeauty.Services\\Services\\IUserService.cs",
+              "RelativeToolTip": "bookBeauty.Services\\Services\\IUserService.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAADwvw4AAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-09T09:37:18.143Z"
             }
           ]
         }

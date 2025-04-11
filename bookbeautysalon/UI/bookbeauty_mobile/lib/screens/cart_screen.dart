@@ -45,7 +45,7 @@ class CartScreen extends StatelessWidget {
       newOrder.orderItems = items;
       newOrder.totalPrice = provider.totalSum;
       newOrder.dateTime = DateTime.now();
-      newOrder.status = 'Kreirana';
+      newOrder.status = 'Created';
    
 
       var res = await _orderProvider.update(response.orderId!, newOrder);
@@ -59,9 +59,9 @@ class CartScreen extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Korpa')),
+      appBar: AppBar(title: const Text('Cart')),
       body: _orderItems.isEmpty
-          ? const Center(child: Text('Vasa korpa je prazna'))
+          ? const Center(child: Text('Shopping cart is empty.'))
           : Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -83,7 +83,7 @@ class CartScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
-                        'Ukupno: $total KM',
+                        'Total price: $total KM',
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -104,7 +104,7 @@ class CartScreen extends StatelessWidget {
                         ),
                         backgroundColor: const Color.fromARGB(255, 34, 33, 33)),
                     child: const Text(
-                      'Kupiti',
+                      'Buy',
                       style: TextStyle(color: Colors.white),
                     ),
                   ),

@@ -78,7 +78,7 @@ class _EditScreenState extends State<EditScreen> {
       }
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Podaci uspjesno sacuvani!'),
+          content: Text('Data updated successfully.'),
           backgroundColor: Colors.lightGreen,
         ),
       );
@@ -86,7 +86,7 @@ class _EditScreenState extends State<EditScreen> {
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-            content: Text('Failed to update user. Please check your inputs.')),
+            content: Text('Updating was unsuccessfully.')),
       );
     }
   }
@@ -94,7 +94,7 @@ class _EditScreenState extends State<EditScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Edit Profile')),
+      appBar: AppBar(title: const Text('Edit profile')),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -102,14 +102,14 @@ class _EditScreenState extends State<EditScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildTextField('Ime', _firstNameController),
-              _buildTextField('Prezime', _lastNameController),
-              _buildTextField('Korisnicko ime', _usernameController),
+              _buildTextField('First name', _firstNameController),
+              _buildTextField('Last name', _lastNameController),
+              _buildTextField('Username', _usernameController),
               _buildTextField('Email', _emailController),
-              _buildTextField('Telefon', _phoneController),
-              _buildTextField('Adresa', _addressController),
-              _buildTextField('Lozinka', _passwordController, isPassword: true),
-              _buildTextField('Potvrdite lozinku', _passwordConfirmedController,
+              _buildTextField('Telephone number:', _phoneController),
+              _buildTextField('Address', _addressController),
+              _buildTextField('Password', _passwordController, isPassword: true),
+              _buildTextField('Confirm password', _passwordConfirmedController,
                   isPassword: true),
               const SizedBox(height: 20),
               Center(
@@ -120,11 +120,12 @@ class _EditScreenState extends State<EditScreen> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
+                    backgroundColor: const Color.fromARGB(255, 181, 186, 188)
                   ),
                   onPressed: _saveUser,
                   child: const Text(
-                    'Save Changes',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    'Save',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color: Color.fromARGB(255, 255, 255, 255)),
                   ),
                 ),
               ),

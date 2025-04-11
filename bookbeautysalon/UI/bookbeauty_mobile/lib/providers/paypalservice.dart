@@ -32,7 +32,6 @@ class PaypalServices {
     }
   }
 
-  // for generating the PayPal payment request
   Future<Map<String, String>?> createPaypalPayment(
       transactions, accessToken) async {
     try {
@@ -71,7 +70,6 @@ class PaypalServices {
     }
   }
 
-  /// for carrying out the payment process
   Future<String?> executePayment(url, payerId, accessToken) async {
     try {
       var response = await http.post(url,

@@ -11,6 +11,7 @@ namespace bookBeauty.Model.Requests
         public string Title { get; set; } = null!;
         public string Text { get; set; } = null!;
         public DateTime? DateTime  { get; set; }
+        public byte[]? NewsImage { get; set; }
         public int HairdresserId { get; set; }
     }
 }

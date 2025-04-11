@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "bookBeauty.API\\bookBeauty.API.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "RabbitMQConsumer\\RabbitMQConsumer.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

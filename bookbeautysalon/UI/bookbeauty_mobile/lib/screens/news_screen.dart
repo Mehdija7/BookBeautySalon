@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:book_beauty/models/news.dart';
 import 'package:book_beauty/providers/news_provider.dart';
 import 'package:flutter/material.dart';
@@ -11,23 +13,10 @@ class NewsScreen extends StatefulWidget {
 }
 
 class _NewsScreenState extends State<NewsScreen> {
-  NewsProvider newsprovider = NewsProvider();
-  List<News> newsList = [];
-  bool isLoading = true;
-  final PageController _pageController = PageController();
-  final ScrollController _scrollController = ScrollController();
-
-  void fetchNews() async {
-    try {
-      var r = await newsprovider.get();
-      setState(() {
-        newsList = r.result;
-        isLoading = false;
-      });
-    } catch (e) {
-      print(e);
-    }
-  }
+ bool isLoading = true;
+  NewsProvider newsProvider = NewsProvider();
+  List<News> news = [];
+  PageController _pageController = PageController();
 
   @override
   void initState() {
@@ -35,131 +24,119 @@ class _NewsScreenState extends State<NewsScreen> {
     fetchNews();
   }
 
+  void fetchNews() async {
+    var result = await newsProvider.get();
+    if (result.count > 0) {
+      setState(() {
+        news = result.result;
+        news.sort((a, b) => b.dateTime!.compareTo(a.dateTime!));
+        isLoading = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-   
-          Positioned.fill(
-            child: AnimatedBuilder(
-              animation: _scrollController,
-              builder: (context, child) {
-                double offset = _scrollController.hasClients
-                    ? _scrollController.offset * 0.3
-                    : 0; 
-                return Transform.translate(
-                  offset: Offset(0, -offset),
-                  child: Image.asset(
-                    "assets/images/newp.jpg", 
-                    fit: BoxFit.cover,
-                  ),
-                );
-              },
-            ),
-          ),
-
-          isLoading
-              ? const Center(child: CircularProgressIndicator())
-              : SingleChildScrollView(
-                  controller: _scrollController,
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.7,
-                        child: PageView.builder(
-                          controller: _pageController,
-                          itemCount: newsList.length,
-                          itemBuilder: (context, index) {
-                            var currentNews = newsList[index];
-                            return Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Card(
-                                color: const Color(0xFFF5F5DC), // Beige newspaper color
-                                elevation: 6,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(16.0),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        currentNews.title!,
-                                        style: const TextStyle(
-                                          fontSize: 26,
-                                          fontWeight: FontWeight.bold,
-                                          fontFamily: 'Georgia', // Classic newspaper font
-                                          color: Colors.black87,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 10),
-                                      Text(
-                                        currentNews.text!,
-                                        style: const TextStyle(
-                                          fontSize: 18,
-                                          fontFamily: 'Times New Roman',
-                                          height: 1.5,
-                                          color: Colors.black87,
-                                        ),
-                                        maxLines: 7,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                      const Spacer(),
-                                      Align(
-                                        alignment: Alignment.bottomLeft,
-                                        child: Text(
-                                          DateFormat('dd/MM/yyyy')
-                                              .format(currentNews.dateTime!),
-                                          style: const TextStyle(
-                                            fontSize: 14,
-                                            fontStyle: FontStyle.italic,
-                                            color: Colors.black54,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
+    return  isLoading
+          ? Center(child: CircularProgressIndicator())
+          : Column(
+              children: [
+                Expanded(
+                  child: PageView.builder(
+                    controller: _pageController,
+                    itemCount: news.length,
+                    itemBuilder: (context, index) {
+                      var currentNews = news[index];
+                      return Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              currentNews.title!,
+                              style: TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
                               ),
-                            );
-                          },
+                              textAlign: TextAlign.center,
+                            ),
+                            SizedBox(height: 10),
+                            if (currentNews.newsImage != null && currentNews.newsImage!.isNotEmpty)
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child:  currentNews.newsImage != null
+                      ? Image.memory(
+                          base64Decode(currentNews.newsImage!), 
+                          width: 100,
+                          height: 200,
+                          fit: BoxFit.cover,
+                        )
+                      : Image.asset(
+                          "assets/images/logoBB.png", 
+                          width: 100,
+                          height: 200,
+                          fit: BoxFit.cover,
                         ),
+                              ),
+                            SizedBox(height: 20),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                              child: Text(
+                                currentNews.text!,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  height: 1.5,
+                                ),
+                                textAlign: TextAlign.justify,
+                              ),
+                            ),
+                            SizedBox(height: 20),
+                            Text(
+                              DateFormat('dd/MM/yyyy').format(currentNews.dateTime!),
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconButton(
+                        icon: Icon(Icons.arrow_back),
+                        onPressed: () {
+                          if (_pageController.page! > 0) {
+                            _pageController.previousPage(
+                              duration: Duration(milliseconds: 300),
+                              curve: Curves.easeInOut,
+                            );
+                          }
+                        },
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          IconButton(
-                            icon: const Icon(Icons.arrow_back),
-                            onPressed: () {
-                              if (_pageController.page! > 0) {
-                                _pageController.previousPage(
-                                  duration: const Duration(milliseconds: 300),
-                                  curve: Curves.easeInOut,
-                                );
-                              }
-                            },
-                          ),
-                          const SizedBox(width: 20),
-                          IconButton(
-                            icon: const Icon(Icons.arrow_forward),
-                            onPressed: () {
-                              if (_pageController.page! < newsList.length - 1) {
-                                _pageController.nextPage(
-                                  duration: const Duration(milliseconds: 300),
-                                  curve: Curves.easeInOut,
-                                );
-                              }
-                            },
-                          ),
-                        ],
+                      SizedBox(width: 20),
+                      IconButton(
+                        icon: Icon(Icons.arrow_forward),
+                        onPressed: () {
+                          if (_pageController.page! < news.length - 1) {
+                            _pageController.nextPage(
+                              duration: Duration(milliseconds: 300),
+                              curve: Curves.easeInOut,
+                            );
+                          }
+                        },
                       ),
                     ],
                   ),
                 ),
-        ],
-      ),
-    );
+              ],
+            );
+  
   }
 }

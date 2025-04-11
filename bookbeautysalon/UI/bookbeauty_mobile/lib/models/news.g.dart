@@ -17,6 +17,7 @@ News _$NewsFromJson(Map<String, dynamic> json) => News(
       hairdresser: json['hairdresser'] == null
           ? null
           : User.fromJson(json['hairdresser'] as Map<String, dynamic>),
+      newsImage: json['newsImage'] as String?,
     );
 
 Map<String, dynamic> _$NewsToJson(News instance) => <String, dynamic>{
@@ -26,4 +27,5 @@ Map<String, dynamic> _$NewsToJson(News instance) => <String, dynamic>{
       'dateTime': instance.dateTime?.toIso8601String(),
       'hairdresserId': instance.hairdresserId,
       'hairdresser': instance.hairdresser,
+      'newsImage': instance.newsImage,
     };

@@ -18,7 +18,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
 
   void _handleReview() async {
     if (_mark == null) {
-      _showMessageDialog('Molimo odaberite ocjenu prije potvrde.');
+      _showMessageDialog('Can you please give a mark before confirmation?');
       return;
     }
 
@@ -27,25 +27,39 @@ class _ReviewScreenState extends State<ReviewScreen> {
       userId: UserProvider.globalUserId,
       mark: _mark,
     );
+   
     try {
-      await _reviewProvider.insert(newReview);
-      Navigator.of(context).pop();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: const Text('Recenzija uspješno dodana!'),
-          backgroundColor: Colors.green,
-          duration: const Duration(seconds: 3),
-        ),
+  var result = await _reviewProvider.insert(newReview);
+  Navigator.of(context).pop(); 
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: const Text('Review added successfully.'),
+      backgroundColor: Colors.green,
+      duration: const Duration(seconds: 3),
+    ),
+  );
+} catch (e) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text("Error"),
+        content: Text("You have already give a review for this product."),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop(); 
+            },
+            child: const Text("OK", style: 
+            TextStyle(
+              color: Color.fromARGB(255, 90, 104, 128)
+            ),),
+          ),
+        ],
       );
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: const Text('Greška pri dodavanju recenzije.'),
-          backgroundColor: Colors.red,
-          duration: const Duration(seconds: 3),
-        ),
-      );
-    }
+    },
+  );
+}
   }
 
   void _showMessageDialog(String message) {
@@ -53,7 +67,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Poruka'),
+          title: const Text('Message'),
           content: Text(message),
           actions: [
             TextButton(
@@ -81,7 +95,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
               child: Column(
                 children: [
                   const Text(
-                    'Odaberite ocjenu:',
+                    'Choose a mark:',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 16),
@@ -111,28 +125,28 @@ class _ReviewScreenState extends State<ReviewScreen> {
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
-                        child: const Text(
-                          'Odustani',
-                          style:
-                              TextStyle(color: Color.fromARGB(255, 70, 67, 67)),
-                        ),
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
                               const Color.fromARGB(255, 229, 236, 240),
+                        ),
+                        child: const Text(
+                          'Cancel',
+                          style:
+                              TextStyle(color: Color.fromARGB(255, 70, 67, 67)),
                         ),
                       ),
                       ElevatedButton(
                         onPressed: () {
                           _handleReview();
                         },
-                        child: const Text(
-                          'Potvrdi',
-                          style:
-                              TextStyle(color: Color.fromARGB(255, 58, 57, 57)),
-                        ),
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
                               const Color.fromARGB(255, 229, 236, 240),
+                        ),
+                        child: const Text(
+                          'Confirm',
+                          style:
+                              TextStyle(color: Color.fromARGB(255, 58, 57, 57)),
                         ),
                       ),
                     ],

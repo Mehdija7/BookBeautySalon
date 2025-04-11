@@ -39,7 +39,7 @@ class _NewCategoryState extends State<NewCategory> {
                       child: TextField(
                         controller: _titleController,
                         maxLength: 50,
-                        decoration: const InputDecoration(label: Text('Naziv')),
+                        decoration: const InputDecoration(label: Text('Name')),
                       ),
                     ),
                   ],
@@ -52,7 +52,7 @@ class _NewCategoryState extends State<NewCategory> {
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      child: const Text('Odustani'),
+                      child: const Text('Cancel'),
                     ),
                     ElevatedButton(
                       onPressed: () async {
@@ -60,7 +60,7 @@ class _NewCategoryState extends State<NewCategory> {
                           showDialog(
                             context: context,
                             builder: (context) => AlertDialog(
-                              title: const Text("Polje naziv je obavezno"),
+                              title: const Text("The field is required"),
                               actions: [
                                 TextButton(
                                     onPressed: () => Navigator.pop(context),
@@ -77,7 +77,7 @@ class _NewCategoryState extends State<NewCategory> {
                             showDialog(
                               context: context,
                               builder: (context) => AlertDialog(
-                                title: const Text("Desila se greska"),
+                                title: const Text("Adding new category was unsuccessfully."),
                                 actions: [
                                   TextButton(
                                       onPressed: () => Navigator.pop(context),
@@ -90,7 +90,7 @@ class _NewCategoryState extends State<NewCategory> {
                         }
                       },
                       child: const Text(
-                        'Spremi',
+                        'Add',
                       ),
                     )
                   ],

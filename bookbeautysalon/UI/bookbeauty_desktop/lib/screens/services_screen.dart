@@ -71,21 +71,20 @@ class _ServicesScreenState extends State<ServicesScreen> {
           context: context,
           builder: (context) {
             return AlertDialog(
-              title: Text('Upozorenje'),
-              content: Text('Jeste li sigurni da zelite obrisati ovu uslugu?'),
+              title: const Text('Warning'),
+              content: const Text('Are you sure about deleting this service?'),
               actions: <Widget>[
                 TextButton(
                   onPressed: () {
-                    Navigator.of(context).pop(false); // Don't delete
+                    Navigator.of(context).pop(false); 
                   },
-                  child: Text('Odustani'),
+                  child: const Text('Cancel'),
                 ),
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pop(true);
-                    // Confirm delete
                   },
-                  child: Text('Obrisi', style: TextStyle(color: Colors.red)),
+                  child: const Text('Delete', style: TextStyle(color: Colors.red)),
                 ),
               ],
             );
@@ -95,7 +94,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
 
     if (shouldDelete) {
       setState(() {
-        _registeredServices.remove(service); // Remove from UI
+        _registeredServices.remove(service); 
       });
     }
   }
@@ -115,9 +114,9 @@ class _ServicesScreenState extends State<ServicesScreen> {
           ],
         ),
         isLoading
-            ? const CircularProgressIndicator() // Show loading indicator
+            ? const CircularProgressIndicator() 
             : _registeredServices.isEmpty
-                ? const Text("Trenutno nema dodanih usluga")
+                ? const Text("The list is empty.")
                 : Expanded(
                     child: ListView.builder(
                       itemCount: _registeredServices.length,
@@ -136,25 +135,23 @@ class _ServicesScreenState extends State<ServicesScreen> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  // Service name
                                   Text(
                                     service.name!,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  SizedBox(height: 8),
-                                  // Description
+                                  const SizedBox(height: 8),
                                   Text(
                                     service.shortDescription!,
-                                    style: TextStyle(fontSize: 16),
+                                    style: const TextStyle(fontSize: 16),
                                   ),
 
-                                  SizedBox(height: 8),
+                                  const SizedBox(height: 8),
                                   Text(
-                                    'Cijena: ${service.price} BAM',
-                                    style: TextStyle(
+                                    'Price: ${service.price} BAM',
+                                    style: const TextStyle(
                                         fontSize: 16, color: Colors.grey),
                                   ),
                                   Align(
@@ -163,19 +160,19 @@ class _ServicesScreenState extends State<ServicesScreen> {
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
                                         IconButton(
-                                          icon: Icon(Icons.edit,
+                                          icon: const Icon(Icons.edit,
                                               color: Colors.blue),
                                           onPressed: () {
                                             _navigateToEditServiceScreen(
-                                                service); // Navigate to edit screen
+                                                service); 
                                           },
                                         ),
                                         IconButton(
-                                          icon: Icon(Icons.delete,
+                                          icon: const Icon(Icons.delete,
                                               color: Colors.red),
                                           onPressed: () {
                                             _deleteService(
-                                                service); // Call delete function
+                                                service); 
                                           },
                                         ),
                                       ],
@@ -271,9 +268,9 @@ class _EditServiceScreenState extends State<EditServiceScreen> {
     await serviceProvider.update(widget.service.serviceId!, widget.service);
 
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
+      const SnackBar(
         content: Text(
-          'Uspjesno ste uredili uslugu',
+          'Service edited successfully.',
         ),
         backgroundColor: Colors.lightGreen,
       ),
@@ -284,7 +281,7 @@ class _EditServiceScreenState extends State<EditServiceScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Uredi uslugu")),
+      appBar: AppBar(title: const Text("Edit service")),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -307,78 +304,74 @@ class _EditServiceScreenState extends State<EditServiceScreen> {
                             fit: BoxFit.cover,
                           )
                         : Image.asset(
-                            "assets/images/logoBB.png", // Default placeholder
+                            "assets/images/logoBB.png", 
                             width: 200,
                             height: 200,
                             fit: BoxFit.cover,
                           ),
               ),
-              // Name Field
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: TextField(
                   controller: _nameController,
                   readOnly: true,
-                  decoration: InputDecoration(
-                    labelText: 'Naziv',
+                  decoration: const InputDecoration(
+                    labelText: 'Name',
                     border: OutlineInputBorder(),
                   ),
                 ),
               ),
               if (_isNameEmpty)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
+                const Padding(
+                  padding: EdgeInsets.only(bottom: 10),
                   child: Text(
-                    'Obavezno polje',
+                    'The field is required.',
                     style: TextStyle(color: Colors.red, fontSize: 12),
                   ),
                 ),
-              // Short Description Field
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: TextField(
                   controller: _shortDescriptionController,
-                  decoration: InputDecoration(
-                    labelText: 'Kratki opis',
+                  decoration: const InputDecoration(
+                    labelText: 'Short description',
                     border: OutlineInputBorder(),
                   ),
                 ),
               ),
               if (_isShortDescriptionEmpty)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
+                const Padding(
+                  padding: EdgeInsets.only(bottom: 10),
                   child: Text(
-                    'Obavezno polje',
+                    'The field is required.',
                     style: TextStyle(color: Colors.red, fontSize: 12),
                   ),
                 ),
-              // Long Description Field
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: TextField(
                   controller: _longDescriptionController,
-                  decoration: InputDecoration(
-                    labelText: 'Dugi opis',
+                  decoration: const InputDecoration(
+                    labelText: 'Long description',
                     border: OutlineInputBorder(),
                   ),
                   maxLines: 5,
                 ),
               ),
               if (_isLongDescriptionEmpty)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
+                const Padding(
+                  padding: EdgeInsets.only(bottom: 10),
                   child: Text(
-                    'Obavezno polje',
+                    'The field is required.',
                     style: TextStyle(color: Colors.red, fontSize: 12),
                   ),
                 ),
-              // Price Field
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: TextField(
                   controller: _priceController,
                   decoration: const InputDecoration(
-                    labelText: 'Cijena',
+                    labelText: 'Price',
                     suffixText: 'BAM',
                     border: OutlineInputBorder(),
                   ),
@@ -386,17 +379,16 @@ class _EditServiceScreenState extends State<EditServiceScreen> {
                 ),
               ),
               if (_isPriceEmpty)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
+                const Padding(
+                  padding: EdgeInsets.only(bottom: 10),
                   child: Text(
-                    'Obavezno polje',
+                    'The field is required.',
                     style: TextStyle(color: Colors.red, fontSize: 12),
                   ),
                 ),
-              // Save Button
               ElevatedButton(
                 onPressed: _saveChanges,
-                child: const Text('Spremi'),
+                child: const Text('Save'),
               ),
             ],
           ),

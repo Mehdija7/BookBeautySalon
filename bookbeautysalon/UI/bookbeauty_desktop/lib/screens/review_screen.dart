@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:bookbeauty_desktop/models/review.dart';
 import 'package:bookbeauty_desktop/providers/review_provider.dart';
 import 'package:bookbeauty_desktop/widgets/product/review_stars.dart';
@@ -19,7 +21,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
   bool isGroupedByUser = false;
   bool isGroupedByProduct = false;
 
-  TextEditingController _searchController = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
 
   @override
   void initState() {
@@ -34,7 +36,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
       setState(() {
         _reviews = result.result;
         _filteredReviews =
-            result.result; // Initialize filtered list as all reviews
+            result.result; 
         isLoading = false;
       });
     } catch (e) {
@@ -46,27 +48,25 @@ class _ReviewScreenState extends State<ReviewScreen> {
     }
   }
 
-  // Sort reviews based on selected option
   void _sortReviews(String option) {
-    if (option == "Od najniže ocjene") {
+    if (option == "From lowest mark") {
       _filteredReviews
-          .sort((a, b) => a.mark!.compareTo(b.mark!)); // Ascending order
-    } else if (option == "Od najviše ocjene") {
+          .sort((a, b) => a.mark!.compareTo(b.mark!)); 
+    } else if (option == "From hihghest mark") {
       _filteredReviews
-          .sort((a, b) => b.mark!.compareTo(a.mark!)); // Descending order
+          .sort((a, b) => b.mark!.compareTo(a.mark!)); 
     }
-    setState(() {}); // Refresh UI after sorting
+    setState(() {}); 
   }
 
-  // Group reviews based on selected option
   void _groupReviews(String option) {
-    if (option == "Po korisniku") {
+    if (option == "By user") {
       _filteredReviews = _groupByUser(_reviews);
       setState(() {
         isGroupedByUser = true;
         isGroupedByProduct = false;
       });
-    } else if (option == "Po proizvodu") {
+    } else if (option == "By product") {
       _filteredReviews = _groupByProduct(_reviews);
       setState(() {
         isGroupedByUser = false;
@@ -75,7 +75,6 @@ class _ReviewScreenState extends State<ReviewScreen> {
     }
   }
 
-  // Helper method to group reviews by user
   List<Review> _groupByUser(List<Review> reviews) {
     Map<String, List<Review>> grouped = {};
     for (var review in reviews) {
@@ -85,11 +84,9 @@ class _ReviewScreenState extends State<ReviewScreen> {
       }
       grouped[username]!.add(review);
     }
-    // Flatten the grouped map into a list of reviews
     return grouped.values.expand((element) => element).toList();
   }
 
-  // Helper method to group reviews by product
   List<Review> _groupByProduct(List<Review> reviews) {
     Map<String, List<Review>> grouped = {};
     for (var review in reviews) {
@@ -99,11 +96,9 @@ class _ReviewScreenState extends State<ReviewScreen> {
       }
       grouped[productName]!.add(review);
     }
-    // Flatten the grouped map into a list of reviews
     return grouped.values.expand((element) => element).toList();
   }
 
-  // Search functionality to filter reviews by user or product name
   void _searchReviews(String query) {
     setState(() {
       if (query.isEmpty) {
@@ -136,30 +131,27 @@ class _ReviewScreenState extends State<ReviewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Recenzije"),
+        title: const Text("Reviews"),
       ),
       body: Column(
         children: [
-          // Search, Sort, and Group Filters Row
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                // Search Box
                 Expanded(
                   child: TextField(
                     controller: _searchController,
                     onChanged: _searchReviews,
                     decoration: const InputDecoration(
-                      labelText: "Pretraga",
+                      labelText: "Search",
                       prefixIcon: Icon(Icons.search),
                       border: OutlineInputBorder(),
                     ),
                   ),
                 ),
                 const SizedBox(width: 10),
-                // Sort Filter Button
                 IconButton(
                   icon: const Icon(Icons.filter_alt),
                   onPressed: () {
@@ -172,25 +164,24 @@ class _ReviewScreenState extends State<ReviewScreen> {
                         0,
                       ),
                       items: [
-                        PopupMenuItem<String>(
-                          value: "Od najniže ocjene",
-                          child: const Text("Od najniže ocjene"),
+                        const PopupMenuItem<String>(
+                          value: "From lowest mark",
+                          child: Text("From lowest mark"),
                         ),
-                        PopupMenuItem<String>(
-                          value: "Od najviše ocjene",
-                          child: const Text("Od najviše ocjene"),
+                        const PopupMenuItem<String>(
+                          value: "From highest mark",
+                          child: Text("From highest mark"),
                         ),
                       ],
                     ).then((value) {
                       if (value != null) {
                         _sortReviews(
-                            value); // Sort the reviews based on the selected option
+                            value); 
                       }
                     });
                   },
                 ),
                 const SizedBox(width: 10),
-                // Group Filter Button
                 IconButton(
                   icon: const Icon(Icons.filter_list),
                   onPressed: () {
@@ -203,19 +194,19 @@ class _ReviewScreenState extends State<ReviewScreen> {
                         0,
                       ),
                       items: [
-                        PopupMenuItem<String>(
-                          value: "Po korisniku",
-                          child: const Text("Po korisniku"),
+                        const PopupMenuItem<String>(
+                          value: "By user",
+                          child: Text("By user"),
                         ),
-                        PopupMenuItem<String>(
-                          value: "Po proizvodu",
-                          child: const Text("Po proizvodu"),
+                        const PopupMenuItem<String>(
+                          value: "By product",
+                          child: Text("By product"),
                         ),
                       ],
                     ).then((value) {
                       if (value != null) {
                         _groupReviews(
-                            value); // Group the reviews based on the selected option
+                            value);
                       }
                     });
                   },
@@ -225,12 +216,11 @@ class _ReviewScreenState extends State<ReviewScreen> {
                       Icons.filter_alt_off,
                       color: Colors.redAccent,
                     ),
-                    tooltip: 'Izbrisi sve filtere',
+                    tooltip: 'Delete all filters',
                     onPressed: _clearFilters),
               ],
             ),
           ),
-          // Reviews List
           isLoading
               ? const Center(child: CircularProgressIndicator())
               : Expanded(
@@ -249,6 +239,22 @@ class _ReviewScreenState extends State<ReviewScreen> {
                             children: [
                               Text(_filteredReviews[index].user!.username!),
                               Text(_filteredReviews[index].product!.name!),
+                              Container(
+                                height: 50,
+                                width: 50,
+                                child: _filteredReviews[index].product!.image != null
+                      ? Image.memory(
+                          base64Decode(_filteredReviews[index].product!.image!),
+                          width: 50,
+                          height: 50,
+                          fit: BoxFit.cover,
+                        )
+                      : Image.asset(
+                          "assets/images/logoBB.png",
+                       
+                          fit: BoxFit.cover,
+                        ),
+                              ),
                               ReviewStars(
                                 average:
                                     _filteredReviews[index].mark!.toDouble(),

@@ -89,7 +89,6 @@ class _ProductsListScreen extends State {
 
   Future<void> editProduct(Product product) async {
     await productProvider.editProduct(product.productId!);
-    print("|||||||||||| SUCCEED CHANGE STATE OF PRODUCT ||||||||||||");
     _fetchProducts();
   }
 
@@ -102,7 +101,7 @@ class _ProductsListScreen extends State {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Proizvodi")),
+      appBar: AppBar(title: const Text("Products")),
       body: isLoading
           ? const CircularProgressIndicator()
           : Column(
@@ -116,7 +115,7 @@ class _ProductsListScreen extends State {
                   ],
                 ),
                 _products.isEmpty
-                    ? const Text("Trenutno nema proizvoda")
+                    ? const Text("The list is empty.")
                     : Expanded(
                         child: GridView.builder(
                           padding: const EdgeInsets.all(10),

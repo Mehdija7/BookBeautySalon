@@ -60,12 +60,12 @@ namespace bookBeauty.Services.Services
             foreach (var u in Context.Users)
             {
                 if (u.Username.Equals(request.Username))
-                    throw new UserException("Korisnik s tim korisnickim imenom vec postoji");
+                    throw new UserException("Username already exist.");
             }
 
             if (request.Password != request.PasswordConfirmed)
             {
-                throw new UserException("Password i PasswordPotvrda moraju biti iste");
+                throw new UserException("Password i PasswordConfirmed must be the same.");
             }
 
             entity.PasswordSalt = GenerateSalt();
@@ -101,7 +101,7 @@ namespace bookBeauty.Services.Services
             {
                 if (request.Password != request.PasswordConfirmed)
                 {
-                    throw new Exception("Password i PasswordPotvrda moraju biti iste");
+                    throw new Exception("Password i PasswordConfirmed must be the same.");
                 }
 
                 entity.PasswordSalt = GenerateSalt();
@@ -126,7 +126,7 @@ namespace bookBeauty.Services.Services
             Console.WriteLine(hash);
             if (hash != entity.PasswordHash)
             {
-                throw new UserException("Pogresna lozinka ili korisnicko ime");
+                throw new UserException("Wrong username or password");
             }
 
             return Mapper.Map<Model.Model.User>(entity);
@@ -150,7 +150,7 @@ namespace bookBeauty.Services.Services
         public Model.Model.User AddUserRole(int id)
         {
             var user = Context.Users.Include("UserRoles.Role").FirstOrDefault(x => x.UserId == id);
-            var role = Context.Roles.FirstOrDefault(x => x.Name.ToLower() == "korisnik"); ;
+            var role = Context.Roles.FirstOrDefault(x => x.Name.ToLower() == "customer"); ;
             UserRole newrole = new UserRole
             {
                 ChangedDate = DateTime.Now,
@@ -172,22 +172,13 @@ namespace bookBeauty.Services.Services
         {
             var users = Context.Users
             .Include("UserRoles.Role")
-             .Where(u => u.UserRoles.Any(r => r.Role.Name.ToLower() == "frizer"))
+             .Where(u => u.UserRoles.Any(r => r.Role.Name.ToLower() == "hairdresser"))
             .ToList();
 
             return Mapper.Map<List<Model.Model.User>>(users);
         }
 
-        public List<HairdresserGetRequest> GetHairdressersMobile()
-        {
 
-            var users = Context.Users
-            .Include("UserRoles.Role")
-             .Where(u => u.UserRoles.Any(r => r.Role.Name.ToLower() == "frizer"))
-            .ToList();
-            return Mapper.Map<List<HairdresserGetRequest>>(users);
-
-        }
 
         public void DeleteUserRoles(int userId)
         {
@@ -204,7 +195,7 @@ namespace bookBeauty.Services.Services
             {
                 if (request.Password != request.PasswordConfirmed)
                 {
-                    throw new UserException("Password i PasswordPotvrda moraju biti iste");
+                    throw new UserException("Password i PasswordConfirmed must be the same. ");
                 }
                 var salt = GenerateSalt();
                 var hash = GenerateHash(salt, request.Password);
@@ -217,11 +208,12 @@ namespace bookBeauty.Services.Services
                     Username = request.Username,
                     PasswordSalt = salt,
                     PasswordHash = hash,
-                    Phone = request.Phone
+                    Phone = request.Phone,
+                    
                 };
                 Context.Add(user);
                 Context.SaveChanges();
-                var role = Context.Roles.FirstOrDefault(x => x.Name.ToLower() == "kupac"); 
+                var role = Context.Roles.FirstOrDefault(x => x.Name.ToLower() == "customer"); 
                 UserRole newrole = new UserRole
                 {
                     ChangedDate = DateTime.Now,

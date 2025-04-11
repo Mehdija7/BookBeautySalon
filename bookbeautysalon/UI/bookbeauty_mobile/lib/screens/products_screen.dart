@@ -7,7 +7,6 @@ import 'package:book_beauty/providers/user_provider.dart';
 import 'package:book_beauty/screens/productdetail_screen.dart';
 import 'package:book_beauty/widgets/product_grid_item.dart';
 import 'package:book_beauty/widgets/products_title.dart';
-import 'package:book_beauty/widgets/product_searchbox.dart';
 import 'package:flutter/material.dart';
 
 class ProductsScreen extends StatefulWidget {
@@ -20,19 +19,18 @@ class ProductsScreen extends StatefulWidget {
 }
 
 class _ProductsScreenState extends State<ProductsScreen> {
-  late List<Product> _allProducts = [];
-  late List<Product> _filteredProducts = [];
+  List<Product> _allProducts = [];
+  List<Product> _filteredProducts = [];
   final ProductProvider productProvider = ProductProvider();
-  final FavoriteProductProvider _favoriteProductProvider =
-      FavoriteProductProvider();
+  final FavoriteProductProvider _favoriteProductProvider = FavoriteProductProvider();
   final TextEditingController searchController = TextEditingController();
   bool isLoading = true;
 
   @override
   void initState() {
+    super.initState();
     _fetchProducts();
     searchController.addListener(_filterProducts);
-    super.initState();
   }
 
   @override
@@ -50,14 +48,13 @@ class _ProductsScreenState extends State<ProductsScreen> {
     try {
       if (widget.favoritesOnly) {
         var filter = {'userId': UserProvider.globalUserId.toString()};
-        SearchResult<FavoriteProduct> result =
-            await _favoriteProductProvider.get(filter: filter);
+        SearchResult<FavoriteProduct> result = await _favoriteProductProvider.get(filter: filter);
         _allProducts = result.result.map((item) => item.product!).toList();
       } else {
         var result = await productProvider.get();
         _allProducts = result.result;
       }
-      _filteredProducts = _allProducts;
+      _filteredProducts = List.from(_allProducts); 
     } catch (e) {
       print("Error fetching products: $e");
     } finally {
@@ -70,36 +67,38 @@ class _ProductsScreenState extends State<ProductsScreen> {
   void _filterProducts() {
     final query = searchController.text.toLowerCase();
     setState(() {
-      _filteredProducts = _allProducts
-          .where((product) =>
-              product.name!.toLowerCase().contains(query) ||
-              product.description!.toLowerCase().contains(query))
-          .toList();
+      _filteredProducts = _allProducts.where((product) =>
+          product.name!.toLowerCase().contains(query) ||
+          product.description!.toLowerCase().contains(query)).toList();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    void selectingProduct(Product product) {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (ctx) => ProductDetailScreen(product: product),
-        ),
-      );
-    }
+   void selectingProduct(Product product) async {
+  await Navigator.of(context).push(
+    MaterialPageRoute(
+      builder: (ctx) => ProductDetailScreen(product: product),
+    ),
+  );
+
+  _fetchProducts();
+}
 
     return Scaffold(
       backgroundColor: !widget.favoritesOnly
-          ? const Color.fromARGB(255, 190, 187, 168).withValues(alpha:0.4)
-          : Color.fromARGB(255, 190, 187, 168),
+          ? const Color.fromARGB(255, 190, 187, 168).withOpacity(0.4)
+          : const Color.fromARGB(255, 215, 214, 211),
       appBar: widget.favoritesOnly
           ? AppBar(
+              backgroundColor: const Color.fromARGB(255, 190, 187, 168),
               leading: IconButton(
                 icon: const Icon(Icons.arrow_back),
                 onPressed: () {
-                  Navigator.of(context).pop(); // Go back to the previous screen
+                  Navigator.of(context).pop();
                 },
               ),
+              title: const Text("Favorite products"),
             )
           : null,
       body: Column(
@@ -110,12 +109,23 @@ class _ProductsScreenState extends State<ProductsScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: !widget.favoritesOnly
-                ? ProductSearchBox(
-                    key: const Key("search-box"),
+                ? Container(
+                    padding: const EdgeInsets.only(left: 10, right: 10),
+                    alignment: Alignment.center,
+                    width: 350,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 248, 249, 250),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                     child: TextField(
                       controller: searchController,
                       decoration: const InputDecoration(
-                        hintText: "Trazi..",
+                        hintText: "Search products...",
+                        hintStyle: TextStyle(color: Color.fromARGB(255, 82, 80, 80)),
+                        prefixIcon: Icon(Icons.search, color: Color.fromARGB(255, 56, 56, 56)),
+                        alignLabelWithHint: true,
+                        border: InputBorder.none,
                       ),
                     ),
                   )
@@ -126,11 +136,10 @@ class _ProductsScreenState extends State<ProductsScreen> {
             child: isLoading
                 ? const Center(child: CircularProgressIndicator())
                 : _filteredProducts.isEmpty
-                    ? const Center(child: Text("Nemate omiljenih proizvoda."))
+                    ? const Center(child: Text("There is no available products."))
                     : GridView.builder(
                         padding: const EdgeInsets.all(10),
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
                           childAspectRatio: 2 / 3,
                           crossAxisSpacing: 20,

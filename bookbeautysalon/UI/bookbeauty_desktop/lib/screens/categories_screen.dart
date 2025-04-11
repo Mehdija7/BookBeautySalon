@@ -95,7 +95,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   ),
                 )
               else
-                const Text("Trenutno nema kategorija")
+                const Text("List is empty")
             ],
           );
   }

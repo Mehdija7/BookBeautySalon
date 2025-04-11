@@ -13,6 +13,7 @@ namespace bookBeauty.Model.Model
         public string Text { get; set; } = null!;
         public DateTime? DateTime { get; set; }
         public int HairdresserId { get; set; }
+        public byte[]? NewsImage { get; set; }
         public virtual User? Hairdresser { get; set; }
     }
 }

@@ -17,13 +17,13 @@ namespace bookBeauty.API.Controllers
         {
         }
 
-        [Authorize(Roles = "Admin, Frizer")]
+        [Authorize(Roles = "Admin, Hairdresser")]
         public override Task<Service> Insert([FromBody] ServiceInsertRequest request)
         {
             return base.Insert(request);
         }
 
-        [Authorize(Roles = "Admin, Frizer")]
+        [Authorize(Roles = "Admin, Hairdresser")]
         public override  async Task<Service> Update(int id, ServiceUpdateRequest request)
         {
             return await _service.Update(id, request);

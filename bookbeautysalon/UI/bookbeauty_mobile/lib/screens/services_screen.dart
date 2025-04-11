@@ -53,7 +53,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
             const Padding(
               padding: EdgeInsets.only(left: 8.0, bottom: 8.0),
               child: Text(
-                'Usluge',
+                'Services',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -64,7 +64,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
               child: isLoading
                   ? const Center(child: CircularProgressIndicator())
                   : _registeredServices.isEmpty
-                      ? const Center(child: Text('Nema dostupnih usluga'))
+                      ? const Center(child: Text('There is no available services.'))
                       : Center(
                           child: ListView.builder(
                             padding: const EdgeInsets.all(12),

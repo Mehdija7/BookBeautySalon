@@ -48,24 +48,24 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.of(context).pop(); // Go back to the previous screen
+            Navigator.of(context).pop(); 
           },
         ),
       ),
-      backgroundColor: const Color(0xFFF1F1F1), // Lighter background color
+      backgroundColor: const Color(0xFFF1F1F1), 
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const MainTitle(title: 'Termini'),
+            const MainTitle(title: 'Appointments'),
             const SizedBox(height: 20),
             Expanded(
               child: _isLoading
                   ? Center(
                       child: CircularProgressIndicator(
                         color: Theme.of(context)
-                            .primaryColor, // Change to app's primary color
+                            .primaryColor, 
                       ),
                     )
                   : _appointments.isEmpty
@@ -77,7 +77,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
                                   size: 50, color: Colors.grey),
                               SizedBox(height: 16),
                               Text(
-                                "Nemate zakazanih termina.",
+                                "There is no appointments.",
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,

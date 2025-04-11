@@ -49,7 +49,7 @@ class OrderItems extends StatelessWidget {
             ),
           ),
           Text(
-            'Ukupno: $totalPrice KM',
+            'Total price: $totalPrice KM',
             style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
         ],

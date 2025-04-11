@@ -64,7 +64,7 @@ namespace bookBeauty.API
                     new Claim(ClaimTypes.NameIdentifier, customer.Result.Username)
                     };
 
-                    claims.Add(new Claim(ClaimTypes.Role, "Kupac"));
+                    claims.Add(new Claim(ClaimTypes.Role, "Customer"));
 
                     var identity = new ClaimsIdentity(claims, Scheme.Name);
 

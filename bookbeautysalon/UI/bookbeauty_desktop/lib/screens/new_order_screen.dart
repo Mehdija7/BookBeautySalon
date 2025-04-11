@@ -37,23 +37,23 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
     Order o = widget.order;
 
     try {
-      if (widget.order.status!.toLowerCase() == 'kreirana') {
-        o.status = "Isporucena"; // Update status to 'Isporucena'
-      } else if (widget.order.status!.toLowerCase() == 'isporucena') {
-        o.status = "Dostavljena"; // Update status to 'Dostavljena'
+      if (widget.order.status!.toLowerCase() == 'created') {
+        o.status = "sent"; 
+      } else if (widget.order.status!.toLowerCase() == 'sent') {
+        o.status = "delivered";
       }
 
       var result = await orderProvider.update(widget.order.orderId!, o);
 
       setState(() {
-        widget.order = result; // Update the order after successful update
-        isLoading = false; // Set loading state to false
+        widget.order = result; 
+        isLoading = false; 
       });
       Navigator.of(context).pop(true);
     } catch (e) {
       print("Error: $e");
       setState(() {
-        isLoading = false; // Handle loading state after error
+        isLoading = false; 
       });
     }
   }
@@ -81,21 +81,21 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
     late String buttonText;
 
     switch (widget.order.status!.toLowerCase()) {
-      case 'kreirana':
-        buttonColor = const Color.fromARGB(255, 172, 247, 150); // Green
-        buttonText = 'Oznaci kao spakovano';
+      case 'created':
+        buttonColor = const Color.fromARGB(255, 172, 247, 150); 
+        buttonText = 'Mark as sent';
         break;
-      case 'isporucena':
-        buttonColor = const Color.fromARGB(255, 255, 165, 0); // Orange
-        buttonText = 'Oznaci kao poslano';
+      case 'sent':
+        buttonColor = const Color.fromARGB(255, 255, 165, 0); 
+        buttonText = 'Mark as delivered';
         break;
-      case 'dostavljena':
-        buttonColor = const Color.fromARGB(255, 255, 69, 58); // Red
-        buttonText = 'Narudzba je poslana';
+      case 'delivered':
+        buttonColor = const Color.fromARGB(255, 255, 69, 58); 
+        buttonText = 'Mark as delivered';
         break;
       default:
-        buttonColor = Colors.grey; // Default case if status is not recognized
-        buttonText = 'Nepoznato stanje';
+        buttonColor = Colors.grey; 
+        buttonText = 'Status is not recognized';
     }
 
     return Scaffold(
@@ -104,14 +104,14 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
           ? const Center(child: CircularProgressIndicator())
           : Column(
               children: [
-                const MainTitle(title: 'Narudzba'),
+                const MainTitle(title: 'Order'),
                 Padding(
                   padding: const EdgeInsets.only(left: 20, top: 15, bottom: 10),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        "ID narudzbe: ${widget.order.orderNumber}",
+                        "Order ID: ${widget.order.orderNumber}",
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ],
@@ -133,7 +133,7 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
-                              'Informacije o kupcu',
+                              'Information about customer',
                               style: TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold),
                             ),
@@ -143,17 +143,17 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                       Padding(
                         padding: const EdgeInsets.only(
                             right: 200, left: 20, bottom: 20),
-                        child: Text('Adresa:  ${user.address}'),
+                        child: Text('Addres:  ${user.address}'),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(
                             right: 200, left: 20, bottom: 20),
-                        child: Text('Ime:  ${user.firstName} ${user.lastName}'),
+                        child: Text('Name:  ${user.firstName} ${user.lastName}'),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(
                             right: 200, left: 20, bottom: 20),
-                        child: Text('Broj:  ${user.phone}'),
+                        child: Text('Telephone number:  ${user.phone}'),
                       ),
                     ],
                   ),

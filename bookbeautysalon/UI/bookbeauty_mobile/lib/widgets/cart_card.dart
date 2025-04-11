@@ -28,10 +28,16 @@ class CartCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  product.product!.name!,
-                  style: const TextStyle(fontSize: 14),
-                ),
+                 Text(
+                        product.product!.name!.length > 10
+                       ? '${product.product!.name!.substring(0, 10)}...'
+                       : product.product!.name!,
+                        overflow: TextOverflow.clip,
+                        maxLines: 1,
+                        style:
+                            const TextStyle(fontSize: 16, color: Colors.black),
+                      ),
+                    
                 Text(
                   '${product.product!.price}',
                   style: const TextStyle(
@@ -44,14 +50,14 @@ class CartCard extends StatelessWidget {
               ? Image.memory(
                   base64Decode(product.product!
                       .image!), 
-                  width: 100,
-                  height: 200,
+                  width: 50,
+                  height: 50,
                   fit: BoxFit.cover,
                 )
               : Image.asset(
                   "assets/images/logoBB.png", 
-                  width: 100,
-                  height: 200,
+                  width: 50,
+                  height: 50,
                   fit: BoxFit.cover,
                 ),
           Padding(
@@ -94,96 +100,3 @@ class CartCard extends StatelessWidget {
     );
   }
 }
-
-
-
-
-
-
-
-/*class CartCard extends StatefulWidget {
-  const CartCard({super.key, required this.product});
-
-  final OrderItem product;
-
-  @override
-  State<CartCard> createState() => _CartCardState();
-}
-
-class _CartCardState extends State<CartCard> {
-  late String quantity = '';
-
-  @override
-  void initState() {
-    super.initState();
-    quantity = widget.product.quantity.toString();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final provider = Provider.of<OrderItemProvider>(context, listen: false);
-    return Card(
-      margin: const EdgeInsets.all(10),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      clipBehavior: Clip.hardEdge,
-      elevation: 2,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  widget.product.product!.name!,
-                  style: const TextStyle(
-                    fontSize: 14,
-                  ),
-                ),
-                Text(
-                  widget.product.product!.price.toString(),
-                  style: const TextStyle(
-                      fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-          ),
-          Image.network(
-            widget.product.product!.image!,
-            width: 100,
-            height: 80,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: 5),
-            child: Row(
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.remove_circle,
-                      color: Color.fromARGB(255, 252, 130, 122)),
-                  onPressed: () {
-                    provider.decreaseQuantity(widget.product.productId!);
-                  },
-                ),
-                Text(
-                  '${provider.getQuantity(widget.product.productId!)}',
-                  style: const TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.w600),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.add_circle,
-                      color: Color.fromARGB(255, 154, 214, 119)),
-                  onPressed: () {
-                    provider.increaseQuantity(widget.product.productId!);
-                  },
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}*/

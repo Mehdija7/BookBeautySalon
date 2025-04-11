@@ -11,6 +11,7 @@ final theme =
     ThemeData(useMaterial3: true, textTheme: GoogleFonts.openSansTextTheme());
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(
     MultiProvider(
       providers: [
@@ -32,9 +33,7 @@ class MyApp extends StatelessWidget {
         localizationsDelegates: GlobalMaterialLocalizations.delegates,
         supportedLocales: const [
           Locale('en', 'US'),
-          Locale('bs'),
         ],
-        locale: const Locale('bs'),
         theme: theme,
         home: const LoginScreen());
   }

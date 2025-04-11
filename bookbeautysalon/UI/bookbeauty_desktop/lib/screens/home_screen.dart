@@ -23,7 +23,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreen extends State<HomeScreen> {
   int _selectedPageIndex = 0;
-  String maintitle = 'Pocetna';
+  String maintitle = 'Reports';
 
   void _setScreen(String title, int index) {
     setState(() {

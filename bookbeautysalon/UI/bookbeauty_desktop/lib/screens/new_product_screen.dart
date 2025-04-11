@@ -74,7 +74,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
     showDialog(
         context: context,
         builder: (ctx) => AlertDialog(
-              title: const Text('Neispravan unos'),
+              title: const Text('Error'),
               content: const Text(
                   'Molimo Vas unesite ispravan naziv, opis, cijenu, kategoriju i sliku proizvoda.'),
               actions: [
@@ -130,9 +130,9 @@ class _NewProductScreenState extends State<NewProductScreen> {
         _descriptionController.text = '';
       });
       _showSnackBar(
-          "Proizvod uspješno dodan", const Color.fromARGB(255, 95, 167, 97));
+          "Product added successfully.", const Color.fromARGB(255, 95, 167, 97));
     } catch (e) {
-      _showSnackBar('Neuspješno dodavanje proizvoda',
+      _showSnackBar('Adding product was unsuccessfully.',
           const Color.fromARGB(255, 226, 98, 75));
     }
   }
@@ -155,14 +155,14 @@ class _NewProductScreenState extends State<NewProductScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const MainTitle(title: 'Dodavanje novog proizvoda'),
+                const MainTitle(title: 'Adding new product'),
                 Padding(
                   padding:
                       const EdgeInsets.only(right: 200, left: 20, bottom: 10),
                   child: TextField(
                     controller: _titleController,
                     decoration: const InputDecoration(
-                      hintText: 'Naziv',
+                      hintText: 'Name',
                     ),
                   ),
                 ),
@@ -172,7 +172,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
                   child: TextField(
                     controller: _priceController,
                     decoration: const InputDecoration(
-                        hintText: 'Cijena', suffixText: 'BAM'),
+                        hintText: 'Price', suffixText: 'BAM'),
                   ),
                 ),
                 Padding(
@@ -182,14 +182,14 @@ class _NewProductScreenState extends State<NewProductScreen> {
                     maxLines: 3,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
-                      hintText: 'Opis proizvoda',
+                      hintText: 'Description',
                     ),
                   ),
                 ),
                 const Padding(
                   padding: EdgeInsets.only(left: 20, top: 15),
                   child: Text(
-                    'Kategorija',
+                    'Category',
                     style: TextStyle(
                         fontSize: 18,
                         color: Color.fromARGB(255, 114, 111, 111),
@@ -197,7 +197,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
                   ),
                 ),
                 _registeredCategories.isEmpty
-                    ? const Text("Dodajte kategorije")
+                    ? const Text("Add categories")
                     : Padding(
                         padding: const EdgeInsets.only(left: 20, top: 15),
                         child: DropdownButton<String>(
@@ -228,7 +228,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text('Slika: '),
+                const Text('Image: '),
                 Padding(
                   padding: const EdgeInsets.only(top: 0, right: 0),
                   child: GestureDetector(
@@ -264,7 +264,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
                       foregroundColor: WidgetStateProperty.all<Color>(
                           const Color.fromARGB(255, 245, 245, 245)),
                     ),
-                    child: const Text('Dodaj proizvod'),
+                    child: const Text('Add product'),
                   ),
                 ),
               ],

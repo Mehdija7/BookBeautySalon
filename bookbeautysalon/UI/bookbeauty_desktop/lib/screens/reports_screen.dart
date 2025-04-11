@@ -16,20 +16,20 @@ class ReportsScreen extends StatelessWidget {
           GestureDetector(
             onTap: () {
               Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (ctx) => ReportScreen()));
+                  .push(MaterialPageRoute(builder: (ctx) => const ReportScreen()));
             },
             child: const CardItem(
-              title: 'Izvjestaji',
+              title: 'Reports',
               color: Colors.grey,
             ),
           ),
           GestureDetector(
             onTap: () {
               Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (ctx) => ReviewScreen()));
+                  .push(MaterialPageRoute(builder: (ctx) => const ReviewScreen()));
             },
             child: const CardItem(
-              title: 'Recenzije',
+              title: 'Reviews',
               color: Colors.blueGrey,
             ),
           ),

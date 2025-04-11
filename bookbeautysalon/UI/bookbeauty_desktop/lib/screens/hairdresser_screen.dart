@@ -27,6 +27,7 @@ class _HairdresserScreenState extends State<HairdresserScreen> {
       setState(() {
         users = u;
       });
+      print(users);
     } catch (e) {
       print('Error fetching users: $e');
     } finally {
@@ -51,29 +52,26 @@ class _HairdresserScreenState extends State<HairdresserScreen> {
     _fetchUsers();
   }
 
-  // Dialog function to confirm deletion
   void _showDeleteDialog(int userId, String firstName) {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Potvrda brisanja'),
+        title: const Text('Confirm deleting'),
         content:
-            Text('Jeste li sigurni da želite obrisati frizera: $firstName?'),
+            Text('Are you sure about deleting hairdresser $firstName?'),
         actions: [
           TextButton(
             onPressed: () {
-              // Dismiss dialog if user presses 'Ne'
               Navigator.of(ctx).pop();
             },
-            child: const Text('Ne'),
+            child: const Text('No'),
           ),
           TextButton(
             onPressed: () {
-              // Call delete function if user presses 'Da'
               _deleteUser(userId);
               Navigator.of(ctx).pop();
             },
-            child: const Text('Da'),
+            child: const Text('Yes'),
           ),
         ],
       ),
@@ -92,18 +90,17 @@ class _HairdresserScreenState extends State<HairdresserScreen> {
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: SizedBox(
-                    width: MediaQuery.of(context).size.width *
-                        0.95, // Stretch table width
+                    width: MediaQuery.of(context).size.width, 
                     child: DataTable(
-                      columnSpacing: 20.0, // Adjust spacing between columns
+                      columnSpacing: 20.0, 
                       columns: const [
-                        DataColumn(label: Text('Ime')),
-                        DataColumn(label: Text('Prezime')),
-                        DataColumn(label: Text('Korisnicko ime')),
+                        DataColumn(label: Text('Name')),
+                        DataColumn(label: Text('Lastname')),
+                        DataColumn(label: Text('Username')),
                         DataColumn(label: Text('Email')),
-                        DataColumn(label: Text('Broj telefona')),
-                        DataColumn(label: Text('Adresa')),
-                        DataColumn(label: Text('Izbrisi')),
+                        DataColumn(label: Text('Telephone number')),
+                        DataColumn(label: Text('Address')),
+                        DataColumn(label: Text('Delete')),
                       ],
                       rows: users.map((hairdresser) {
                         return DataRow(cells: [
@@ -116,7 +113,6 @@ class _HairdresserScreenState extends State<HairdresserScreen> {
                           DataCell(IconButton(
                             icon: const Icon(Icons.delete),
                             onPressed: () {
-                              // Show delete confirmation dialog
                               _showDeleteDialog(
                                   hairdresser.userId!, hairdresser.firstName!);
                             },
@@ -141,11 +137,11 @@ class _HairdresserScreenState extends State<HairdresserScreen> {
             _fetchUsers();
           }
         },
-        child: const Icon(Icons.add),
         backgroundColor: Theme.of(context).primaryColor,
+        child: const Icon(Icons.add),
       ),
       floatingActionButtonLocation:
-          FloatingActionButtonLocation.endFloat, // Bottom-right corner
+          FloatingActionButtonLocation.endFloat, 
     );
   }
 }

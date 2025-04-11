@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:book_beauty/models/service.dart';
 import 'package:book_beauty/screens/reservation_screen.dart';
 import 'package:book_beauty/widgets/main_title.dart';
@@ -25,108 +24,83 @@ class ServiceDetailScreen extends StatelessWidget {
         title: const Text(''),
         backgroundColor: const Color.fromARGB(255, 231, 228, 213),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            MainTitle(title: service.name!),
-            const SizedBox(height: 14),
-            Hero(
-              tag: UniqueKey(),
-              child: service.image != null
-                  ? Image.memory(
-                      base64Decode(service
-                          .image!), // Assuming it's a Uint8List if not null
-                      width: 100,
-                      height: 200,
-                      fit: BoxFit.cover,
-                    )
-                  : Image.asset(
-                      "assets/images/logoBB.png", // Fallback asset image when image is null
-                      width: 100,
-                      height: 200,
-                      fit: BoxFit.cover,
-                    ),
-            ),
-            Container(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          MainTitle(title: service.name!),
+          const SizedBox(height: 14),
+          Hero(
+            tag: UniqueKey(),
+            child: service.image != null
+                ? Image.memory(
+                    base64Decode(service.image!),
+                    width: double.infinity,
+                    height: 200,
+                    fit: BoxFit.cover,
+                  )
+                : Image.asset(
+                    "assets/images/pranje_kose.jpg",
+                    width: double.infinity,
+                    height: 200,
+                    fit: BoxFit.cover,
+                  ),
+          ),
+          Expanded(
+            child: Container(
               color: const Color.fromARGB(255, 231, 228, 213),
-              height: 400,
+              padding: const EdgeInsets.all(16.0),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(left: 5, top: 15, bottom: 20),
-                    child: Column(
-                      children: [
-                        Text(
-                          service.shortDescription!,
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleMedium!
-                              .copyWith(fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        Text(
-                          service.longDescription!,
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleMedium!
-                              .copyWith(fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
+                  Text(
+                    service.shortDescription!,
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium!
+                        .copyWith(fontWeight: FontWeight.bold),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 5),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text('${service.price} BAM'),
-                        TextButton(
-                          style: ButtonStyle(
-                            fixedSize: WidgetStateProperty.all(
-                              const Size(150, 60),
-                            ),
-                            backgroundColor: WidgetStateProperty.all<Color>(
+                  const SizedBox(height: 15),
+                  Text(
+                    service.longDescription!,
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium!
+                        .copyWith(fontWeight: FontWeight.bold),
+                  ),
+                  const Spacer(), 
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        '${service.price} BAM',
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 15, horizontal: 30),
+                          backgroundColor:
                               const Color.fromARGB(255, 113, 121, 122),
-                            ),
-                            foregroundColor: WidgetStateProperty.all<Color>(
-                                const Color.fromARGB(255, 245, 245, 245)),
-                            overlayColor:
-                                WidgetStateProperty.resolveWith<Color?>(
-                              (Set<WidgetState> states) {
-                                if (states.contains(WidgetState.hovered)) {
-                                  return const Color.fromARGB(185, 48, 49, 49)
-                                      .withValues(alpha: 40);
-                                }
-                                if (states.contains(WidgetState.focused) ||
-                                    states.contains(WidgetState.pressed)) {
-                                  return const Color.fromARGB(
-                                          214, 126, 129, 131)
-                                      .withOpacity(0.12);
-                                }
-                                return null;
-                              },
-                            ),
-                          ),
-                          onPressed: goToReservation,
-                          child: const Text(
-                            'Rezerviši termin',
-                            style: TextStyle(fontSize: 16),
-                          ),
+                          foregroundColor:
+                              const Color.fromARGB(255, 245, 245, 245),
                         ),
-                      ],
-                    ),
+                        onPressed: goToReservation,
+                        child: const Text(
+                          'Reserve',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ),
+                    ],
                   ),
+                  const SizedBox(height: 20), 
                 ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

@@ -15,14 +15,14 @@ namespace bookBeauty.API.Controllers
         {
         }
 
-        [Authorize(Roles = "Admin,Frizer")]
+        [Authorize(Roles = "Admin,Hairdresser")]
         public override Task<Model.Model.News> Insert([FromBody] NewsUpsertRequest request)
         {
 
             return base.Insert(request);
         }
 
-        [Authorize(Roles = "Admin,Frizer")]
+        [Authorize(Roles = "Admin,Hairdresser")]
         public override Task<IActionResult> Delete(int id)
         {
             return base.Delete(id);

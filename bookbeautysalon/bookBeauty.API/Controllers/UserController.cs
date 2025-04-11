@@ -40,7 +40,7 @@ namespace bookBeauty.API.Controllers
         }
 
         [HttpGet("{id}/GetRoles")]
-        [Authorize(Roles = "Admin,Frizer")]
+        [Authorize(Roles = "Admin,Hairdresser")]
         public List<UserRoles> GetUserRoles(int id)
         {
             return ((IUserService)_service).GetUserRoles(id);
@@ -59,12 +59,6 @@ namespace bookBeauty.API.Controllers
             ((IUserService)_service).DeleteUserRoles(userId);
         }
 
-        [HttpGet("/GetHairdressersMobile")]
-        [Authorize]
-        public List<HairdresserGetRequest> GetHairdressersMobile()
-        {
-            return ((IUserService)_service).GetHairdressersMobile();
-        }
         
         [AllowAnonymous]
         [HttpPost("UserRegistration")]

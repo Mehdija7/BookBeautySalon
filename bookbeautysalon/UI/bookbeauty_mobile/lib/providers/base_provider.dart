@@ -27,7 +27,7 @@ abstract class BaseProvider<T> with ChangeNotifier {
     var uri = Uri.parse(url);
     var headers = createHeaders();
 
-    print("--------- base url----------");
+    print("--------- base url in get method ----------");
     print(uri);
     print(headers.toString());
     var response = await http.get(uri, headers: headers);
@@ -46,10 +46,9 @@ abstract class BaseProvider<T> with ChangeNotifier {
       print(result.result);
       return result;
     } else {
-      throw  Exception("Upps, something went wrong");
+      throw new Exception("Upps, something went wrong");
     }
   }
-
   Future<SearchResult<T>> getRecommended(int id) async {
     var url = "$baseUrl$_endpoint/$id/recommend";
 
@@ -137,25 +136,28 @@ abstract class BaseProvider<T> with ChangeNotifier {
     }
   }
 
-  Future<bool> delete(int id) async {
-    var url = "$baseUrl$_endpoint/$id";
+  Future<T> delete(int id) async {
+    var url = "$baseUrl$_endpoint?id=$id";
     var uri = Uri.parse(url);
     var headers = createHeaders();
 
-    var response = await http.delete(uri, headers: headers);
-
-    if (isValidResponse(response)) {
-      return true;
-    } else {
-      throw  Exception("Unknown error");
+    try {
+      var response = await http.delete(uri, headers: headers);
+      var data = jsonDecode(response.body);
+      return fromJson(data);
+    } catch (e) {
+        throw  Exception("Unknown error");
+      
     }
+
+    
   }
 
   bool isValidResponse(Response response) {
     if (response.statusCode < 299) {
       return true;
     } else if (response.statusCode == 401) {
-      throw  Exception("Unauthorised");
+      throw  Exception("Unauthorized");
     } else {
       throw  Exception("Upps, something went wrong");
     }

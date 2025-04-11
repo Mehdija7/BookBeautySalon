@@ -22,7 +22,7 @@ class MainDrawer extends StatelessWidget {
               color: Color.fromARGB(255, 69, 71, 73),
             ),
             child: Text(
-              isAdmin ? 'ADMIN PANEL' : 'Frizer panel',
+              isAdmin ? 'Administrator' : 'Hairdresser',
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 24,
@@ -30,58 +30,58 @@ class MainDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
-            title: const Text('Pocetna'),
+            title: const Text('Reports'),
             onTap: () {
-              goToScreen('Pocetna', 0);
+              goToScreen('Reports', 0);
               Navigator.pop(context);
             },
           ),
           ListTile(
-              title: const Text('Narudzbe'),
+              title: const Text('Orders'),
               onTap: () {
                 Navigator.pop(context);
-                goToScreen('Narudzbe', 1);
+                goToScreen('Orders', 1);
               }),
           ListTile(
-            title: const Text('Termini'),
+            title: const Text('Appointments'),
             onTap: () {
               Navigator.pop(context);
-              goToScreen('Termini', 2);
+              goToScreen('Appointments', 2);
             },
           ),
           ListTile(
-            title: const Text('Proizvodi'),
+            title: const Text('Products'),
             onTap: () {
-              goToScreen('Proizvodi', 3);
-              Navigator.pop(context);
-            },
-          ),
-          ListTile(
-            title: const Text('Usluge'),
-            onTap: () {
-              goToScreen('Usluge', 4);
+              goToScreen('Products', 3);
               Navigator.pop(context);
             },
           ),
           ListTile(
-            title: const Text('Kategorije'),
+            title: const Text('Services'),
             onTap: () {
-              goToScreen('Kategorije', 5);
+              goToScreen('Services', 4);
               Navigator.pop(context);
             },
           ),
           ListTile(
-            title: const Text('Novosti'),
+            title: const Text('Categories'),
             onTap: () {
-              goToScreen('Novosti', 6);
+              goToScreen('Categories', 5);
+              Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            title: const Text('News'),
+            onTap: () {
+              goToScreen('News', 6);
               Navigator.pop(context);
             },
           ),
           isAdmin
               ? ListTile(
-                  title: const Text('Frizeri'),
+                  title: const Text('Haidressers'),
                   onTap: () {
-                    goToScreen('Frizeri', 7);
+                    goToScreen('Haidressers', 7);
                     Navigator.pop(context);
                   },
                 )
@@ -101,7 +101,7 @@ class MainDrawer extends StatelessWidget {
                   );
                 },
                 icon: const Icon(Icons.logout),
-                label: const Text('Odjava'),
+                label: const Text('Log out'),
                 style: TextButton.styleFrom(),
               ),
             ],

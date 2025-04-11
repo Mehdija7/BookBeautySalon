@@ -43,14 +43,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Greška'),
+          title: const Text('Error'),
           content: Text(message),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('U redu'),
+              child: const Text('OK'),
             ),
           ],
         );
@@ -73,7 +73,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       );
       var u = await _userProvider.registrate(newUser);
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Registracija uspješna!'), backgroundColor: Colors.green),
+        SnackBar(content: Text('Registration was successfully!'), backgroundColor: Colors.green),
       );
       Navigator.of(context)
           .push(MaterialPageRoute(builder: (ctx) => const LoginScreen()));
@@ -92,13 +92,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   'assets/images/logoBB2.jpg',
                   fit: BoxFit.cover,
                   width: double.infinity,
-                  height: 200,
+                  height: 100,
                 ),
               ],
             ),
           ),
           Positioned.fill(
-            top: 200,
+            top: 100,
             child: Container(
               decoration: BoxDecoration(
                 color: const Color.fromARGB(255, 190, 187, 168).withOpacity(0.4),
@@ -110,21 +110,21 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   child: ListView(
                     children: [
-                      _buildLabel('Ime'),
+                      _buildLabel('First name'),
                       _buildTextField(_firstNameController),
-                      _buildLabel('Prezime'),
+                      _buildLabel('Last name'),
                       _buildTextField(_lastNameController),
-                      _buildLabel('Adresa'),
+                      _buildLabel('Address'),
                       _buildTextField(_addressController),
                       _buildLabel('Email'),
                       _buildTextField(_emailController, isEmail: true),
-                      _buildLabel('Broj telefona'),
+                      _buildLabel('Telephone number'),
                       _buildTextField(_phoneController),
-                      _buildLabel('Korisnicko ime'),
+                      _buildLabel('Username'),
                       _buildTextField(_usernameController),
-                      _buildLabel('Lozinka'),
+                      _buildLabel('Password'),
                       _buildTextField(_passwordController, obscureText: true, isPassword: true),
-                      _buildLabel('Lozinka potvrda'),
+                      _buildLabel('Confirm password'),
                       _buildTextField(_confirmPasswordController, obscureText: true, isPasswordConfirmed: true),
                       const SizedBox(height: 32),
                       SizedBox(
@@ -139,14 +139,37 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             ),
                           ),
                           child: const Text(
-                            'Registruj se',
+                            'Registrate',
                             style: TextStyle(
                               fontSize: 18,
                               color: Color.fromARGB(255, 59, 60, 61),
                             ),
-                          ),
+                          ),      
                         ),
                       ),
+                    const SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          "Do you have already account?",
+                          style: TextStyle(color: Colors.blueGrey),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (ctx) => const LoginScreen()));
+                          },
+                          child: const Text(
+                            "Sign in",
+                            style: TextStyle(
+                              color: Color.fromARGB(255, 30, 121, 240),
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                     ],
                   ),
                 ),
@@ -177,16 +200,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         obscureText: obscureText,
         validator: (value) {
           if (value == null || value.isEmpty) {
-            return 'Polje je obavezno';
+            return 'This field is required.';
           }
           if (isEmail && !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
-            return 'Unesite ispravan email';
+            return 'Wrong email format.';
           }
           if (isPassword && !RegExp(r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}\$').hasMatch(value)) {
-            return 'Lozinka mora imati najmanje 8 karaktera i bar jedno slovo i broj';
+            return 'Password must contains at least 8 characters including number and letters';
           }
           if (isPasswordConfirmed && _confirmPasswordController.text != _passwordController.text) {
-            return 'Lozinke se ne podudaraju';
+            return 'Passwords are not the same.';
           }
           
           return null;

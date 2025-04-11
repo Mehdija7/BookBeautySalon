@@ -23,7 +23,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
-    _fetchUser(); // Fetch user data when the screen initializes
+    _fetchUser(); 
   }
 
   Future<void> _fetchUser() async {
@@ -82,9 +82,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             fit: BoxFit.cover,
                           ),
                         ),
-                        IconButton(
-                          icon: const Icon(Icons.edit),
-                          onPressed: goToEditScreen,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            IconButton(
+                              icon: const Icon(Icons.edit),
+                              onPressed: goToEditScreen,
+                            ),
+                          ],
                         ),
                         const SizedBox(height: 10),
                         Text(
@@ -97,25 +102,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                         const SizedBox(height: 30),
                         CustomerInfoItem(
-                            title: 'Ime:',
+                            title: 'First name:',
                             value: user!.firstName ?? '',
                             titleStyle: const TextStyle(
                                 color: dustyBlue, fontWeight: FontWeight.bold),
                             valueStyle: const TextStyle(color: goldGrey)),
                         CustomerInfoItem(
-                            title: 'Prezime:',
+                            title: 'Last name:',
                             value: user!.lastName ?? '',
                             titleStyle: const TextStyle(
                                 color: dustyBlue, fontWeight: FontWeight.bold),
                             valueStyle: const TextStyle(color: goldGrey)),
                         CustomerInfoItem(
-                            title: 'Grad:',
+                            title: 'Address:',
                             value: user!.address ?? '',
                             titleStyle: const TextStyle(
                                 color: dustyBlue, fontWeight: FontWeight.bold),
                             valueStyle: const TextStyle(color: goldGrey)),
                         CustomerInfoItem(
-                            title: 'Broj telefona:',
+                            title: 'Telephone number:',
                             value: user!.phone ?? '',
                             titleStyle: const TextStyle(
                                 color: dustyBlue, fontWeight: FontWeight.bold),
@@ -130,23 +135,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           valueStyle: const TextStyle(
                             color: goldGrey,
                           ),
-                          valueWidget: Flexible(
-                            child: Text(
-                              user!.email ?? '',
-                              style: const TextStyle(color: goldGrey),
-                              overflow: TextOverflow.ellipsis,
-                              softWrap: false,
-                            ),
-                          ),
+                        
                         ),
                         const SizedBox(height: 30),
-                        _buildCard("Moje narudzbe",
+                        _buildCard("My orders",
                             icon: Icons.shopping_cart_outlined,
                             iconColor: Colors.blueGrey,
                             path: 'orders'),
-                        _buildCard("Moji termini",
+                        _buildCard("My appointments",
                             icon: Icons.book, path: 'appointments'),
-                        _buildCard("Omiljeni proizvodi",
+                        _buildCard("Favorite products",
                             icon: Icons.favorite,
                             iconColor: Colors.redAccent,
                             path: 'favorites'),
@@ -162,7 +160,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                           ),
                           icon: const Icon(Icons.logout, color: backgroundGrey),
-                          label: const Text("Odjava"),
+                          label: const Text("Log out"),
                           onPressed: () {
                             Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
@@ -205,6 +203,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         }
       },
       child: Card(
+        color: const Color.fromARGB(135, 255, 250, 236),
         elevation: 4,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         child: Padding(
@@ -222,7 +221,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   if (icon != null)
                     Icon(
                       icon,
-                      color: iconColor ?? const Color(0xFF748CAB),
+                      color: iconColor ?? const Color.fromARGB(255, 183, 187, 191),
                     ),
                 ],
               ),

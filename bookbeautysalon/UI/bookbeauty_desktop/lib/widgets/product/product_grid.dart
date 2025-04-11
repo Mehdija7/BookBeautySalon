@@ -47,13 +47,13 @@ class ProductGridItem extends StatelessWidget {
                   child: product.image != null
                       ? Image.memory(
                           base64Decode(product
-                              .image!), // Assuming it's a Uint8List if not null
+                              .image!), 
                           width: 100,
                           height: 200,
                           fit: BoxFit.cover,
                         )
                       : Image.asset(
-                          "assets/images/logoBB.png", // Fallback asset image when image is null
+                          "assets/images/logoBB.png",
                           width: 100,
                           height: 200,
                           fit: BoxFit.cover,

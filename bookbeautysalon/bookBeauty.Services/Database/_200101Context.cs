@@ -97,6 +97,7 @@ public partial class _200101Context : DbContext
                 .HasColumnName("NewsID");
             entity.Property(e => e.Text);
             entity.Property(e => e.Title).HasMaxLength(50);
+            entity.Property(e => e.NewsImage).HasColumnName("image");
             entity.Property(e => e.DateTime).HasColumnType("datetime");
             entity.HasOne(e => e.Hairdresser).WithMany(p => p.News)
                .HasForeignKey(d => d.HairdresserId)

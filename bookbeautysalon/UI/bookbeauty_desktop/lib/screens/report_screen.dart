@@ -105,7 +105,7 @@ class _ReportScreenState extends State<ReportScreen> {
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: const Text('Zatvori'),
+              child: const Text('Close'),
             ),
           ],
         );
@@ -123,7 +123,7 @@ class _ReportScreenState extends State<ReportScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Izvjestaj"),
+        title: const Text("Report"),
       ),
       body: isLoading
           ? const CircularProgressIndicator()
@@ -132,7 +132,7 @@ class _ReportScreenState extends State<ReportScreen> {
                 RepaintBoundary(
                     key: _chartKey,
                     child: Column(children: [
-                      Row(
+                      const Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
@@ -178,7 +178,7 @@ class _ReportScreenState extends State<ReportScreen> {
                           foregroundColor: WidgetStateProperty.all<Color>(
                               const Color.fromARGB(255, 245, 245, 245)),
                         ),
-                        child: const Text('Pregled izvjestaja'),
+                        child: const Text('Report preview'),
                       ),
                     ),
                   ],

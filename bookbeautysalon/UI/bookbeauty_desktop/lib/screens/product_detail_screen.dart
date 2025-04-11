@@ -41,15 +41,15 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           context: context,
           builder: (context) {
             return AlertDialog(
-                title: Text('Upozorenje'),
+                title: const Text('Warning'),
                 content: Text(
-                    'Onemoguceno je uredjivanje proizvoda za stanje ${_product!.stateMachine}'),
+                    'Editing is disabled for current state: ${_product!.stateMachine}'),
                 actions: <Widget>[
                   TextButton(
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    child: Text('OK'),
+                    child: const Text('OK'),
                   ),
                 ]);
           });
@@ -85,24 +85,21 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         if (_image != null) {
           _product!.image = base64Encode(await _image!.readAsBytes());
         }
-        
-      /* var product =
-            await productProvider.update(_product!.productId!, _product);*/
-        
-        var product = await widget.updateProduct!(_product!);
+
+        var product = await widget.updateProduct(_product!);
         setState(() {
           _product = product;
           isEditing = false;
         });
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('Proizvod uspjesno spremljen'),
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Product successfully updated.'),
           backgroundColor: Colors.lightGreen,
         ));
       }
     } catch (e) {
       print("Error updating product: $e");
       ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Greska prilikom spremanja proizvoda.')));
+          const SnackBar(content: Text('Updating product was unsuccessfully.')));
     }
   }
 
@@ -130,7 +127,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         backgroundColor: const Color.fromARGB(157, 201, 198, 198),
       ),
       body: _product == null || isLoading
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : Container(
               height: MediaQuery.of(context).size.height,
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 0),
@@ -157,7 +154,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                   fit: BoxFit.cover,
                                 )
                               : Image.asset(
-                                  "assets/images/logoBB.png", // Default placeholder
+                                  "assets/images/logoBB.png",
                                   width: 200,
                                   height: 200,
                                   fit: BoxFit.cover,
@@ -176,7 +173,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           labelText: 'Description',
                         ),
                         enabled:
-                            isEditing, // Enable editing only if isEditing is true
+                            isEditing,
                       ),
                     ),
                     Padding(
@@ -184,17 +181,16 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       child: TextField(
                         controller: _priceController,
                         keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          border: const OutlineInputBorder(),
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
                           hintText: 'Enter price...',
                           labelText: 'Price',
                         ),
                         enabled:
-                            isEditing, // Enable editing only if isEditing is true
+                            isEditing, 
                       ),
                     ),
 
-                    // Edit or Save Button
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           vertical: 20, horizontal: 15),
@@ -212,7 +208,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                 ),
                               ),
                               child: const Text(
-                                'Spremi',
+                                'Save',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(fontSize: 18),
                               ),
@@ -232,7 +228,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                 ),
                               ),
                               child: const Text(
-                                'Uredi',
+                                'Edit',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(fontSize: 18),
                               ),

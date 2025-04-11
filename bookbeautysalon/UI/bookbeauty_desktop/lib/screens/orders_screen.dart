@@ -53,11 +53,11 @@ class _OrdersScreenState extends State<OrdersScreen> with RouteAware {
 
   Color _getStatusColor(String status) {
     switch (status.toLowerCase()) {
-      case 'kreirana':
+      case 'created':
         return Colors.green;
-      case 'isporucena':
+      case 'sent':
         return Colors.orange;
-      case 'dostavljena':
+      case 'delivered':
         return Colors.red;
       default:
         return Colors.grey;
@@ -72,27 +72,24 @@ class _OrdersScreenState extends State<OrdersScreen> with RouteAware {
     });
   }
 
-  // Sorting by price
   void _sortOrdersByPrice() {
-    if (selectedPriceOrder == 'Od najniže cijene') {
+    if (selectedPriceOrder == 'From lowest price') {
       orders.sort((a, b) => (a.totalPrice ?? 0).compareTo(b.totalPrice ?? 0));
-    } else if (selectedPriceOrder == 'Od najskuplje cijene') {
+    } else if (selectedPriceOrder == 'From highest price') {
       orders.sort((a, b) => (b.totalPrice ?? 0).compareTo(a.totalPrice ?? 0));
     }
   }
 
-  // Sorting by date
   void _sortOrdersByDate() {
-    if (selectedDateOrder == 'Od najnovije') {
+    if (selectedDateOrder == 'From newest') {
       orders.sort((a, b) => (b.dateTime ?? DateTime.now())
           .compareTo(a.dateTime ?? DateTime.now()));
-    } else if (selectedDateOrder == 'Od najstarije') {
+    } else if (selectedDateOrder == 'From oldest') {
       orders.sort((a, b) => (a.dateTime ?? DateTime.now())
           .compareTo(b.dateTime ?? DateTime.now()));
     }
   }
 
-  // Filtering by status
   List<Order> _filterOrdersByStatus(List<Order> orders) {
     if (selectedStatusFilter != null && selectedStatusFilter!.isNotEmpty) {
       return orders.where((order) {
@@ -112,19 +109,17 @@ class _OrdersScreenState extends State<OrdersScreen> with RouteAware {
     return Scaffold(
       body: Column(
         children: [
-          // Filter and Categorization Row
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Filter by Price Dropdown
                 DropdownButton<String>(
-                  hint: const Text('Filter po cijeni'),
+                  hint: const Text('Filter by price'),
                   value: selectedPriceOrder,
                   items: <String>[
-                    'Od najniže cijene',
-                    'Od najskuplje cijene',
+                    'From lowest price',
+                    'From highest price',
                   ].map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                         value: value, child: Text(value));
@@ -136,13 +131,12 @@ class _OrdersScreenState extends State<OrdersScreen> with RouteAware {
                   },
                 ),
                 const SizedBox(width: 20),
-                // Filter by Date Dropdown
                 DropdownButton<String>(
-                  hint: const Text('Filter po datumu'),
+                  hint: const Text('Filter by date'),
                   value: selectedDateOrder,
                   items: <String>[
-                    'Od najnovije',
-                    'Od najstarije',
+                    'From newest',
+                    'From oldest',
                   ].map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                         value: value, child: Text(value));
@@ -154,14 +148,13 @@ class _OrdersScreenState extends State<OrdersScreen> with RouteAware {
                   },
                 ),
                 const SizedBox(width: 20),
-                // Filter by Status Dropdown
                 DropdownButton<String>(
-                  hint: const Text('Filter po statusu'),
+                  hint: const Text('Filter by state'),
                   value: selectedStatusFilter,
                   items: <String>[
-                    'Kreirana',
-                    'Isporucena',
-                    'Dostavljena',
+                    'Created',
+                    'Sent',
+                    'Delivered',
                   ].map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                         value: value, child: Text(value));
@@ -173,19 +166,17 @@ class _OrdersScreenState extends State<OrdersScreen> with RouteAware {
                   },
                 ),
                 const SizedBox(width: 20),
-                // Clear Filters IconButton
                 IconButton(
                   icon: const Icon(
                     Icons.filter_alt_off,
                     color: Colors.redAccent,
                   ),
                   onPressed: _clearFilters,
-                  tooltip: 'Izbrisi sve filtere',
+                  tooltip: 'Delete all filters',
                 ),
               ],
             ),
           ),
-          // Orders Table
           Expanded(
             child: SingleChildScrollView(
               scrollDirection: Axis.vertical,
@@ -197,10 +188,10 @@ class _OrdersScreenState extends State<OrdersScreen> with RouteAware {
                         width: MediaQuery.of(context).size.width,
                         child: DataTable(
                           columns: const [
-                            DataColumn(label: Text('Broj narudzbe')),
-                            DataColumn(label: Text('Ukupna cijena')),
-                            DataColumn(label: Text('Datum')),
-                            DataColumn(label: Text('Status')),
+                            DataColumn(label: Text('Order number')),
+                            DataColumn(label: Text('Total price')),
+                            DataColumn(label: Text('Date')),
+                            DataColumn(label: Text('State')),
                           ],
                           rows: filteredOrders.map((order) {
                             return DataRow(
@@ -218,14 +209,14 @@ class _OrdersScreenState extends State<OrdersScreen> with RouteAware {
                                 DataCell(
                                   TextButton(
                                     onPressed: () {
-                                      print('Status: ${order.status}');
+                                      print('State: ${order.status}');
                                     },
                                     style: TextButton.styleFrom(
                                       backgroundColor: _getStatusColor(
                                           order.status ?? "unknown"),
                                       foregroundColor: Colors.white,
                                     ),
-                                    child: Text(order.status ?? "nepoznato"),
+                                    child: Text(order.status ?? "unknown"),
                                   ),
                                 ),
                               ],

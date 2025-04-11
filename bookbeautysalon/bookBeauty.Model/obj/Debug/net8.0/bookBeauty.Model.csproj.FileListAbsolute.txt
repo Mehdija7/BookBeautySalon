@@ -11,3 +11,16 @@ C:\Users\elmin\Desktop\BookBeautySalon\bookbeautysalon\bookBeauty.Model\obj\Debu
 C:\Users\elmin\Desktop\BookBeautySalon\bookbeautysalon\bookBeauty.Model\obj\Debug\net8.0\refint\bookBeauty.Model.dll
 C:\Users\elmin\Desktop\BookBeautySalon\bookbeautysalon\bookBeauty.Model\obj\Debug\net8.0\bookBeauty.Model.pdb
 C:\Users\elmin\Desktop\BookBeautySalon\bookbeautysalon\bookBeauty.Model\obj\Debug\net8.0\ref\bookBeauty.Model.dll
+C:\Users\Dell\Desktop\BookBeautySalon\bookbeautysalon\bookBeauty.Model\bin\Debug\net8.0\bookBeauty.Model.deps.json
+C:\Users\Dell\Desktop\BookBeautySalon\bookbeautysalon\bookBeauty.Model\bin\Debug\net8.0\bookBeauty.Model.dll
+C:\Users\Dell\Desktop\BookBeautySalon\bookbeautysalon\bookBeauty.Model\bin\Debug\net8.0\bookBeauty.Model.pdb
+C:\Users\Dell\Desktop\BookBeautySalon\bookbeautysalon\bookBeauty.Model\obj\Debug\net8.0\bookBeauty.Model.csproj.AssemblyReference.cache
+C:\Users\Dell\Desktop\BookBeautySalon\bookbeautysalon\bookBeauty.Model\obj\Debug\net8.0\bookBeauty.Model.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Dell\Desktop\BookBeautySalon\bookbeautysalon\bookBeauty.Model\obj\Debug\net8.0\bookBeauty.Model.AssemblyInfoInputs.cache
+C:\Users\Dell\Desktop\BookBeautySalon\bookbeautysalon\bookBeauty.Model\obj\Debug\net8.0\bookBeauty.Model.AssemblyInfo.cs
+C:\Users\Dell\Desktop\BookBeautySalon\bookbeautysalon\bookBeauty.Model\obj\Debug\net8.0\bookBeauty.Model.csproj.CoreCompileInputs.cache
+C:\Users\Dell\Desktop\BookBeautySalon\bookbeautysalon\bookBeauty.Model\obj\Debug\net8.0\bookBeauty.Model.sourcelink.json
+C:\Users\Dell\Desktop\BookBeautySalon\bookbeautysalon\bookBeauty.Model\obj\Debug\net8.0\bookBeauty.Model.dll
+C:\Users\Dell\Desktop\BookBeautySalon\bookbeautysalon\bookBeauty.Model\obj\Debug\net8.0\refint\bookBeauty.Model.dll
+C:\Users\Dell\Desktop\BookBeautySalon\bookbeautysalon\bookBeauty.Model\obj\Debug\net8.0\bookBeauty.Model.pdb
+C:\Users\Dell\Desktop\BookBeautySalon\bookbeautysalon\bookBeauty.Model\obj\Debug\net8.0\ref\bookBeauty.Model.dll

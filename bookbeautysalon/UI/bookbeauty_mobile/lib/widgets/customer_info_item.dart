@@ -29,7 +29,7 @@ class CustomerInfoItem extends StatelessWidget {
           const SizedBox(width: 10),
           Expanded(
             child:
-                valueWidget ?? // Use valueWidget if provided, otherwise fallback to default Text
+                valueWidget ?? 
                     Text(
                       value,
                       style: valueStyle,

@@ -11,6 +11,7 @@ class News {
   final DateTime? dateTime;
   final int? hairdresserId;
   final User? hairdresser;
+  final String? newsImage;
 
   News({
     this.newsId,
@@ -19,6 +20,7 @@ class News {
     this.dateTime,
     this.hairdresserId,
     this.hairdresser,
+    this.newsImage
   });
 
   factory News.fromJson(Map<String, dynamic> json) => _$NewsFromJson(json);

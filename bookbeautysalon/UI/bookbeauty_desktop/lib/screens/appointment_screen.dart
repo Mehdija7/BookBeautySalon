@@ -93,7 +93,7 @@ class _AppointmentScreen extends State<AppointmentScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Kalendar termina"),
+        title: const Text("Appointments calendar"),
         centerTitle: true,
         automaticallyImplyLeading: false,
       ),
@@ -105,9 +105,9 @@ class _AppointmentScreen extends State<AppointmentScreen> {
               firstDay: DateTime(2020),
               lastDay: DateTime(2050),
               calendarFormat: format,
-              onFormatChanged: (CalendarFormat _format) {
+              onFormatChanged: (CalendarFormat format) {
                 setState(() {
-                  format = _format;
+                  format = format;
                 });
               },
               startingDayOfWeek: StartingDayOfWeek.monday,
@@ -125,19 +125,19 @@ class _AppointmentScreen extends State<AppointmentScreen> {
               eventLoader: _getEventsfromDay,
               calendarStyle: CalendarStyle(
                 isTodayHighlighted: true,
-                selectedDecoration: BoxDecoration(
-                  color: Colors.blueGrey, // Circle for selected day
-                  shape: BoxShape.circle, // Ensure circle shape
+                selectedDecoration: const BoxDecoration(
+                  color: Colors.blueGrey, 
+                  shape: BoxShape.circle, 
                 ),
-                selectedTextStyle: TextStyle(color: Colors.white),
-                todayDecoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 105, 108, 110),
-                  shape: BoxShape.circle, // Ensure circle shape for today
+                selectedTextStyle: const TextStyle(color: Colors.white),
+                todayDecoration: const BoxDecoration(
+                  color: Color.fromARGB(255, 105, 108, 110),
+                  shape: BoxShape.circle, 
                 ),
-                defaultDecoration: BoxDecoration(
-                  shape: BoxShape.circle, // Circle shape for all days
-                  color: const Color.fromARGB(
-                      255, 179, 209, 216), // Make sure it's not filled
+                defaultDecoration: const BoxDecoration(
+                  shape: BoxShape.circle, 
+                  color: Color.fromARGB(
+                      255, 179, 209, 216), 
                 ),
                 weekendDecoration: BoxDecoration(
                   shape: BoxShape.rectangle,
@@ -152,7 +152,7 @@ class _AppointmentScreen extends State<AppointmentScreen> {
                   color: const Color.fromARGB(255, 144, 147, 150),
                   borderRadius: BorderRadius.circular(5.0),
                 ),
-                formatButtonTextStyle: TextStyle(
+                formatButtonTextStyle: const TextStyle(
                   color: Colors.white,
                 ),
               ),
@@ -162,16 +162,16 @@ class _AppointmentScreen extends State<AppointmentScreen> {
                 title: Card(
                   color: const Color.fromARGB(255, 235, 235, 235),
                   elevation: 3,
-                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                  margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                   child: Padding(
-                    padding: EdgeInsets.all(15),
+                    padding: const EdgeInsets.all(15),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           event.title,
-                          style: TextStyle(
-                            color: const Color.fromARGB(255, 44, 43, 43),
+                          style: const TextStyle(
+                            color: Color.fromARGB(255, 44, 43, 43),
                             fontSize: 18,
                           ),
                         ),

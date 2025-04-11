@@ -85,21 +85,7 @@ Flutter3DController controller = Flutter3DController();
                         },
                     ),
                   ),
-                 /* Container(
-                    width: screenWidth * 0.1, 
-                    height: screenWidth * 0.1, 
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: const Color.fromARGB(231, 19, 31, 36),
-                    ),
-                    child: O3D.asset(
-                    src: 'assets/images/22.glb',
-                    controller: controller,
-                     ),
-                  ),
-                  const SizedBox(height: 20),
-                  */
-                  // Title
+                
                   Text(
                     "Book Beauty Salon",
                     style: GoogleFonts.bigShouldersDisplay(
@@ -113,7 +99,7 @@ Flutter3DController controller = Flutter3DController();
                     controller: _usernameController,
                     decoration: InputDecoration(
                       prefixIcon: const Icon(Icons.person, color: Colors.blueGrey),
-                      labelText: "Korisnicko ime",
+                      labelText: "Username",
                       labelStyle: const TextStyle(color: Colors.blueGrey),
                       filled: true,
                       fillColor: const Color.fromARGB(211, 219, 219, 219),
@@ -124,14 +110,12 @@ Flutter3DController controller = Flutter3DController();
                     ),
                   ),
                    SizedBox(height: screenHeight*0.01),
-
-                  // Password Field
                   TextField(
                     controller: _passwordController,
                     obscureText: true,
                     decoration: InputDecoration(
                       prefixIcon: const Icon(Icons.lock, color: Colors.blueGrey),
-                      labelText: "Lozinka",
+                      labelText: "Password",
                       labelStyle: const TextStyle(color: Colors.blueGrey),
                       filled: true,
                       fillColor: const Color.fromARGB(236, 207, 206, 206),
@@ -150,10 +134,11 @@ Flutter3DController controller = Flutter3DController();
                         Authorization.password = _passwordController.text;
                         if (_usernameController.text.trim().isEmpty ||
                             _passwordController.text.trim().isEmpty) {
+                            //treba uraditii validaciju
                           showDialog(
                             context: context,
                             builder: (context) => AlertDialog(
-                              title: const Text("Greska"),
+                              title: const Text("Error"),
                               content: const Text(
                                   "Popunite polja za unos korisnickog imena i lozinke"),
                               actions: [
@@ -198,7 +183,7 @@ Flutter3DController controller = Flutter3DController();
                         ),
                       ),
                       child: Text(
-                        "Prijavi se",
+                        "Sign in",
                         style: TextStyle(fontSize: screenWidth * 0.05, color: Colors.white), 
                       ),
                     ),
@@ -208,11 +193,11 @@ Flutter3DController controller = Flutter3DController();
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                        Text(
-                        'Nemate kreiran račun?',
+                        'You dont have account?',
                         style: TextStyle(color: Colors.blueGrey, fontSize: 12),                   
                       ),
                       _buildHoverTextButton(
-                        label: "Registrujte se",
+                        label: "Registrate!",
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (ctx) => const RegistrationScreen()));

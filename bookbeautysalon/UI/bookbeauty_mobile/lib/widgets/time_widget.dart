@@ -24,7 +24,7 @@ class TimeWidget extends StatelessWidget {
             ),
             child: Center(
               child: Text(
-                formattedTime, // Display the formatted time here
+                formattedTime, 
                 style: const TextStyle(fontSize: 16),
               ),
             ),

@@ -119,20 +119,20 @@ using (var scope = app.Services.CreateScope())
         dataContext.Database.Migrate();
 
         dataContext.Categories.AddRange(
-            new Category { Name = "Šampon" },
-            new Category { Name = "Ulje" },
+            new Category { Name = "Shampoo" },
+            new Category { Name = "Oil" },
             new Category { Name = "Serum" },
-            new Category { Name = "Krema" },
-            new Category { Name = "Regenerator" },
-            new Category { Name = "Sprej" },
-            new Category { Name = "Maska" }
+            new Category { Name = "Cream" },
+            new Category { Name = "Conditioner" },
+            new Category { Name = "Spray" },
+            new Category { Name = "Mask" }
         );
         dataContext.SaveChanges();
 
         dataContext.Roles.AddRange(
-            new Role { Name = "Admin", Description = "Administrator ima omoguæene sve funkcionalnosti." },
-            new Role { Name = "Frizer", Description = "Frizer ima ulogu da manipulise narudzbama/terminima" },
-            new Role { Name = "Kupac", Description = "Dostupne su mu funkcinonalnosti poput online kupovine i rezervacije termina" }
+            new Role { Name = "Admin", Description = "Full system access." },
+            new Role { Name = "Hairdresser", Description = "Enabled functionalities like manipulation of orders and appointments" },
+            new Role { Name = "Customer", Description = "Enabled functionalities like online order and reservation" }
 
         );
         dataContext.SaveChanges();
@@ -142,33 +142,33 @@ using (var scope = app.Services.CreateScope())
 
         dataContext.Products.AddRange(new Product
         {
-            Name = "Burdock Therapy šampon",
+            Name = "Burdock Therapy shampoo",
             CategoryId = 1,
-            Description = "Eveline šampon za kosu èièak pogodan je za slabu, tanku i krhku kosu. Zahvaljujæi inovativnoj obnavljajuæoj formuli, temeljito èisti kosu i vlasište, sprijeèava ispadanje kose, potièe njen rast, umiruje iritacije, elimira perut, jaèa i obnavlja strukturu kose. Eveline šampon za kosu èièak hrani kosu i sadrži protuupalna svojstva.",
+            Description = "Eveline thistle hair shampoo is suitable for weak, thin and fragile hair. Thanks to the innovative renewing formula, it thoroughly cleans the hair and scalp, prevents hair loss, stimulates its growth, soothes irritations, eliminates dandruff, strengthens and restores the hair structure. Eveline hair shampoo burdock nourishes the hair and contains anti-inflammatory properties.",
             StateMachine = "active",
             Price = 6.00f
         },
         new Product
         {
-            Name = "Aqua Hyaluron maska",
+            Name = "Aqua Hyaluron mask",
             CategoryId = 7,
-            Description = "Balea PROFESSIONAL Aqua Hyaluron 3u1 maska za kosu idealna je za suhu kosu. Uèinkovita formula za njegu sadrži hijaluronsku kiselinu i 40 % aloe vere. Ova maska pruža intenzivnu njegu bez otežavanja i olakšava rašèešljavanje. Pružite kosu potrebnu hidrataciju s Balea PROFESSIONAL Aqua Hyaluron 3u1 maskom.",
+            Description = "Balea PROFESSIONAL Aqua Hyaluron 3in1 hair mask is ideal for dry hair. Its effective formula contains hyaluronic acid and 40% aloe vera. This mask provides intense hair without weighing it down and makes combing easier. Give your hair the necessary hydration with the Balea PROFESSIONAL Aqua Hyaluron 3in1 mask.",
             StateMachine = "active",
             Price = 10.00f
         },
         new Product
         {
-            Name = "Garnier maska",
+            Name = "Garnier mask",
             CategoryId = 7,
-            Description = "Njega svježeg mirisa za vašu kosu! 3u1 maska za kosu s aloe verom intenzivno njeguje kosu, raspetljava je i èini je nevjerojatno podatnom. Pritom se ova kura može upotrijebiti kao regenerator, maska ili njega bez ispiranja. Bogata formula sastoji se od 98 posto prirodnih tvari i pogodna je za vegane.",
+            Description = "Fresh smelling care for your hair! 3in1 hair mask with aloe vera intensively cares for hair, detangles it and makes it incredibly supple. At the same time, this cure can be used as a conditioner, mask or leave-in care. The rich formula consists of 98 percent natural substances and is suitable for vegans.",
             StateMachine = "active",
             Price = 12.00f
         },
         new Product
         {
-            Name = "Repair ulje",
+            Name = "Repair oil",
             CategoryId = 2,
-            Description = "Luxurious Coconut Repair ulje za kosu obnavlja jako suhu i ošteæenu kosu. Obnavlja je i ne masti. Obogaæeno je vitaminima A, B i E potièe rast i obnovu ošteæene kose. Štiti je od štetnih vanjskih utjecaja. Iznimno zaglaðuje površinu vlasi, a pomaže i kod ispucalih vrhova. Ne sadrži paraben, mineralna ulja i bojila.",
+            Description = "Luxurious Coconut Repair hair oil restores very dry and damaged hair. It restores it and does not make it greasy. Enriched with vitamins A, B and E, it promotes the growth and renewal of damaged hair. It protects it from harmful external influences. It extremely smoothes the surface of the hair, and also helps with split ends. It does not contain parabens, mineral oils and dyes.",
             StateMachine = "active",
             Price = 4.00f
         },
@@ -176,117 +176,117 @@ using (var scope = app.Services.CreateScope())
         {
             Name = "Grow serum",
             CategoryId = 3,
-            Description = "Zdrava i oèuvana kosa uz Fructis Grow Strong serum Blood Orange! Serum protiv ispadanja kose njeguje i spašava i do 1000 vlasi kose mjeseèno. Fructis Grow Strong Blood Orange serum umanjuje lomljenje kose i bit æe vaš najvjerniji partner u oèuvanju kose i njenoj njezi. Dokazano jaèa kosa zdravijeg izgleda!",
+            Description = "Healthy and preserved hair with Fructis Grow Strong serum Blood Orange! Serum against hair loss nourishes and saves up to 1000 hairs per month. Fructis Grow Strong Blood Orange serum reduces hair breakage and will be your most faithful partner in hair preservation and care. Proven stronger, healthier-looking hair!",
             StateMachine = "active",
             Price = 17.00f
         },
         new Product
         {
-            Name = "Balea krema",
+            Name = "Balea cream",
             CategoryId = 4,
-            Description = "Balea Professional krema za korekciju boje sijede i izbijeljene kose. Posebnim èesticama reducira žute tonove u kosi. Posebna formula njeguje i jaèa strukturu vlasi i poboljšava kvalitetu kose. Za savršeni srebrnkasti sjaj kose.",
+            Description = "Balea Professional cream for correcting the color of gray and bleached hair. With special particles, it reduces yellow tones in the hair. The special formula nourishes and strengthens the structure of the hair and improves the quality of the hair. For a perfect silvery hair shine.",
             StateMachine = "active",
             Price = 3.00f
         },
         new Product
         {
-            Name = "La croa regenerator",
+            Name = "La croa conditioner",
             CategoryId = 5,
-            Description = "La Croa Hydrating regenerator s najmodernijom tehnologijom sadrži nježne sastojke, bez silikona. Obogaæen je organskim uljima kokosa, argana i sezama te organskom aloe verom i zelenim èajem. La Croa Hydrating regenerator njeguje kosu prirodnim hidratizirajuæim faktorima kao što su hijaluron i glicerin. Idealan je za svakodnevno korištenje.",
+            Description = "La Croa Hydrating conditioner with the most modern technology contains gentle ingredients, without silicone. It is enriched with organic coconut, argan and sesame oils, as well as organic aloe vera and green tea. La Croa Hydrating conditioner nourishes the hair with natural moisturizing factors such as hyaluronic and glycerin. It is ideal for everyday use.",
             StateMachine = "active",
             Price = 20.00f
         },
         new Product
         {
-            Name = "Hibiskus sprej",
+            Name = "Hibiscus spray",
             CategoryId = 6,
-            Description = "Balea natural beauty hidratantna njega u spreju s organskim ekstraktom hibiskusa i kokosovim mlijekom. Formula sadrži 97 % sastojaka prirodnog podrijetla i ne sadrži silikone. Hrani, njeguje i hidratizira suhu i lomljivu kosu, daje joj mekoæu i prirodan sjaj bez otežavanja. Za zdraviji izgled kose i prirodan sjaj od korijena do vrhova.",
+            Description = "Balea natural beauty moisturizing spray with organic hibiscus extract and coconut milk. The formula contains 97% ingredients of natural origin and does not contain silicones. Nourishes and hydrates dry and brittle hair, gives it softness and natural shine without weighing it down. For healthier looking hair and natural shine from root to hair ends.",
             Price = 5.00f,
             StateMachine = "active"
         },
         new Product
         {
-            Name = "Burdock Therapy šampon",
+            Name = "Burdock Therapy shampoo",
             CategoryId = 1,
-            Description = "Masno vlasište i istovremeno suhi vrhovi? Nije problem za šampon iz linije Garnier Fructis koji jaèa kosu! Njegova nježna formula temeljito èisti masno vlasište, a vrhovima daje intenzivnu vlagu. Kokosova voda i vitamin B3 i B6 pružaju vašoj kosi dubinsku njegu i daju joj zdrav sjaj. Osim toga, šampon bez silikona daje kosi odreðenu lakoæu.",
+            Description = "Oily scalp and dry ends at the same time? Not a problem for shampoo from the Garnier Fructis line that strengthens hair! Its gentle formula thoroughly cleans the oily scalp, and gives intense moisture to the ends. Coconut water and vitamin B3 and B6 provide your hair with deep care and give it a healthy shine. In addition, silicone-free shampoo gives the hair a certain lightness ",
             StateMachine = "active",
             Price = 7.00f
         },
         new Product
         {
-            Name = "Silky serum",
-            CategoryId = 3,
-            Description = "Olival Silk On silikonski serum za kosu na kosi stvara vodootporni film, sprjeèava gubitak vlažnosti te kosu èini otpornijom na ošteæenja. Uz to, poboljšava izgled frizure, olakšava rašèešljavanje dok krhka i ošteæena kosa djeluje sjajno i lepršavo. Olival Silk On silikonski serum za kosu brzo se upija i ne masti kosu te je pH neutralan ",
-            StateMachine = "active",
-            Price = 13.00f
+          Name = "Silky Serum",
+          CategoryId = 3,
+          Description = "Olival Silk On silicone hair serum forms a waterproof film on the hair, prevents moisture loss, and makes the hair more resistant to damage. Additionally, it improves the appearance of the hairstyle, makes detangling easier, while fragile and damaged hair looks shiny and bouncy. Olival Silk On silicone hair serum absorbs quickly, doesn’t make the hair greasy, and is pH neutral.",
+          StateMachine = "active",
+          Price = 13.00f
         },
-         new Product
-         {
-             Name = "Mievelle šampon",
-             CategoryId = 1,
-             Description = "Mievelle te je pH neutralan ",
-             StateMachine = "active",
-             Price = 17.00f
-         }
+      new Product
+      {
+         Name = "Mievelle Shampoo",
+        CategoryId = 1,
+        Description = "Mievelle is pH neutral.",
+        StateMachine = "active",
+        Price = 17.00f
+      }
     );
         dataContext.SaveChanges();
 
         dataContext.Services.AddRange(
-            new Service
-            {
-               Name = "Feniranje",
-               ShortDescription = "Stiliziranje kose fenom za savršenu frizuru",
-               LongDescription = "Feniranje ukljuèuje stiliziranje vaše kose fenom prema vašim željama. Možete birati izmeðu ravnog izgleda, valova ili voluminoznih stilova koji odgovaraju vašem izgledu i prigodi." ,
-               Price = 15.00f,
-               Duration = 30,
-            },
-       new Service
-       {
-           Name = "Pranje kose",
-           ShortDescription = "Profesionalno pranje kose za osvježavanje.",
-           LongDescription = "Ova usluga ukljuèuje temeljito pranje vaše kose s visokokvalitetnim šamponima i regeneratorima koji njeguju i štite kosu, ostavljajuæi je svježom i mirisnom.",
-           Price = 10.00f,
-           Duration = 15,
-       },
-        new Service
-        {
-            Name = "Šišanje",
-            ShortDescription = "Profesionalno šišanje za vaš savršen izgled",
-            LongDescription = "Naši struèni frizeri pružaju uslugu šišanja prilagoðenu vašim željama i obliku lica. Ukljuèuje konzultacije i završno stiliziranje.",
-            Price = 20.00f,
-            Duration = 45,
-        },
-        new Service
-        {
-            Name = "Farbanje",
-            ShortDescription = "Promjena ili osvježavanje boje vaše kose.",
-            LongDescription = "Usluga farbanja ukljuèuje korištenje visokokvalitetnih boja koje osiguravaju dugotrajnu boju, sjaj i njegu vaše kose. Moguæe su jednobojne boje, pramenovi ili tehnike poput balayage-a.",
-            Price = 80.00f,
-            Duration = 90,
-        },
-        new Service
-        {
-            Name = "Frizure",
-            ShortDescription = "Kreiranje posebnih frizura za svaku prigodu.",
-            LongDescription = "Bez obzira planirate li vjenèanje, maturalnu veèer ili bilo koju posebnu priliku, naši frizeri kreiraju personalizirane frizure koje savršeno odgovaraju vašem stilu i željama.",
-            Price = 30.00f,
-            Duration = 60,
-        },
-       new Service
-       {
-           Name = "Tretman",
-           ShortDescription = "Intenzivna njega za zdravu i sjajnu kosu.",
-           LongDescription = "Ovaj tretman ukljuèuje dubinsku hidrataciju i obnovu vaše kose pomoæu visokokvalitetnih proizvoda. Idealno za suhu, ošteæenu ili beživotnu kosu. Pomaže u vraæanju elastiènosti, sjaja i snage kosi",
-           Duration = 40,
-           Price = 50.00f
-       }
+          new Service
+          {
+              Name = "Blow-drying",
+              ShortDescription = "Hair styling with a blow-dryer for a perfect look.",
+              LongDescription = "Blow-drying includes styling your hair with a blow-dryer according to your preferences. You can choose between a sleek straight look, waves, or voluminous styles that suit your appearance and occasion.",
+              Price = 15.00f,
+              Duration = 30,
+          },
+new Service
+{
+    Name = "Hair Wash",
+    ShortDescription = "Professional hair wash for a fresh feel.",
+    LongDescription = "This service includes a thorough wash using high-quality shampoos and conditioners that nourish and protect the hair, leaving it fresh and fragrant.",
+    Price = 10.00f,
+    Duration = 15,
+},
+new Service
+{
+    Name = "Haircut",
+    ShortDescription = "Professional haircut for your perfect look.",
+    LongDescription = "Our skilled hairdressers provide haircuts tailored to your preferences and face shape. The service includes consultation and final styling.",
+    Price = 20.00f,
+    Duration = 45,
+},
+new Service
+{
+    Name = "Hair Coloring",
+    ShortDescription = "Change or refresh your hair color.",
+    LongDescription = "The coloring service includes the use of high-quality dyes that ensure long-lasting color, shine, and care for your hair. Options include single-color, highlights, or techniques like balayage.",
+    Price = 80.00f,
+    Duration = 90,
+},
+new Service
+{
+    Name = "Hairstyling",
+    ShortDescription = "Creating special hairstyles for any occasion.",
+    LongDescription = "Whether you're planning a wedding, prom night, or any special event, our stylists create personalized hairstyles that perfectly match your style and wishes.",
+    Price = 30.00f,
+    Duration = 60,
+},
+new Service
+{
+    Name = "Hair Treatment",
+    ShortDescription = "Intensive care for healthy and shiny hair.",
+    LongDescription = "This treatment includes deep hydration and hair restoration using high-quality products. Ideal for dry, damaged, or lifeless hair. Helps restore elasticity, shine, and strength.",
+    Price = 50.00f,
+    Duration = 40,
+}
 
     );
         dataContext.SaveChanges();
 
         string adminpass = "admin";
-        string userpass = "korisnik";
-        string hairpass = "frizer";
+        string userpass = "customer";
+        string hairpass = "hairdresser";
 
         string adminsalt = GenerateSalt();
         string adminhash = GenerateHash(adminsalt, adminpass);
@@ -313,18 +313,17 @@ using (var scope = app.Services.CreateScope())
             },
                new User
                {   
-                   FirstName = "Frizer",
-                   LastName = "Frizer",
-                   Username = "frizer",
-                   Email = "frizer@example.com",
+                   FirstName = "Hairdresser",
+                   LastName = "Hairdresser",
+                   Username = "hairdresser",
+                   Email = "hairdresser@example.com",
                    Phone = "061111111",
                    PasswordHash = hairhash,
                    PasswordSalt = hairsalt,
                    Address = "Zalik, Mostar"
                },
                  new User
-                 {
-                    
+                 {                   
                      FirstName = "Lejla",
                      LastName = "Kovacevic",
                      Username = "lejlakovacevic",
@@ -446,38 +445,87 @@ using (var scope = app.Services.CreateScope())
             new CommentProduct
             {
                 CommentDate = DateTime.Now,
-                CommentText = "Super proizvod",
+                CommentText = "Product is great",
                 UserId = 6,
                 ProductId =2
             },
             new CommentProduct
             {
                 CommentDate = DateTime.Now,
-                CommentText = "Kosa mirise lijepo",
+                CommentText = "Hair smells so nice",
                 UserId = 6,
                 ProductId = 4
             },
             new CommentProduct
             {
                 CommentDate = DateTime.Now,
-                CommentText = "Super proizvod",
+                CommentText = "Good",
                 UserId = 6,
                 ProductId = 1
             },
             new CommentProduct
             {
                 CommentDate = DateTime.Now,
-                CommentText = "Super proizvod",
-                UserId = 6,
+                CommentText = "Not bad",
+                UserId = 5,
                 ProductId = 5
             },
             new CommentProduct
             {
                 CommentDate = DateTime.Now,
-                CommentText = "Super proizvod",
-                UserId = 6,
+                CommentText = "I dont like it",
+                UserId = 7,
                 ProductId = 3
-            }
+            },
+             new CommentProduct
+             {
+                 CommentDate = DateTime.Now,
+                 CommentText = "I dont like it",
+                 UserId = 7,
+                 ProductId = 2
+             },
+             new CommentProduct
+             {
+                 CommentDate = DateTime.Now,
+                 CommentText = "Nice",
+                 UserId = 7,
+                 ProductId = 4
+             },
+              new CommentProduct
+              {
+                  CommentDate = DateTime.Now,
+                  CommentText = "Nice",
+                  UserId = 7,
+                  ProductId = 6
+              },
+               new CommentProduct
+               {
+                   CommentDate = DateTime.Now,
+                   CommentText = "Like it",
+                   UserId = 5,
+                   ProductId = 6
+               },
+                new CommentProduct
+                {
+                    CommentDate = DateTime.Now,
+                    CommentText = "Super",
+                    UserId = 7,
+                    ProductId = 7
+                },
+                 new CommentProduct
+                 {
+                     CommentDate = DateTime.Now,
+                     CommentText = "Great",
+                     UserId = 5,
+                     ProductId = 8
+                 },
+                  new CommentProduct
+                  {
+                      CommentDate = DateTime.Now,
+                      CommentText = "Good",
+                      UserId = 4,
+                      ProductId = 8
+                  }
             );
 
         dataContext.SaveChanges();
@@ -485,20 +533,20 @@ using (var scope = app.Services.CreateScope())
 
         
         dataContext.News.AddRange(
-        new News
-         {
-        Title = "Vitamini za zdravu kosu",
-        Text = "Vitamini su kljuèni za zdravlje kose. Neke od najvažnijih vrsta ukljuèuju biotin, vitamin E, vitamin A i vitamin D. Ovi vitamini pomažu u jaèanju kose, sprjeèavanju opadanja i poboljšanju njenog zdravlja.",
-        HairdresserId = 2,
-        DateTime = DateTime.Now
-        },
-         new News
-         {
-        Title = "Popularne frizure ovog mjeseca",
-        Text = "Ovaj mjesec su popularne kratke frizure i valovite šiške. Ako želite nešto modernije, bob frizura s volumenom na vrhu je hit. Takoðe, prirodne teksture kose su u trendu.",
-        HairdresserId = 3,
-        DateTime = new DateTime(year: 2025, month: 2, day: 8, hour: 10, minute: 0, second: 0)
-         }
+      new News
+      {
+          Title = "Vitamins for Healthy Hair",
+          Text = "Vitamins are essential for hair health. Some of the most important types include biotin, vitamin E, vitamin A, and vitamin D. These vitamins help strengthen the hair, prevent hair loss, and improve its overall health.",
+          HairdresserId = 2,
+          DateTime = DateTime.Now
+      },
+new News
+{
+    Title = "Popular Hairstyles This Month",
+    Text = "This month, short hairstyles and wavy bangs are popular. If you're looking for something more modern, a bob haircut with volume on top is trending. Also, natural hair textures are in style.",
+    HairdresserId = 3,
+    DateTime = new DateTime(year: 2025, month: 2, day: 8, hour: 10, minute: 0, second: 0)
+}
          );
 
 
@@ -513,7 +561,7 @@ using (var scope = app.Services.CreateScope())
                 UserId = 5,
                 HairdresserId = 2,
                 ServiceId = 1,
-                Note = "Ravno feniranje",
+                Note = "Straight blow-draying",
             },
              new Appointment
              {
@@ -521,7 +569,7 @@ using (var scope = app.Services.CreateScope())
                  UserId = 5,
                  HairdresserId = 2,
                  ServiceId = 4,
-                 Note = "Farabnje samo izrasta",
+                 Note = "Just hair root",
              },
             new Appointment
             {
@@ -529,7 +577,7 @@ using (var scope = app.Services.CreateScope())
               UserId = 5,
               HairdresserId = 2,
               ServiceId = 1,
-              Note ="Ravno feniranje",
+              Note = "Straight blow-draying",
             },
          new Appointment
          {
@@ -537,7 +585,7 @@ using (var scope = app.Services.CreateScope())
              UserId = 6,
              HairdresserId = 3,
              ServiceId = 3,
-             Note = "Samo ispucali vrhovi",
+             Note = "Just split ends",
          },
           new Appointment
           {
@@ -545,7 +593,7 @@ using (var scope = app.Services.CreateScope())
               UserId = 7,
               HairdresserId = 4,
               ServiceId = 2,
-              Note = "Alergija na SLS i paraben",
+              Note = "I have alergy on SLS and paraben",
           },
             new Appointment
             {
@@ -553,7 +601,7 @@ using (var scope = app.Services.CreateScope())
                 UserId = 8,
                 HairdresserId = 3,
                 ServiceId = 6,
-                Note = "Tretman s Olaplex proizvodima",
+                Note = "Treatment with Olaplex products",
             },
              new Appointment
              {
@@ -561,7 +609,7 @@ using (var scope = app.Services.CreateScope())
                  UserId = 6,
                  HairdresserId = 2,
                  ServiceId = 5,
-                 Note = "Svadbena frizura",
+                 Note = "Weeding hairstyle",
              },
                  new Appointment
                  {
@@ -569,7 +617,7 @@ using (var scope = app.Services.CreateScope())
                      UserId = 7,
                      HairdresserId = 4,
                      ServiceId = 4,
-                     Note = "Plavi pramenovi",
+                     Note = "Blonde highlights",
                  },
                    new Appointment
                    {
@@ -577,7 +625,7 @@ using (var scope = app.Services.CreateScope())
                        UserId = 5,
                        HairdresserId = 4,
                        ServiceId = 5,
-                       Note = "Krupne lokne",
+                       Note = "Big curls",
                    },
                         new Appointment
                         {
@@ -585,7 +633,7 @@ using (var scope = app.Services.CreateScope())
                             UserId = 5,
                             HairdresserId = 3,
                             ServiceId = 1,
-                            Note = "Ravno feniranje",
+                            Note = "Curly blow-drying",
                         },
                            new Appointment
                            {
@@ -593,7 +641,7 @@ using (var scope = app.Services.CreateScope())
                                UserId = 6,
                                HairdresserId = 3,
                                ServiceId = 4,
-                               Note = "Svijetlo-smedji balayage",
+                               Note = "Light-brown balayage",
                            },
                              new Appointment
                              {
@@ -601,7 +649,7 @@ using (var scope = app.Services.CreateScope())
                                  UserId = 4,
                                  HairdresserId = 2,
                                  ServiceId = 4,
-                                 Note = "Crveni balayage",
+                                 Note = "Red balayage",
                              },
                                new Appointment
                                {
@@ -609,7 +657,7 @@ using (var scope = app.Services.CreateScope())
                                    UserId = 5,
                                    HairdresserId = 2,
                                    ServiceId = 6,
-                                   Note = "Ukljuciti i kristale",
+                                   Note = "Include crystals to treatment",
                                },
                                    new Appointment
                                    {
@@ -617,7 +665,7 @@ using (var scope = app.Services.CreateScope())
                                        UserId = 8,
                                        HairdresserId = 2,
                                        ServiceId = 6,
-                                       Note = "Ukljuciti i kristale",
+                                       Note = "Include crystals to treatment",
                                    }
 
 
@@ -654,20 +702,20 @@ using (var scope = app.Services.CreateScope())
         dataContext.SaveChanges();
 
         dataContext.Orders.AddRange(
-               new Order { OrderNumber = "#1",  DateTime = new DateTime(2024,1,15),CustomerId =5,Status = "Kreirana" ,TotalPrice=100 },
-               new Order { OrderNumber = "#2",  DateTime = new DateTime(2024,1,15),CustomerId =6,Status = "Kreirana" ,TotalPrice=100 },
-               new Order { OrderNumber = "#3",  DateTime = new DateTime(2024,1,15),CustomerId =7,Status = "Kreirana" ,TotalPrice=100 },
-               new Order { OrderNumber = "#4",  DateTime = new DateTime(2024,1,14),CustomerId =8,Status = "Kreirana" ,TotalPrice=100 },
-               new Order { OrderNumber = "#5",  DateTime = new DateTime(2024,1,14),CustomerId =5,Status = "Kreirana" ,TotalPrice=100 },
-               new Order { OrderNumber = "#6",  DateTime = new DateTime(2024,1,14),CustomerId =6,Status = "Kreirana" ,TotalPrice=100 },
-               new Order { OrderNumber = "#7",  DateTime = new DateTime(2024,1,14),CustomerId =7,Status = "Kreirana" ,TotalPrice=100 },
-               new Order { OrderNumber = "#8",  DateTime=  new DateTime(2024,1,12),CustomerId =5,Status = "Isporucena" ,TotalPrice=100 },
-               new Order { OrderNumber = "#9",  DateTime=  new DateTime(2024,1,11),CustomerId =6,Status = "Isporucena" ,TotalPrice=100 },
-               new Order { OrderNumber = "#10", DateTime = new DateTime(2024,1,10),CustomerId =7,Status = "Dostavljena" ,TotalPrice=100 },
-               new Order { OrderNumber = "#11", DateTime = new DateTime(2024,1,9) ,CustomerId =8,Status = "Dostavljena" ,TotalPrice=100 },
-               new Order { OrderNumber = "#12", DateTime = new DateTime(2024,1,9) ,CustomerId =5,Status = "Dostavljena" ,TotalPrice=100 },
-               new Order { OrderNumber = "#13", DateTime = new DateTime(2024,1,13),CustomerId =6,Status = "Isporucena" ,TotalPrice=100 },
-               new Order { OrderNumber = "#14", DateTime = new DateTime(2024,1,13),CustomerId =7,Status = "Isporucena" ,TotalPrice=100 }
+               new Order { OrderNumber = "#1",  DateTime = new DateTime(2024,1,15),CustomerId =5,Status = "Created" ,TotalPrice=100 },
+               new Order { OrderNumber = "#2",  DateTime = new DateTime(2024,1,15),CustomerId =6,Status = "Created" ,TotalPrice=100 },
+               new Order { OrderNumber = "#3",  DateTime = new DateTime(2024,1,15),CustomerId =7,Status = "Created" ,TotalPrice=100 },
+               new Order { OrderNumber = "#4",  DateTime = new DateTime(2024,1,14),CustomerId =8,Status = "Created" ,TotalPrice=100 },
+               new Order { OrderNumber = "#5",  DateTime = new DateTime(2024,1,14),CustomerId =5,Status = "Created" ,TotalPrice=100 },
+               new Order { OrderNumber = "#6",  DateTime = new DateTime(2024,1,14),CustomerId =6,Status = "Created" ,TotalPrice=100 },
+               new Order { OrderNumber = "#7",  DateTime = new DateTime(2024,1,14),CustomerId =7,Status = "Created" ,TotalPrice=100 },
+               new Order { OrderNumber = "#8",  DateTime=  new DateTime(2024,1,12),CustomerId =5,Status = "Sent" ,TotalPrice=100 },
+               new Order { OrderNumber = "#9",  DateTime=  new DateTime(2024,1,11),CustomerId =6,Status = "Sent" ,TotalPrice=100 },
+               new Order { OrderNumber = "#10", DateTime = new DateTime(2024,1,10),CustomerId =7,Status = "Delivered" ,TotalPrice=100 },
+               new Order { OrderNumber = "#11", DateTime = new DateTime(2024,1,9) ,CustomerId =8,Status = "Delivered" ,TotalPrice=100 },
+               new Order { OrderNumber = "#12", DateTime = new DateTime(2024,1,9) ,CustomerId =5,Status = "Delivered" ,TotalPrice=100 },
+               new Order { OrderNumber = "#13", DateTime = new DateTime(2024,1,13),CustomerId =6,Status = "Sent" ,TotalPrice=100 },
+               new Order { OrderNumber = "#14", DateTime = new DateTime(2024,1,13),CustomerId =7,Status = "Sent" ,TotalPrice=100 }
             );
 
         dataContext.SaveChanges();
@@ -709,6 +757,11 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
+app.Use(async (context, next) =>
+{
+    context.Response.Headers.Append("Content-Type", "application/json;");
+    await next();
+});
 
 app.Run();
 

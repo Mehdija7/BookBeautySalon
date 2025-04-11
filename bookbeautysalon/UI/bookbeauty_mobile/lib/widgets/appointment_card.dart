@@ -28,7 +28,7 @@ class AppointmentCard extends StatelessWidget {
       child: Card(
         color: isNew
             ? const Color.fromARGB(125, 125, 252, 22)
-            : const Color.fromARGB(255, 230, 197, 108),
+            : const Color.fromARGB(255, 134, 134, 131),
         margin: const EdgeInsets.all(20),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(24),
@@ -53,11 +53,11 @@ class AppointmentCard extends StatelessWidget {
                 children: [
                   ApointmentTrait(date: date, icon: Icons.calendar_month),
                   const SizedBox(
-                    width: 60,
+                    width: 30,
                   ),
                   ApointmentTrait(date: time, icon: Icons.watch_later_outlined),
                   const SizedBox(
-                    width: 60,
+                    width: 30,
                   ),
                   ApointmentTrait(
                       date: price, icon: Icons.monetization_on_sharp),

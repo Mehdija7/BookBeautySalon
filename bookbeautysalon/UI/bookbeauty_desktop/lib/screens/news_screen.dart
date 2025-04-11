@@ -19,20 +19,20 @@ class NewsScreen extends StatelessWidget {
           GestureDetector(
             onTap: () {
               Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (ctx) => AddnewsScreen()));
+                  .push(MaterialPageRoute(builder: (ctx) => const AddNewsScreen()));
             },
             child: const CardItem(
-              title: 'Dodaj novost',
+              title: 'Add news',
               color: Color.fromARGB(255, 114, 199, 121),
             ),
           ),
           GestureDetector(
             onTap: () {
               Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (ctx) => OldnewsScreen()));
+                  .push(MaterialPageRoute(builder: (ctx) => const OldnewsScreen()));
             },
             child: const CardItem(
-              title: 'Arhiva novosti',
+              title: 'News archive',
               color: Color.fromARGB(255, 214, 226, 109),
             ),
           ),

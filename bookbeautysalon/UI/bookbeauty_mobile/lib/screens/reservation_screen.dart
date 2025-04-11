@@ -37,17 +37,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
     _fetchHairdressers();
   }
 
-  bool _decideWhichDayToEnable(DateTime day) {
-    DateTime event = DateTime(2024, 4, 26);
-    DateTime event2 = DateTime(2024, 4, 28);
-    if (day.isAtSameMomentAs(event) || day.isAtSameMomentAs(event2)) {
-      return false;
-    }
-    if (day.weekday == 7) {
-      return false;
-    }
-    return true;
-  }
+
 
   _fetchHairdressers() async {
     var result = await userProvider.getHairdressers();
@@ -86,36 +76,47 @@ class _ReservationScreenState extends State<ReservationScreen> {
   }
 
   void _presentDatePicker() async {
-    if (_selectedHairdresser == null) {
-      _showHairdresserAlert();
-      return;
-    }
-    final now = DateTime.now();
-    final lastDate = DateTime(now.year + 1, now.month, now.day);
-    final firstdate = DateTime(now.year, now.month, now.day + 1);
-    final pickedDate = await showDatePicker(
-      helpText: 'Odaberi datum',
-      cancelText: 'Odustani',
-      confirmText: 'Odaberi',
-      context: context,
-      initialDate: firstdate,
-      firstDate: firstdate,
-      lastDate: lastDate,
-      selectableDayPredicate: _decideWhichDayToEnable,
-      builder: (context, child) => Theme(
-        data: ThemeData().copyWith(
-          colorScheme: const ColorScheme.light(
-            primary: Color(0xFF93BBBB),
-          ),
-        ),
-        child: child!,
-      ),
-    );
+  if (_selectedHairdresser == null) {
+    _showHairdresserAlert();
+    return;
+  }
 
+  final now = DateTime.now();
+  DateTime nextValidDate = now.add(Duration(days: 1)); 
+
+  while (nextValidDate.weekday == DateTime.sunday) {
+    nextValidDate = nextValidDate.add(Duration(days: 1));
+  }
+
+  final lastDate = DateTime(now.year + 1, now.month, now.day);
+
+  final pickedDate = await showDatePicker(
+    helpText: 'Choose date',
+    cancelText: 'Cancel',
+    confirmText: 'Choose',
+    context: context,
+    initialDate: nextValidDate,
+    firstDate: nextValidDate,
+    lastDate: lastDate,
+    selectableDayPredicate: (DateTime date) {
+      return date.weekday != DateTime.sunday; 
+    },
+    builder: (context, child) => Theme(
+      data: ThemeData().copyWith(
+        colorScheme: const ColorScheme.light(
+          primary: Color(0xFF93BBBB),
+        ),
+      ),
+      child: child!,
+    ),
+  );
+
+  if (pickedDate != null) {
     setState(() {
       _selectedDate = pickedDate;
     });
   }
+}
 
   void _presentTimePicker() async {
     print(
@@ -126,9 +127,9 @@ class _ReservationScreenState extends State<ReservationScreen> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: const Text('Greška'),
+              title: const Text('Error'),
               content: const Text(
-                  'Za odabrani datum nema slobodnih termina. Pokušajte promijeniti frizera ili datum.'),
+                  'There is no available date for that choosen date, please change the date or hairdresser.'),
               actions: [
                 TextButton(
                   onPressed: () {
@@ -144,7 +145,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
         context: context,
         builder: (BuildContext context) {
           return SimpleDialog(
-            title: const Text('Odaberite vrijeme'),
+            title: const Text('Choose time'),
             children: _availableAppointments.map((TimeOfDay time) {
               return SimpleDialogOption(
                 onPressed: () {
@@ -170,9 +171,9 @@ class _ReservationScreenState extends State<ReservationScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Greška'),
+          title: const Text('Error'),
           content: const Text(
-              'Potrebno je odabrati frizera prije nego se odabere datum.'),
+              'You need to choose a hairdresser first.'),
           actions: [
             TextButton(
               onPressed: () {
@@ -198,7 +199,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const MainTitle(title: 'Rezervacija'),
+              const MainTitle(title: 'Reservation'),
               const SizedBox(height: 20),
               _buildServiceRow(),
               const SizedBox(height: 20),
@@ -222,7 +223,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
     return Row(
       children: [
         const Text(
-          'Usluga: ',
+          'Service: ',
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         const SizedBox(width: 20),
@@ -248,7 +249,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          'Napomena:',
+          'Note:',
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 10),
@@ -256,7 +257,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
           controller: controller,
           maxLines: 3,
           decoration: const InputDecoration(
-              hintText: 'Ovdje upišite zahtjeve', border: OutlineInputBorder()),
+              hintText: 'This is place for your note.', border: OutlineInputBorder()),
         ),
       ],
     );
@@ -270,11 +271,11 @@ class _ReservationScreenState extends State<ReservationScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const Text(
-              'Termin: ',
+              'Date: ',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             Text(_selectedDate == null
-                ? 'Niste odabrali datum'
+                ? 'You havent choose the date.'
                 : formater.format(_selectedDate!)),
             IconButton(
               onPressed: _presentDatePicker,
@@ -287,7 +288,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
           const Padding(
             padding: EdgeInsets.only(top: 5.0),
             child: Text(
-              'Polje datum je obavezno.',
+              'This field is required.',
               style: TextStyle(color: Colors.red, fontSize: 14),
             ),
           ),
@@ -303,11 +304,11 @@ class _ReservationScreenState extends State<ReservationScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const Text(
-              'Vrijeme: ',
+              'Time: ',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             Text(_selectedTime == null
-                ? 'Niste odabrali vrijeme'
+                ? 'You havent choose the time.'
                 : _selectedTime!.format(context)),
             IconButton(
               onPressed: _presentTimePicker,
@@ -320,7 +321,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
           const Padding(
             padding: EdgeInsets.only(top: 5.0),
             child: Text(
-              'Polje vrijeme je obavezno.',
+              'This field is required.',
               style: TextStyle(color: Colors.red, fontSize: 14),
             ),
           ),
@@ -333,14 +334,14 @@ class _ReservationScreenState extends State<ReservationScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          'Frizer:',
+          'Hairdresser:',
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 10),
         DropdownButton<int?>(
           value: _selectedHairdresser,
           isExpanded: true,
-          hint: const Text('Odaberite frizera'),
+          hint: const Text('Choose hairdresser:'),
           items: _hairdressers.map((User hairdresser) {
             return DropdownMenuItem<int>(
               value: hairdresser.userId,
@@ -358,7 +359,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
           const Padding(
             padding: EdgeInsets.only(top: 5.0),
             child: Text(
-              'Polje frizer je obavezno.',
+              'This field is required.',
               style: TextStyle(color: Colors.red, fontSize: 14),
             ),
           ),
@@ -376,7 +377,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
         onPressed: () {
           reserve();
         },
-        child: const Text('Rezerviši',
+        child: const Text('Reserve',
             style: TextStyle(fontSize: 16, color: Colors.blueGrey)),
       ),
     );
@@ -414,7 +415,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
       userId: userid,
       serviceId: widget.service.serviceId,
       note:
-          _noteController.text.isEmpty ? 'bez napomene' : _noteController.text,
+          _noteController.text.isEmpty ? 'with out note' : _noteController.text,
       hairdresserId: _selectedHairdresser,
     );
     print('&&& appointment &&&&');
@@ -429,7 +430,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
     if (response.appointmentId!>0) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Uspješno ste rezervirali termin.'),
+          content: Text('The reservation was successfully.'),
           backgroundColor: Colors.green,
         ),
       );
@@ -437,7 +438,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Neuspješno rezerviranje termina.'),
+          content: Text('The reservation was unsuccessfully.'),
           backgroundColor: Colors.red,
         ),
       );

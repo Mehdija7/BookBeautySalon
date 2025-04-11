@@ -39,7 +39,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Narudzbe'),
+        title: Text('Orders'),
       ),
       body: isLoading
           ? Center(child: CircularProgressIndicator())
@@ -52,15 +52,15 @@ class _OrdersScreenState extends State<OrdersScreen> {
                     return Card(
                       margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                       child: ListTile(
-                        title: Text('Narudzba #${order.orderNumber}'),
+                        title: Text('Order #${order.orderNumber}'),
                         subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Status: ${order.status}'),
+                            Text('State: ${order.status}'),
                             Text(
-                                'Ukupna cijena: \$${order.totalPrice?.toStringAsFixed(2)}'),
+                                'Total price: \$${order.totalPrice?.toStringAsFixed(2)}'),
                             Text(
-                                'Datum: ${order.dateTime?.toLocal().toString().split(' ')[0]}'),
+                                'Date: ${order.dateTime?.toLocal().toString().split(' ')[0]}'),
                           ],
                         ),
                         onTap: () {

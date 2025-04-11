@@ -12,6 +12,7 @@ namespace bookBeauty.Services.Database
         public required string Title { get; set; }
         public required string Text { get; set; }
         public DateTime? DateTime { get; set; }
+        public byte[]? NewsImage { get; set; }
         public int HairdresserId { get; set; }
         public virtual User? Hairdresser { get; set; }
     }

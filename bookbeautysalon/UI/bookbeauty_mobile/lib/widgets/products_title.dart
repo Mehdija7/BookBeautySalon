@@ -18,7 +18,7 @@ class ProductsTitle extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           const Text(
-            'Proizvodi',
+            'Products',
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
           IconButton(

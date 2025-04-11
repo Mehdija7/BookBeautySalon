@@ -14,28 +14,28 @@ namespace bookBeauty.API.Controllers
         public ProductController(ILogger<BaseController<Product, ProductSearchObject>> logger, IProductService service) : base(logger,service)
         {
         }
-        [Authorize(Roles ="Admin, Frizer")]
+        [Authorize(Roles ="Admin, Hairdresser")]
         [HttpPut("{id}/activate")]
         public async Task<Product> Activate(int id)
         {
             return await ((IProductService)_service).Activate(id);
         }
 
-        [Authorize(Roles = "Admin,Frizer")]
+        [Authorize(Roles = "Admin,Hairdresser")]
         public override Task<Product> Insert([FromBody] ProductInsertRequest request)
         {
 
             return base.Insert(request);
         }
 
-        [Authorize(Roles = "Admin,Frizer")]
+        [Authorize(Roles = "Admin,Hairdresser")]
         [HttpPut("{id}/hide")]
         public virtual async Task<Product> Hide(int id)
         {
             return await (_service as IProductService).Hide(id);
         }
 
-        [Authorize(Roles = "Admin,Frizer")]
+        [Authorize(Roles = "Admin,Hairdresser")]
         [HttpPut("{id}/edit")]
         public virtual async Task<Product> Edit(int id)
         {
@@ -44,7 +44,7 @@ namespace bookBeauty.API.Controllers
 
 
 
-        [Authorize(Roles = "Admin,Frizer")]
+        [Authorize(Roles = "Admin,Hairdresser")]
         [HttpGet("{id}/allowedActions")]
         public virtual async Task<List<string>> AllowedActions(int id)
         {

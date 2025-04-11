@@ -1,24 +1,3 @@
-/*enum Category { shampoo, oil, serum, cream }
-
-const categoryName = {
-  Category.shampoo: 'Sampon',
-  Category.oil: 'Ulje',
-  Category.cream: 'Krema',
-  Category.serum: 'Serum',
-};*/
-
-/*class ProductTest {
-  ProductTest(
-      {required this.title,
-      required this.id,
-      required this.amount,
-      required this.category});
-
-  final String id;
-  final String title;
-  final double amount;
-  final Category category;
-}*/
 
 import 'package:bookbeauty_desktop/models/category.dart';
 import 'package:bookbeauty_desktop/models/product.dart';

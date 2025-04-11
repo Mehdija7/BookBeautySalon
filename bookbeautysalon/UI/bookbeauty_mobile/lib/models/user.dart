@@ -13,6 +13,7 @@ class User {
   String? address;
   String? password;
   String? passwordConfirmed;
+  String? userImage;
 
   User(
       {this.userId,
@@ -23,7 +24,8 @@ class User {
       this.phone,
       this.address,
       this.password,
-      this.passwordConfirmed});
+      this.passwordConfirmed,
+      this.userImage});
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 

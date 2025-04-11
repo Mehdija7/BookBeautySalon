@@ -15,5 +15,6 @@ namespace bookBeauty.Model.Requests
         public string? Password { get; set; }
         public string? PasswordConfirmed { get; set; }
         public bool? Status { get; set; }
+        public byte[]? UserImage { get; set; }
     }
 }

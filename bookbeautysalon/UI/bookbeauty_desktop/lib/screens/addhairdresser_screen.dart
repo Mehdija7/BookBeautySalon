@@ -45,15 +45,14 @@ class _AddHairdresserScreenState extends State<AddHairdresserScreen> {
     bool isValid = true;
 
     setState(() {
-      firstNameError = firstName.isEmpty ? 'Obavezno polje' : null;
-      lastNameError = lastName.isEmpty ? 'Obavezno polje' : null;
-      usernameError = username.isEmpty ? 'Obavezno polje' : null;
-      emailError = _validateEmail(email) ? null : 'Neispravan email';
-      phoneError = _validatePhone(phone) ? null : 'Neispravan broj telefona';
-      passwordError = _validatePassword(password) ? null : 'Lozinka mora imati najmanje 6 znakova, uključujući slova i brojeve';
+      firstNameError = firstName.isEmpty ? 'Input field is required' : null;
+      lastNameError = lastName.isEmpty ? 'Input field is required' : null;
+      usernameError = username.isEmpty ? 'Input field is required' : null;
+      emailError = _validateEmail(email) ? null : 'Wrong format for email';
+      phoneError = _validatePhone(phone) ? null : 'Wrong telephone number';
+      passwordError = _validatePassword(password) ? null : 'Password must contain at least 6 characters including letters and numbers';
     });
 
-    // Check if any field has an error
     if (firstName.isEmpty ||
         lastName.isEmpty ||
         username.isEmpty ||
@@ -100,7 +99,7 @@ class _AddHairdresserScreenState extends State<AddHairdresserScreen> {
   Future<void> _addUser(User newUser) async {
     try {
       var u = await userProvider.insert(newUser);
-      var ur = await userProvider.addRole(u.userId!, 'Frizer');
+      var ur = await userProvider.addRole(u.userId!, 'Hairdresser');
 
       setState(() {
         firstNameController.text = '';
@@ -112,10 +111,10 @@ class _AddHairdresserScreenState extends State<AddHairdresserScreen> {
         passwordController.text = '';
       });
       _showSnackBar(
-          "Korisnik uspješno dodan", const Color.fromARGB(255, 95, 167, 97));
+          "Successfully added a hairdresser", const Color.fromARGB(255, 95, 167, 97));
       Navigator.pop(context, true);
     } catch (e) {
-      _showSnackBar('Neuspješno dodavanje korisnika',
+      _showSnackBar('Adding a hairdresser was unsuccessfully',
           const Color.fromARGB(255, 226, 98, 75));
     }
   }
@@ -146,18 +145,16 @@ class _AddHairdresserScreenState extends State<AddHairdresserScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // Dusty blue
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Title Heading
             Padding(
               padding: const EdgeInsets.only(bottom: 16.0),
               child: Text(
-                "Dodavanje novog frizera",
+                "Adding new hairdresser",
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: const Color(0xFF607D8B),
@@ -165,19 +162,19 @@ class _AddHairdresserScreenState extends State<AddHairdresserScreen> {
               ),
             ),
 
-            _buildTextField('Ime', firstNameController, firstNameError),
-            _buildTextField('Prezime', lastNameController, lastNameError),
-            _buildTextField('Korisnicko ime', usernameController, usernameError),
+            _buildTextField('Name', firstNameController, firstNameError),
+            _buildTextField('Lastname', lastNameController, lastNameError),
+            _buildTextField('Username', usernameController, usernameError),
             _buildTextField('Email', emailController, emailError),
-            _buildTextField('Broj telefona', phoneController, phoneError),
-            _buildTextField('Adresa', addressController, addressError),
-            _buildTextField('Lozinka', passwordController, passwordError),
+            _buildTextField('Telephone number', phoneController, phoneError),
+            _buildTextField('Address', addressController, addressError),
+            _buildTextField('Password', passwordController, passwordError),
             const SizedBox(height: 16),
             Center(
               child: ElevatedButton(
                 onPressed: _submitData,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF607D8B), // Dusty blue button
+                  backgroundColor: const Color(0xFF607D8B),
                   padding:
                       const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                   textStyle: const TextStyle(fontWeight: FontWeight.bold),
@@ -186,7 +183,7 @@ class _AddHairdresserScreenState extends State<AddHairdresserScreen> {
                   ),
                 ),
                 child: const Text(
-                  'Dodaj frizera',
+                  'Add hairdresser',
                   style: TextStyle(color: Colors.white),
                 ),
               ),
@@ -208,11 +205,11 @@ class _AddHairdresserScreenState extends State<AddHairdresserScreen> {
             decoration: InputDecoration(
               labelText: label,
               labelStyle: const TextStyle(
-                  color: Color(0xFF607D8B)), // Dusty blue for labels
+                  color: Color(0xFF607D8B)),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
                 borderSide: const BorderSide(
-                    color: Color(0xFF607D8B)), // Dusty blue border color
+                    color: Color(0xFF607D8B)),
               ),
               focusedBorder: const OutlineInputBorder(
                 borderSide: BorderSide(color: Color(0xFF607D8B)),

@@ -17,7 +17,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
-  String maintitle = 'Pocetna';
+  String maintitle = 'News';
   late List<Widget> _widgetOptions;
 
   @override
@@ -29,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
         favoritesOnly: false,
       ),
       ServicesScreen(
-        mainTitle: 'Usluge',
+        mainTitle: 'Services',
       ),
       const ProfileScreen()
     ];

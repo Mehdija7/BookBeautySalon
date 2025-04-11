@@ -28,7 +28,6 @@ class _ButtonsListState extends State<ButtonsList> {
   @override
   void initState() {
     super.initState();
-    //_product = widget.product;
     _fetchProduct();
   }
 
@@ -76,7 +75,7 @@ class _ButtonsListState extends State<ButtonsList> {
               ),
             ),
             child: const Text(
-              'Aktiviraj',
+              'Active',
               textAlign: TextAlign.center,
             ),
           ),
@@ -95,7 +94,7 @@ class _ButtonsListState extends State<ButtonsList> {
             ),
           ),
           child: const Text(
-            'Uredi',
+            'Edit',
             textAlign: TextAlign.center,
           ),
         ),
@@ -117,7 +116,7 @@ class _ButtonsListState extends State<ButtonsList> {
             ),
           ),
           child: const Text(
-            'Uredi',
+            'Draft',
             textAlign: TextAlign.center,
           ),
         ),
@@ -137,7 +136,7 @@ class _ButtonsListState extends State<ButtonsList> {
           ),
         ),
         child: const Text(
-          'Sakrij',
+          'Hide',
           textAlign: TextAlign.center,
         ),
       );

@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import '../../models/service.dart';
@@ -38,14 +37,6 @@ class _NewServiceState extends State<NewService> {
     }
   }
 
-  /*Future<void> _uploadFile(int id) async {
-    if (_image == null) return;
-    try {
-      await uploadService.uploadFileService(_image!, id);
-    } catch (e) {
-      print('Error upload product: $e');
-    }
-  }*/
 
   void _showDialog() {
     showDialog(
@@ -113,34 +104,34 @@ class _NewServiceState extends State<NewService> {
                   TextField(
                     controller: _titleController,
                     maxLength: 50,
-                    decoration: const InputDecoration(label: Text('Naziv')),
+                    decoration: const InputDecoration(label: Text('Name')),
                   ),
                   const SizedBox(width: 22),
                   TextField(
                     controller: _priceController,
                     keyboardType: TextInputType.number,
                     decoration: const InputDecoration(
-                        label: Text('Cijena'), prefixText: 'BAM'),
+                        label: Text('Price'), prefixText: 'BAM'),
                   ),
                   TextField(
                     controller: _shortDescriptionController,
                     maxLines: 2,
                     decoration:
-                        const InputDecoration(label: Text('Kratki opis')),
+                        const InputDecoration(label: Text('Short description')),
                   ),
                   TextField(
                     controller: _longDescriptionController,
                     maxLines: 3,
-                    decoration: const InputDecoration(label: Text('Dugi opis')),
+                    decoration: const InputDecoration(label: Text('Long description')),
                   ),
                   const SizedBox(height: 15),
                   TextField(
                     controller: _durationController,
                     decoration: const InputDecoration(
-                        label: Text("Vrijeme trajanja"), prefixText: 'min'),
+                        label: Text("Time"), prefixText: 'min'),
                   ),
                   const SizedBox(height: 15),
-                  const Text('Slika: '),
+                  const Text('Image: '),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 15),
                     child: GestureDetector(
@@ -165,12 +156,12 @@ class _NewServiceState extends State<NewService> {
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        child: const Text('Odustani'),
+                        child: const Text('Cancel'),
                       ),
                       ElevatedButton(
                         onPressed: _submitData,
                         child: const Text(
-                          'Spremi',
+                          'Save',
                         ),
                       )
                     ],

@@ -22,7 +22,7 @@ class ProductsScreen extends StatelessWidget {
               );
             },
             child: const CardItem(
-              title: 'Dodaj novi proizvod',
+              title: 'Add new product',
               color: Color.fromARGB(255, 158, 228, 93),
             ),
           ),
@@ -35,7 +35,7 @@ class ProductsScreen extends StatelessWidget {
               );
             },
             child: const CardItem(
-              title: 'Pregled proizvoda',
+              title: 'Products',
               color: Color.fromARGB(255, 250, 196, 125),
             ),
           ),

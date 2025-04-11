@@ -1,17 +1,20 @@
 import 'dart:async';
 import 'package:book_beauty/models/order.dart';
 import 'package:book_beauty/models/transaction.dart';
+import 'package:book_beauty/models/user.dart';
 import 'package:book_beauty/providers/order_item_provider.dart';
 import 'package:book_beauty/providers/paypalservice.dart';
 import 'package:book_beauty/providers/transaction_provider.dart';
 import 'package:book_beauty/providers/user_provider.dart';
 import 'package:book_beauty/screens/home_screen.dart';
+import 'package:book_beauty/screens/products_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class PaymentScreen extends StatefulWidget {
   const PaymentScreen({super.key, required this.order});
+
   final Order order;
 
   @override
@@ -19,41 +22,56 @@ class PaymentScreen extends StatefulWidget {
 }
 
 class _PaymentScreenState extends State<PaymentScreen> {
+  StreamSubscription? _sub;
   final TransactionProvider _transactionProvider = TransactionProvider();
-  final PaypalServices _paypalServices = PaypalServices();
+
+  late List<Map<String, dynamic>> itemList = [];
   String? checkoutUrl;
   String? executeUrl;
   String? accessToken;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final String returnURL = 'https://api.sandbox.paypal.com/v1/payments/payment';
-  final String cancelURL = 'https://api.sandbox.paypal.com/v1/payments/payment';
+  final PaypalServices _paypalServices = PaypalServices();
 
-  final Map<String, dynamic> defaultCurrency = {
+  final Map<dynamic, dynamic> defaultCurrency = {
     "symbol": "USD ",
     "decimalDigits": 2,
     "symbolBeforeTheNumber": true,
     "currency": "USD"
   };
 
+  bool isEnableShipping = false;
+  bool isEnableAddress = false;
+
+  final String returnURL = 'https://api.sandbox.paypal.com/v1/payments/payment';
+  final String cancelURL = 'https://api.sandbox.paypal.com/v1/payments/payment';
+
+  @override
+  void initState() {
+    super.initState();
+    _initializePayment();
+  }
+
   Future<void> _initializePayment() async {
     try {
       accessToken = await _paypalServices.getAccessToken();
+
       final transactions = _getOrderParams();
-      final res = await _paypalServices.createPaypalPayment(transactions, accessToken);
-      if (res != null && mounted) {
+      final res =
+          await _paypalServices.createPaypalPayment(transactions, accessToken);
+      if (res != null) {
         setState(() {
           checkoutUrl = res["approvalUrl"];
           executeUrl = res["executeUrl"];
         });
       }
     } catch (ex) {
-      _showSnackBar("Payment initialization failed: ${ex.toString()}");
+      _showSnackBar(ex.toString());
     }
   }
 
   Map<String, dynamic> _getOrderParams() {
     List<Map<String, dynamic>> items = [];
-
     if (widget.order.orderItems != null) {
       for (var orderItem in widget.order.orderItems!) {
         items.add({
@@ -65,19 +83,31 @@ class _PaymentScreenState extends State<PaymentScreen> {
       }
     }
 
+    for (var i in items) {
+      print("****** ITEM IN ITEMS IN PAYMENT SCREEN ****** ");
+      print(i);
+    }
     return {
       "intent": "sale",
       "payer": {"payment_method": "paypal"},
       "transactions": [
         {
           "amount": {
-            "total": widget.order.totalPrice.toString(),
+            "total": widget.order.totalPrice,
             "currency": defaultCurrency["currency"],
-            "details": {"subtotal": widget.order.totalPrice.toString(), "shipping": "0", "shipping_discount": "0"}
+            "details": {
+              "subtotal": widget.order.totalPrice,
+              "shipping": "0",
+              "shipping_discount": "0"
+            }
           },
           "description": "The payment transaction description.",
-          "payment_options": {"allowed_payment_method": "INSTANT_FUNDING_SOURCE"},
-          "item_list": {"items": items},
+          "payment_options": {
+            "allowed_payment_method": "INSTANT_FUNDING_SOURCE"
+          },
+          "item_list": {
+            "items": items,
+          }
         }
       ],
       "note_to_payer": "Contact us for any questions on your order.",
@@ -86,66 +116,102 @@ class _PaymentScreenState extends State<PaymentScreen> {
   }
 
   void _showSnackBar(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message), duration: const Duration(seconds: 5)),
+    final snackBar = SnackBar(
+      content: Text(message),
+      duration: const Duration(seconds: 5),
+      action: SnackBarAction(
+        label: 'Close',
+        onPressed: () {},
+      ),
     );
+    ScaffoldMessenger.of(_scaffoldKey.currentContext!).showSnackBar(snackBar);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.of(context).pop(),
+    print("----- ORDER ID ------- ");
+    print(widget.order.orderId);
+    Transaction newTransaction = Transaction(
+        orderId: widget.order.orderId,
+        price: widget.order.totalPrice,
+        name: 'transaction',
+        status: 'Created');
+    final _orderItemProvider =
+        Provider.of<OrderItemProvider>(context, listen: false);
+    if (checkoutUrl != null) {
+      return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          leading: GestureDetector(
+            child: const Icon(Icons.arrow_back_ios),
+            onTap: () => Navigator.pop(context),
+          ),
         ),
-        backgroundColor: Colors.black12,
-        elevation: 0.0,
-      ),
-      body: FutureBuilder(
-        future: _initializePayment(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
+        body: WebViewWidget(
+          controller: WebViewController()
+            ..setJavaScriptMode(JavaScriptMode.unrestricted)
+            ..loadRequest(Uri.parse(checkoutUrl!))
+            ..setNavigationDelegate(NavigationDelegate(
+              onNavigationRequest: (NavigationRequest request) async {
+                print(
+                    "+++++++++++++++++++++++++++++++++++++++++ REQUEST URL +++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+                print(request.url);
+                if (request.url.contains(returnURL)) {
+                  final uri = Uri.parse(request.url);
+                  final payerID = uri.queryParameters['PayerID'];
+                  print(
+                      "+++++++++++++++++++++++++++++++++++++++ PAYER ID +++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+                  print(payerID);
 
-          if (checkoutUrl != null) {
-            return WebViewWidget(
-              controller: WebViewController()
-                ..setJavaScriptMode(JavaScriptMode.unrestricted)
-                ..clearCache()
-                ..loadRequest(Uri.parse(checkoutUrl!))
-                ..setNavigationDelegate(NavigationDelegate(
-                  onNavigationRequest: (NavigationRequest request) async {
-                    if (request.url.contains(returnURL)) {
-                      final uri = Uri.parse(request.url);
-                      final payerID = uri.queryParameters['PayerID'];
+                  if (payerID != null) {
+                    print(
+                        "+++++++++++++++++++++++++++++++++++++++ EXECUTE URL +++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+                    print(executeUrl);
 
-                      if (payerID != null) {
-                        try {
-                          await _paypalServices.executePayment(
-                              Uri.parse(executeUrl!), payerID, accessToken);
-                          Provider.of<OrderItemProvider>(context, listen: false).deleteAllItems();
-                          Navigator.pushReplacement(
-                              context, MaterialPageRoute(builder: (context) => const SuccessScreen()));
-                        } catch (error) {
-                          _showSnackBar("Payment execution failed: ${error.toString()}");
-                        }
-                      } else {
-                        Navigator.pushReplacement(
-                            context, MaterialPageRoute(builder: (context) => const CancelScreen()));
-                      }
-                    }
-                    return NavigationDecision.navigate;
-                  },
-                )),
-            );
-          } else {
-            return const Center(child: Text("Failed to load payment page."));
-          }
-        },
-      ),
-    );
+                    _paypalServices
+                        .executePayment(
+                            Uri.parse(executeUrl!), payerID, accessToken)
+                        .then((id) async {
+                      _orderItemProvider.deleteAllItems();
+                      print(
+                          "////////////////// PLACENO USPJESNO   ////////////////////////");
+                      newTransaction.status = 'Succeed';
+                      var r = await _transactionProvider.insert(newTransaction);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const SuccessScreen()));
+                    });
+                  } else {
+                    newTransaction.status = 'Canceled';
+                    var r = await _transactionProvider.insert(newTransaction);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => CancelScreen()));
+                  }
+                }
+                if (request.url.contains(cancelURL)) {}
+                return NavigationDecision.navigate;
+              },
+            )),
+        ),
+      );
+    } else {
+      return Scaffold(
+        key: _scaffoldKey,
+        appBar: AppBar(
+          leading: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.of(context).pop();
+              }),
+          backgroundColor: Colors.black12,
+          elevation: 0.0,
+        ),
+        body: const Center(child: CircularProgressIndicator()),
+      );
+    }
   }
 }
 
@@ -156,7 +222,7 @@ class SuccessScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(child: Text('Uspješna transakcija')),
+        title: const Center(child: Text('Transaction done successfully.')),
         automaticallyImplyLeading: false,
       ),
       body: Center(
@@ -164,7 +230,7 @@ class SuccessScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Text('Hvala Vam na kupovini.'),
+              const Text('Thank you for buying!'),
               SizedBox(
                 height: 10,
               ),
@@ -186,7 +252,7 @@ class SuccessScreen extends StatelessWidget {
                     backgroundColor: Colors.lightGreen,
                     foregroundColor: Colors.white),
                 child: const Text(
-                  "Vrati na početnu",
+                  "Go to home screen",
                 ),
               ),
             ]),
@@ -202,7 +268,7 @@ class CancelScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(child: Text('Neuspjela transakcija')),
+        title: const Center(child: Text('Transaction was unsuccessfully.')),
         automaticallyImplyLeading: false,
       ),
       body: Center(
@@ -210,7 +276,7 @@ class CancelScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Text('Vaša transakcija je otkazana.'),
+              const Text('Your transaction was canceled.'),
               SizedBox(
                 height: 10,
               ),
@@ -232,7 +298,7 @@ class CancelScreen extends StatelessWidget {
                     backgroundColor: Colors.redAccent,
                     foregroundColor: Colors.white),
                 child: const Text(
-                  "Vrati na početnu",
+                  "Go to home screen",
                 ),
               ),
             ]),
@@ -240,4 +306,3 @@ class CancelScreen extends StatelessWidget {
     );
   }
 }
-

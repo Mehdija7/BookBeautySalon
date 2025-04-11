@@ -79,10 +79,10 @@ class _NewserviceScreenState extends State<NewserviceScreen> {
         _longDescriptionController.text = '';
         _durationController.text = '';
       });
-      _showSnackBar('Usluga uspješno dodana!', Colors.green);
+      _showSnackBar('Service added successfully.', Colors.green);
       Navigator.pop(context, 'service_added');
     } catch (e) {
-      _showSnackBar('Neuspješno dodavanje usluge.', Colors.red);
+      _showSnackBar('Adding service was unsuccessfully.', Colors.red);
     }
   }
 
@@ -133,15 +133,13 @@ class _NewserviceScreenState extends State<NewserviceScreen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Left side for fields
             Expanded(
               flex: 3,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const MainTitle(title: 'Dodavanje nove usluge'),
-                  SizedBox(height: 20),
-                  // Title Field
+                  const MainTitle(title: 'Adding new service'),
+                  const SizedBox(height: 20),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 10),
                     child: Column(
@@ -150,22 +148,21 @@ class _NewserviceScreenState extends State<NewserviceScreen> {
                         TextField(
                           controller: _titleController,
                           decoration: const InputDecoration(
-                            labelText: 'Naziv',
+                            labelText: 'Name',
                             border: OutlineInputBorder(),
                           ),
                         ),
                         if (_isTitleEmpty)
-                          Padding(
-                            padding: const EdgeInsets.only(top: 5),
+                          const Padding(
+                            padding: EdgeInsets.only(top: 5),
                             child: Text(
-                              'Obavezno polje',
+                              'The field is required.',
                               style: TextStyle(color: Colors.red, fontSize: 12),
                             ),
                           ),
                       ],
                     ),
                   ),
-                  // Price Field
                   Padding(
                     padding: const EdgeInsets.only(bottom: 10),
                     child: Column(
@@ -174,16 +171,16 @@ class _NewserviceScreenState extends State<NewserviceScreen> {
                         TextField(
                           controller: _priceController,
                           decoration: const InputDecoration(
-                            labelText: 'Cijena',
+                            labelText: 'Price',
                             suffixText: 'BAM',
                             border: OutlineInputBorder(),
                           ),
                         ),
                         if (_isPriceEmpty)
-                          Padding(
-                            padding: const EdgeInsets.only(top: 5),
+                          const Padding(
+                            padding: EdgeInsets.only(top: 5),
                             child: Text(
-                              'Obavezno polje',
+                              'The field is required.',
                               style: TextStyle(color: Colors.red, fontSize: 12),
                             ),
                           ),
@@ -200,22 +197,21 @@ class _NewserviceScreenState extends State<NewserviceScreen> {
                           controller: _shortDescriptionController,
                           maxLines: 2,
                           decoration: const InputDecoration(
-                            labelText: 'Kratki opis',
+                            labelText: 'Short description',
                             border: OutlineInputBorder(),
                           ),
                         ),
                         if (_isShortDescriptionEmpty)
-                          Padding(
-                            padding: const EdgeInsets.only(top: 5),
+                          const Padding(
+                            padding: EdgeInsets.only(top: 5),
                             child: Text(
-                              'Obavezno polje',
+                              'The field is required.',
                               style: TextStyle(color: Colors.red, fontSize: 12),
                             ),
                           ),
                       ],
                     ),
                   ),
-                  // Long Description Field
                   Padding(
                     padding: const EdgeInsets.only(bottom: 10),
                     child: Column(
@@ -225,15 +221,15 @@ class _NewserviceScreenState extends State<NewserviceScreen> {
                           controller: _longDescriptionController,
                           maxLines: 3,
                           decoration: const InputDecoration(
-                            labelText: 'Duži opis',
+                            labelText: 'Long description',
                             border: OutlineInputBorder(),
                           ),
                         ),
                         if (_isLongDescriptionEmpty)
-                          Padding(
-                            padding: const EdgeInsets.only(top: 5),
+                          const Padding(
+                            padding: EdgeInsets.only(top: 5),
                             child: Text(
-                              'Obavezno polje',
+                              'The field is required.',
                               style: TextStyle(color: Colors.red, fontSize: 12),
                             ),
                           ),
@@ -249,16 +245,16 @@ class _NewserviceScreenState extends State<NewserviceScreen> {
                         TextField(
                           controller: _durationController,
                           decoration: const InputDecoration(
-                            labelText: 'Vrijeme trajanja',
+                            labelText: 'Time',
                             suffixText: 'min',
                             border: OutlineInputBorder(),
                           ),
                         ),
                         if (_isDurationEmpty)
-                          Padding(
-                            padding: const EdgeInsets.only(top: 5),
+                          const Padding(
+                            padding: EdgeInsets.only(top: 5),
                             child: Text(
-                              'Obavezno polje',
+                              'The field is required.',
                               style: TextStyle(color: Colors.red, fontSize: 12),
                             ),
                           ),
@@ -268,14 +264,13 @@ class _NewserviceScreenState extends State<NewserviceScreen> {
                 ],
               ),
             ),
-            // Right side for image placeholder
             Expanded(
               flex: 2,
               child: Padding(
-                padding: EdgeInsets.only(top: 40),
+                padding: const EdgeInsets.only(top: 40),
                 child: Column(
                   children: [
-                    const Text('Slika:', style: TextStyle(fontSize: 16)),
+                    const Text('Image:', style: TextStyle(fontSize: 16)),
                     Padding(
                       padding: const EdgeInsets.only(top: 10),
                       child: GestureDetector(
@@ -296,10 +291,10 @@ class _NewserviceScreenState extends State<NewserviceScreen> {
                       ),
                     ),
                     if (_isImageEmpty)
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10),
+                      const Padding(
+                        padding: EdgeInsets.only(top: 10),
                         child: Text(
-                          'Obavezno polje',
+                          'The field is required.',
                           style: TextStyle(color: Colors.red, fontSize: 12),
                         ),
                       ),
@@ -329,7 +324,7 @@ class _NewserviceScreenState extends State<NewserviceScreen> {
             foregroundColor: WidgetStateProperty.all<Color>(
                 const Color.fromARGB(255, 245, 245, 245)),
           ),
-          child: const Text('Dodaj uslugu'),
+          child: const Text('Add service'),
         ),
       ),
     );

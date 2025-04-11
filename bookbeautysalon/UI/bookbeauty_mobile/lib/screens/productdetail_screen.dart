@@ -10,6 +10,7 @@ import 'package:book_beauty/providers/order_item_provider.dart';
 import 'package:book_beauty/providers/review_provider.dart';
 import 'package:book_beauty/providers/user_provider.dart';
 import 'package:book_beauty/widgets/main_title.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../widgets/review_stars.dart';
@@ -26,9 +27,6 @@ class ProductDetailScreen extends StatefulWidget {
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
   final ReviewProvider _reviewProvider = ReviewProvider();
   double rating = 0.0;
-  final FavoriteProductProvider _favoriteProductProvider =
-      FavoriteProductProvider();
-  late bool fav = false;
   bool isLoading = false;
   final CommentProductProvider _commentProductProvider =
       CommentProductProvider();
@@ -38,7 +36,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   void initState() {
     super.initState();
     fetchComments();
-    _fetchFavorite();
     _fetchAverage();
   }
 
@@ -54,51 +51,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     });
   }
 
-  Future<void> _fetchFavorite() async {
-    try {
-      var user = UserProvider.globalUserId!;
-      var favoriteStatus = await _favoriteProductProvider.isProductFav(
-          widget.product.productId!, user);
-      print(
-          "+++++++++++++++++++++++++++++++++++++++++++++ GLOBAL FAVORITE ID ++++++++++++++++++++++++++");
-      print(FavoriteProductProvider.globalIsFavorite);
-      setState(() {
-        fav = favoriteStatus;
-      });
-    } catch (e) {
-      print("Error in fetchFavoriteProductProduct: $e");
-    }
-  }
-
-  Future<void> toggleFav() async {
-    setState(() {
-      isLoading = true;
-    });
-    if (fav) {
-      SearchResult<FavoriteProduct> result =
-          await _favoriteProductProvider.get(filter: {
-        'ProductId': widget.product.productId.toString(),
-        'UserId': UserProvider.globalUserId.toString()
-      });
-      var data = result.result;
-
-      var item = data.first.favoriteProductsId;
-      await _favoriteProductProvider.delete(item!);
-      await _favoriteProductProvider.toggleFavorite(false);
-    } else {
-      FavoriteProduct newFav = FavoriteProduct(
-        addingDate: DateTime.now(),
-        userId: UserProvider.globalUserId,
-        productId: widget.product.productId,
-      );
-      await _favoriteProductProvider.insert(newFav);
-      await _favoriteProductProvider.toggleFavorite(true);
-    }
-    setState(() {
-      fav = FavoriteProductProvider.globalIsFavorite!;
-      isLoading = false;
-    });
-  }
 
   fetchComments() async {
     try {
@@ -140,7 +92,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             ),
             body: Container(
               height: MediaQuery.of(context).size.height,
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 0),
+              width:  MediaQuery.of(context).size.width,
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 2),
               color: const Color.fromARGB(157, 201, 198, 198),
               child: SingleChildScrollView(
                 child: Column(
@@ -151,13 +104,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     widget.product.image != null
                         ? Image.memory(
                             base64Decode(widget.product
-                                .image!), // Assuming it's a Uint8List if not null
+                                .image!),
                             width: 100,
                             height: 200,
                             fit: BoxFit.cover,
                           )
                         : Image.asset(
-                            "assets/images/logoBB.png", // Fallback asset image when image is null
+                            "assets/images/logoBB.png", 
                             width: 100,
                             height: 200,
                             fit: BoxFit.cover,
@@ -165,21 +118,12 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     Padding(
                         padding: const EdgeInsets.all(5),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            ReviewStars(
-                                average: rating, product: widget.product),
-                            IconButton(
-                              icon: Icon(Icons.favorite,
-                                  size: 20,
-                                  color: fav
-                                      ? const Color.fromARGB(255, 233, 83, 83)
-                                      : Colors.grey),
-                              onPressed: () {
-                                toggleFav();
-                              },
-                            ),
+                          ReviewStars(
+                                        average: rating, product: widget.product),
+                            
                           ],
                         )),
                     Padding(
@@ -223,7 +167,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               ),
                             ),
                             child: const Text(
-                              'Kupi',
+                              'Buy',
                               textAlign: TextAlign.center,
                               style: TextStyle(fontSize: 18),
                             ),
@@ -270,6 +214,7 @@ class _CommentsSectionState extends State<CommentsSection> {
   @override
   Widget build(BuildContext context) {
     final keyboardSpace = MediaQuery.of(context).viewInsets.bottom;
+     
     return LayoutBuilder(
       builder: (ctx, constraints) {
         return SizedBox(
@@ -278,7 +223,7 @@ class _CommentsSectionState extends State<CommentsSection> {
             children: [
               const SizedBox(height: 16),
               const Text(
-                "Komentari",
+                "Comments",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 16),
@@ -288,20 +233,25 @@ class _CommentsSectionState extends State<CommentsSection> {
                         itemCount: widget.comments.length,
                         itemBuilder: (ctx, index) {
                           final comment = widget.comments[index];
+                          String date = DateFormat('yyyy/MM/dd HH:mm').format(comment.commentDate!.toLocal());
                           return Card(
                             margin: const EdgeInsets.symmetric(
                                 vertical: 8, horizontal: 16),
                             child: ListTile(
-                              title: Text(comment.commentText!),
+                              title: Text(comment.commentText!,style: 
+                              TextStyle(fontWeight: FontWeight.bold),),
                               subtitle: Text(
-                                'By User ${comment.userId} on ${comment.commentDate!.toLocal()}'
+                                '${comment.user!.username!}   $date'
                                     .split('.')[0],
+                                style: TextStyle(
+                                  fontStyle: FontStyle.italic
+                                ),    
                               ),
                             ),
                           );
                         },
                       )
-                    : const Center(child: Text("Nema komentara")),
+                    : const Center(child: Text("There is no comments.")),
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(16, 8, 16, keyboardSpace + 16),
@@ -316,7 +266,7 @@ class _CommentsSectionState extends State<CommentsSection> {
                             controller: _titleController,
                             maxLength: 50,
                             decoration: InputDecoration(
-                              labelText: 'Dodaj komentar',
+                              labelText: 'Add comment',
                               labelStyle: TextStyle(color: Colors.grey[700]),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(12),
@@ -346,15 +296,22 @@ class _CommentsSectionState extends State<CommentsSection> {
                         const Spacer(),
                         TextButton(
                           onPressed: () => Navigator.pop(context),
-                          child: const Text('Odustani'),
+                          child: const Text('Cancel',
+                          style: TextStyle(
+                            color:Color.fromARGB(255, 132, 132, 104),
+                            fontWeight: FontWeight.bold
+                          ),),
                         ),
                         ElevatedButton(
+                           style: ButtonStyle(
+    backgroundColor: WidgetStateProperty.all<Color>(Color.fromARGB(255, 167, 160, 125)),
+  ),
                           onPressed: () async {
                             if (_titleController.text.trim().isEmpty) {
                               showDialog(
                                 context: context,
                                 builder: (context) => AlertDialog(
-                                  title: const Text("Polje naziv je obavezno"),
+                                  title: const Text("TThe input field is required."),
                                   actions: [
                                     TextButton(
                                       onPressed: () => Navigator.pop(context),
@@ -375,7 +332,7 @@ class _CommentsSectionState extends State<CommentsSection> {
 
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
-                                    content: Text("Komentar uspješno dodan"),
+                                    content: Text("Comment added successfully."),
                                     backgroundColor: Colors.green,
                                   ),
                                 );
@@ -385,7 +342,7 @@ class _CommentsSectionState extends State<CommentsSection> {
                                 showDialog(
                                   context: context,
                                   builder: (context) => AlertDialog(
-                                    title: const Text("Desila se greska"),
+                                    title: const Text("Adding comment was unsuccessfully."),
                                     actions: [
                                       TextButton(
                                         onPressed: () => Navigator.pop(context),
@@ -398,7 +355,10 @@ class _CommentsSectionState extends State<CommentsSection> {
                               }
                             }
                           },
-                          child: const Text('Spremi'),
+                          child: const Text('Save',style: TextStyle(
+                            color:Color.fromARGB(255, 72, 72, 71),
+                           
+                          ),),
                         ),
                       ],
                     ),

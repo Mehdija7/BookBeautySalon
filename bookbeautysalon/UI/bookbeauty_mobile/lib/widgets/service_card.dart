@@ -25,18 +25,18 @@ class ServiceCard extends StatelessWidget {
           _selectCard(context);
         },
         child: Stack(children: [
-          Hero(
-            tag: UniqueKey(),
-            child: FadeInImage(
-              placeholder: MemoryImage(kTransparentImage),
-              image: service.image != null
-                  ? MemoryImage(base64Decode(service.image!))
-                  : MemoryImage(kTransparentImage),
-              fit: BoxFit.cover,
-              height: 150,
-              width: double.infinity,
-            ),
-          ),
+    Hero(
+  tag: UniqueKey(),
+  child: FadeInImage(
+    placeholder: MemoryImage(kTransparentImage),
+    image: service.image != null && service.image!.isNotEmpty
+        ? MemoryImage(base64Decode(service.image!)) as ImageProvider<Object>
+        : AssetImage("assets/images/pranje_kose.jpg") as ImageProvider<Object>,
+    fit: BoxFit.cover,
+    height: 150,
+    width: double.infinity,
+  ),
+),
           Positioned.fill(
             child: Container(
               color: const Color.fromARGB(121, 206, 206, 206),
