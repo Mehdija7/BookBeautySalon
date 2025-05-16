@@ -11,13 +11,14 @@ This project is a Beauty Salon App developed for my university. It includes both
 __Setup Instructions__
 
 *Prerequisites*
+
 Ensure that you have the following installed:
 
 * Docker (Ensure Docker Desktop is running)
 * Flutter
 * Android Emulator (e.g., Android Studio)
 
-_Backend Setup_
+**Backend Setup**
 
 * Start Docker Desktop
 	Ensure Docker is running on your machine.
@@ -29,9 +30,9 @@ _Backend Setup_
 
 	Wait for Docker to finish composing the services.
 
-_Frontend Setup (Mobile & Desktop)_
+**Frontend Setup (Mobile & Desktop)**
 
-**Desktop application**
+_Desktop application_
   Run desktop_app.exe from Release folder in the zipped archive fit-build-2025-05-16.zip
 
  * Administrator
@@ -45,7 +46,7 @@ Username: hairdresser | Password: test
 
 Username: melihakazic	| Password: hairdresser
 
-**Mobile Application**
+_Mobile Application_
 
 Open Android Studio and run Emulator
 Drag and drop the app-release.apk file (from flutter-apk folder in the zipped archive fit-build-2025-05-16.zip) into the Emulator, in order to install the application
