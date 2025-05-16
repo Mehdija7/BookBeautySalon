@@ -33,6 +33,7 @@ Ensure that you have the following installed:
 **Frontend Setup (Mobile & Desktop)**
 
 _Desktop application_
+
   Run desktop_app.exe from Release folder in the zipped archive fit-build-2025-05-16.zip
 
  * Administrator
