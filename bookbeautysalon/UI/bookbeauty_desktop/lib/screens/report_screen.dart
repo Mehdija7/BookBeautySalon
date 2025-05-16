@@ -138,7 +138,7 @@ class _ReportScreenState extends State<ReportScreen> {
                           children: [
                             MainTitle(
                                 title:
-                                    "Graf najprodavanijih proizvoda po kategoriji"),
+                                    "Chart of the best-selling products by category"),
                           ]),
                       Chart(
                         products: _registeredProducts,
@@ -148,7 +148,7 @@ class _ReportScreenState extends State<ReportScreen> {
                         readOnly: true,
                         controller: _textcontroller
                           ..text =
-                              'Ovaj graf predstavlja prodaju proizvoda po kategorijama. Trenutno je u radnji registrovano ${_registeredProducts.length} proizvoda, raspoređenih u ${_registeredCategories.length} kategorija. Na x osi se nalaze imena svake kategorije pojedinačno, a na y osi je simbolično prikazana prodaja, gdje broj na vrhu štapića predstavlja broj prodatih proizvoda za tu kategoriju.',
+                              'This chart represents product sales by category. Currently, there are ${_registeredProducts.length} products registered in the store, distributed across ${_registeredCategories.length} categories. On the x-axis are the names of each individual category, and on the y-axis, sales are symbolically represented, where the number at the top of each bar indicates the number of products sold in that category.',
                         maxLines: 3,
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(),

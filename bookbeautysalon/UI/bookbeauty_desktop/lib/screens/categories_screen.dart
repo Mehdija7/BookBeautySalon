@@ -64,39 +64,40 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   Widget build(BuildContext context) {
     return isLoading
         ? const CircularProgressIndicator()
-        : Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IconButton(
-                    onPressed: _openAddCategoryOverlay,
-                    icon: const Icon(Icons.add),
-                    padding: const EdgeInsets.only(left: 40, right: 40),
-                  ),
-                ],
-              ),
-              if (_registeredCategories.isNotEmpty)
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: _registeredCategories.length,
-                    itemBuilder: (ctx, index) {
-                      return Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0),
-                        ),
-                        child: ListTile(
-                          title: Text(
-                            _registeredCategories[index].name!,
+        :  Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    IconButton(
+                      onPressed: _openAddCategoryOverlay,
+                      icon: const Icon(Icons.add),
+                      padding: const EdgeInsets.only(left: 40, right: 40),
+                    ),
+                  ],
+                ),
+                if (_registeredCategories.isNotEmpty)
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: _registeredCategories.length,
+                      itemBuilder: (ctx, index) {
+                        return Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0),
                           ),
-                        ),
-                      );
-                    },
-                  ),
-                )
-              else
-                const Text("List is empty")
-            ],
-          );
+                          child: ListTile(
+                            title: Text(
+                              _registeredCategories[index].name!,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  )
+                else
+                  const Text("List is empty")
+              ],
+           
+        );
   }
 }

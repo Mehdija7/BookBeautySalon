@@ -38,7 +38,6 @@ builder.Services.AddTransient<IServiceService, ServiceService>();
 builder.Services.AddTransient<IAppointmentService, AppointmentService>();
 builder.Services.AddTransient<INewsService, NewsService>();
 builder.Services.AddTransient<ICommentProductService, CommentProductService>();
-
 builder.Services.AddTransient<BaseProductState>();
 builder.Services.AddTransient<InitialProductState>();
 builder.Services.AddTransient<DraftProductState>();
@@ -287,6 +286,7 @@ new Service
         string adminpass = "admin";
         string userpass = "customer";
         string hairpass = "hairdresser";
+        string pass = "test";
 
         string adminsalt = GenerateSalt();
         string adminhash = GenerateHash(adminsalt, adminpass);
@@ -297,6 +297,8 @@ new Service
         string hairsalt = GenerateSalt();
         string hairhash = GenerateHash(hairsalt, hairpass);
 
+        string passsalt = GenerateSalt();
+        string passhash = GenerateHash(passsalt, pass);
 
         dataContext.Users.AddRange(
             new User
@@ -307,8 +309,8 @@ new Service
                 Username = "admin",
                 Email = "admin.admin@gmail.com",
                 Phone = "061111111",
-                PasswordHash = adminhash,
-                PasswordSalt = adminsalt,
+                PasswordHash = passhash,
+                PasswordSalt = passsalt,
                 Address = "ADMIN"
             },
                new User
@@ -318,8 +320,8 @@ new Service
                    Username = "hairdresser",
                    Email = "hairdresser@example.com",
                    Phone = "061111111",
-                   PasswordHash = hairhash,
-                   PasswordSalt = hairsalt,
+                   PasswordHash = passhash,
+                   PasswordSalt = passsalt,
                    Address = "Zalik, Mostar"
                },
                  new User
@@ -359,13 +361,13 @@ new Service
       
         new User
         {   
-            FirstName = "Korisnik",
-            LastName = "Korisnik",
-            Username = "korisnik",
+            FirstName = "Customer",
+            LastName = "Customer",
+            Username = "customer",
             Email = "mehdijabookbeauty@gmail.com",
             Phone = "061111111",
-            PasswordHash = userhash,
-            PasswordSalt = usersalt,
+            PasswordHash = passhash,
+            PasswordSalt = passsalt,
             Address = "Branilaca, Sarajevo"
         },   
         new User
@@ -557,7 +559,7 @@ new News
         dataContext.Appointments.AddRange(
             new Appointment
             {
-                DateTime = new DateTime(year: 2024, month: 1, day: 16, hour: 10, minute: 0, second: 0),
+                DateTime = new DateTime(year: 2025, month: 5, day: 19, hour: 10, minute: 0, second: 0),
                 UserId = 5,
                 HairdresserId = 2,
                 ServiceId = 1,
@@ -565,23 +567,23 @@ new News
             },
              new Appointment
              {
-                 DateTime = new DateTime(year: 2024, month: 1, day: 31, hour: 10, minute: 0, second: 0),
-                 UserId = 5,
+                 DateTime = new DateTime(year: 2025, month: 5, day: 19, hour: 12, minute: 0, second: 0),
+                 UserId = 6,
                  HairdresserId = 2,
                  ServiceId = 4,
                  Note = "Just hair root",
              },
             new Appointment
             {
-              DateTime = new DateTime(year:2024,month: 1,day: 28,hour:9,minute:0,second:0),
+              DateTime = new DateTime(year:2025,month: 5,day: 20,hour:9,minute:0,second:0),
               UserId = 5,
-              HairdresserId = 2,
+              HairdresserId = 3,
               ServiceId = 1,
               Note = "Straight blow-draying",
             },
          new Appointment
          {
-             DateTime = new DateTime(year: 2024, month: 1, day: 31, hour: 11, minute: 0, second: 0),
+             DateTime = new DateTime(year: 2025, month: 5, day: 20, hour: 11, minute: 0, second: 0),
              UserId = 6,
              HairdresserId = 3,
              ServiceId = 3,
@@ -589,7 +591,7 @@ new News
          },
           new Appointment
           {
-              DateTime = new DateTime(year: 2024, month: 1, day: 30, hour: 14, minute: 0, second: 0),
+              DateTime = new DateTime(year: 2025, month: 5, day: 20, hour: 14, minute: 0, second: 0),
               UserId = 7,
               HairdresserId = 4,
               ServiceId = 2,
@@ -597,7 +599,7 @@ new News
           },
             new Appointment
             {
-                DateTime = new DateTime(year: 2024, month: 1, day: 29, hour: 8, minute: 0, second: 0),
+                DateTime = new DateTime(year: 2025, month: 5, day: 21, hour: 8, minute: 0, second: 0),
                 UserId = 8,
                 HairdresserId = 3,
                 ServiceId = 6,
@@ -605,7 +607,7 @@ new News
             },
              new Appointment
              {
-                 DateTime = new DateTime(year: 2024, month: 1, day: 29, hour: 14, minute: 0, second: 0),
+                 DateTime = new DateTime(year: 2025, month: 5, day: 21, hour: 9, minute: 0, second: 0),
                  UserId = 6,
                  HairdresserId = 2,
                  ServiceId = 5,
@@ -613,7 +615,7 @@ new News
              },
                  new Appointment
                  {
-                     DateTime = new DateTime(year: 2024, month: 1, day: 23, hour: 10, minute: 0, second: 0),
+                     DateTime = new DateTime(year: 2025, month: 5, day: 21, hour: 15, minute: 0, second: 0),
                      UserId = 7,
                      HairdresserId = 4,
                      ServiceId = 4,
@@ -621,7 +623,7 @@ new News
                  },
                    new Appointment
                    {
-                       DateTime = new DateTime(year: 2024, month: 1, day: 24, hour: 12, minute: 0, second: 0),
+                       DateTime = new DateTime(year: 2025, month: 5, day: 22, hour: 12, minute: 0, second: 0),
                        UserId = 5,
                        HairdresserId = 4,
                        ServiceId = 5,
@@ -629,7 +631,7 @@ new News
                    },
                         new Appointment
                         {
-                            DateTime = new DateTime(year: 2024, month: 1, day: 27, hour: 10, minute: 0, second: 0),
+                            DateTime = new DateTime(year: 2025, month: 5, day: 22, hour: 10, minute: 0, second: 0),
                             UserId = 5,
                             HairdresserId = 3,
                             ServiceId = 1,
@@ -637,7 +639,7 @@ new News
                         },
                            new Appointment
                            {
-                               DateTime = new DateTime(year: 2024, month: 1, day: 27, hour: 11, minute: 0, second: 0),
+                               DateTime = new DateTime(year: 2025, month: 5, day: 22, hour: 13, minute: 0, second: 0),
                                UserId = 6,
                                HairdresserId = 3,
                                ServiceId = 4,
@@ -645,7 +647,7 @@ new News
                            },
                              new Appointment
                              {
-                                 DateTime = new DateTime(year: 2024, month: 1, day: 27, hour: 8, minute: 0, second: 0),
+                                 DateTime = new DateTime(year: 2025, month: 5, day: 23, hour: 8, minute: 0, second: 0),
                                  UserId = 4,
                                  HairdresserId = 2,
                                  ServiceId = 4,
@@ -653,7 +655,7 @@ new News
                              },
                                new Appointment
                                {
-                                   DateTime = new DateTime(year: 2024, month: 1, day: 29, hour: 8, minute: 0, second: 0),
+                                   DateTime = new DateTime(year: 2025, month: 5, day: 23, hour: 9, minute: 0, second: 0),
                                    UserId = 5,
                                    HairdresserId = 2,
                                    ServiceId = 6,
@@ -661,12 +663,167 @@ new News
                                },
                                    new Appointment
                                    {
-                                       DateTime = new DateTime(year: 2024, month: 1, day: 24, hour: 8, minute: 0, second: 0),
+                                       DateTime = new DateTime(year: 2025, month: 5, day: 23, hour: 11, minute: 0, second: 0),
                                        UserId = 8,
                                        HairdresserId = 2,
                                        ServiceId = 6,
                                        Note = "Include crystals to treatment",
-                                   }
+                                   },
+
+
+
+
+                                     new Appointment
+                                     {
+                                         DateTime = new DateTime(year: 2025, month: 5, day: 26, hour: 10, minute: 0, second: 0),
+                                         UserId = 5,
+                                         HairdresserId = 2,
+                                         ServiceId = 1,
+                                         Note = "Straight blow-draying",
+                                     },
+             new Appointment
+             {
+                 DateTime = new DateTime(year: 2025, month: 5, day: 26, hour: 12, minute: 0, second: 0),
+                 UserId = 6,
+                 HairdresserId = 2,
+                 ServiceId = 4,
+                 Note = "Just hair root",
+             },
+            new Appointment
+            {
+                DateTime = new DateTime(year: 2025, month: 5, day: 27, hour: 9, minute: 0, second: 0),
+                UserId = 5,
+                HairdresserId = 3,
+                ServiceId = 1,
+                Note = "Straight blow-draying",
+            },
+         new Appointment
+         {
+             DateTime = new DateTime(year: 2025, month: 5, day: 27, hour: 11, minute: 0, second: 0),
+             UserId = 6,
+             HairdresserId = 3,
+             ServiceId = 3,
+             Note = "Just split ends",
+         },
+          new Appointment
+          {
+              DateTime = new DateTime(year: 2025, month: 5, day: 27, hour: 14, minute: 0, second: 0),
+              UserId = 7,
+              HairdresserId = 4,
+              ServiceId = 2,
+              Note = "I have alergy on SLS and paraben",
+          },
+            new Appointment
+            {
+                DateTime = new DateTime(year: 2025, month: 5, day: 28, hour: 8, minute: 0, second: 0),
+                UserId = 8,
+                HairdresserId = 3,
+                ServiceId = 6,
+                Note = "Treatment with Olaplex products",
+            },
+             new Appointment
+             {
+                 DateTime = new DateTime(year: 2025, month: 5, day: 29, hour: 9, minute: 0, second: 0),
+                 UserId = 6,
+                 HairdresserId = 2,
+                 ServiceId = 5,
+                 Note = "Weeding hairstyle",
+             },
+
+
+               new Appointment
+               {
+                   DateTime = new DateTime(year: 2025, month: 5, day: 29, hour: 12, minute: 0, second: 0),
+                   UserId = 5,
+                   HairdresserId = 4,
+                   ServiceId = 5,
+                   Note = "Big curls",
+               },
+                        new Appointment
+                        {
+                            DateTime = new DateTime(year: 2025, month: 6, day: 2, hour: 10, minute: 0, second: 0),
+                            UserId = 5,
+                            HairdresserId = 3,
+                            ServiceId = 1,
+                            Note = "Curly blow-drying",
+                        },
+                           new Appointment
+                           {
+                               DateTime = new DateTime(year: 2025, month: 6, day: 2, hour: 13, minute: 0, second: 0),
+                               UserId = 6,
+                               HairdresserId = 3,
+                               ServiceId = 4,
+                               Note = "Light-brown balayage",
+                           },
+                             new Appointment
+                             {
+                                 DateTime = new DateTime(year: 2025, month: 6, day: 3, hour: 8, minute: 0, second: 0),
+                                 UserId = 4,
+                                 HairdresserId = 2,
+                                 ServiceId = 4,
+                                 Note = "Red balayage",
+                             },
+                               new Appointment
+                               {
+                                   DateTime = new DateTime(year: 2025, month: 6, day: 3, hour: 9, minute: 0, second: 0),
+                                   UserId = 5,
+                                   HairdresserId = 2,
+                                   ServiceId = 6,
+                                   Note = "Include crystals to treatment",
+                               },
+                                   new Appointment
+                                   {
+                                       DateTime = new DateTime(year: 2025, month: 6, day: 3, hour: 11, minute: 0, second: 0),
+                                       UserId = 8,
+                                       HairdresserId = 2,
+                                       ServiceId = 6,
+                                       Note = "Include crystals to treatment",
+                                   },
+
+
+                                    new Appointment
+                                    {
+                                        DateTime = new DateTime(year: 2025, month: 6, day: 4, hour: 9, minute: 0, second: 0),
+                                        UserId = 5,
+                                        HairdresserId = 3,
+                                        ServiceId = 1,
+                                        Note = "Straight blow-draying",
+                                    },
+         new Appointment
+         {
+             DateTime = new DateTime(year: 2025, month: 6, day: 4, hour: 11, minute: 0, second: 0),
+             UserId = 6,
+             HairdresserId = 3,
+             ServiceId = 3,
+             Note = "Just split ends",
+         },
+          new Appointment
+          {
+              DateTime = new DateTime(year: 2025, month: 6, day: 5, hour: 14, minute: 0, second: 0),
+              UserId = 7,
+              HairdresserId = 4,
+              ServiceId = 2,
+              Note = "I have alergy on SLS and paraben",
+          },
+
+
+            new Appointment
+            {
+                DateTime = new DateTime(year: 2025, month: 6, day: 6, hour: 8, minute: 0, second: 0),
+                UserId = 4,
+                HairdresserId = 2,
+                ServiceId = 4,
+                Note = "Red balayage",
+            },
+                               new Appointment
+                               {
+                                   DateTime = new DateTime(year: 2025, month: 6, day: 6, hour: 9, minute: 0, second: 0),
+                                   UserId = 5,
+                                   HairdresserId = 2,
+                                   ServiceId = 6,
+                                   Note = "Include crystals to treatment",
+                               }
+
 
 
 
@@ -708,14 +865,14 @@ new News
                new Order { OrderNumber = "#4",  DateTime = new DateTime(2024,1,14),CustomerId =8,Status = "Created" ,TotalPrice=100 },
                new Order { OrderNumber = "#5",  DateTime = new DateTime(2024,1,14),CustomerId =5,Status = "Created" ,TotalPrice=100 },
                new Order { OrderNumber = "#6",  DateTime = new DateTime(2024,1,14),CustomerId =6,Status = "Created" ,TotalPrice=100 },
-               new Order { OrderNumber = "#7",  DateTime = new DateTime(2024,1,14),CustomerId =7,Status = "Created" ,TotalPrice=100 },
-               new Order { OrderNumber = "#8",  DateTime=  new DateTime(2024,1,12),CustomerId =5,Status = "Sent" ,TotalPrice=100 },
-               new Order { OrderNumber = "#9",  DateTime=  new DateTime(2024,1,11),CustomerId =6,Status = "Sent" ,TotalPrice=100 },
-               new Order { OrderNumber = "#10", DateTime = new DateTime(2024,1,10),CustomerId =7,Status = "Delivered" ,TotalPrice=100 },
-               new Order { OrderNumber = "#11", DateTime = new DateTime(2024,1,9) ,CustomerId =8,Status = "Delivered" ,TotalPrice=100 },
-               new Order { OrderNumber = "#12", DateTime = new DateTime(2024,1,9) ,CustomerId =5,Status = "Delivered" ,TotalPrice=100 },
-               new Order { OrderNumber = "#13", DateTime = new DateTime(2024,1,13),CustomerId =6,Status = "Sent" ,TotalPrice=100 },
-               new Order { OrderNumber = "#14", DateTime = new DateTime(2024,1,13),CustomerId =7,Status = "Sent" ,TotalPrice=100 }
+               new Order { OrderNumber = "#7",  DateTime = new DateTime(2024,12,14),CustomerId =7,Status = "Created" ,TotalPrice=100 },
+               new Order { OrderNumber = "#8",  DateTime=  new DateTime(2025,4,12),CustomerId =5,Status = "Sent" ,TotalPrice=100 },
+               new Order { OrderNumber = "#9",  DateTime=  new DateTime(2025,4,11),CustomerId =6,Status = "Sent" ,TotalPrice=100 },
+               new Order { OrderNumber = "#11", DateTime = new DateTime(2025,5,9) ,CustomerId =8,Status = "Delivered" ,TotalPrice=100 },
+               new Order { OrderNumber = "#10", DateTime = new DateTime(2025,5,10),CustomerId =7,Status = "Delivered" ,TotalPrice=100 },
+               new Order { OrderNumber = "#12", DateTime = new DateTime(2025,5,9) ,CustomerId =5,Status = "Delivered" ,TotalPrice=100 },
+               new Order { OrderNumber = "#13", DateTime = new DateTime(2025,5,13),CustomerId =6,Status = "Sent" ,TotalPrice=100 },
+               new Order { OrderNumber = "#14", DateTime = new DateTime(2025,5,13),CustomerId =7,Status = "Sent" ,TotalPrice=100 }
             );
 
         dataContext.SaveChanges();

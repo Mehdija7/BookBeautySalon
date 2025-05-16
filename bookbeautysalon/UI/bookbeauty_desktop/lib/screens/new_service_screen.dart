@@ -15,6 +15,7 @@ class NewserviceScreen extends StatefulWidget {
 }
 
 class _NewserviceScreenState extends State<NewserviceScreen> {
+
   final _titleController = TextEditingController();
   final _priceController = TextEditingController();
   final _shortDescriptionController = TextEditingController();
@@ -31,6 +32,8 @@ class _NewserviceScreenState extends State<NewserviceScreen> {
   bool _isLongDescriptionEmpty = false;
   bool _isDurationEmpty = false;
   bool _isImageEmpty = false;
+  bool _isPriceInvalidFormat = false;
+  bool _isDurationInvalidFormat = false;
 
   @override
   void dispose() {
@@ -87,11 +90,7 @@ class _NewserviceScreenState extends State<NewserviceScreen> {
   }
 
   void _submitData() {
-    final enteredPrice = double.tryParse(_priceController.text);
-    final duration = int.tryParse(_durationController.text);
-    final amountIsInvalid = enteredPrice == null || enteredPrice <= 0;
-    final timeIsInvalid = duration == null || duration <= 0;
-
+  
     setState(() {
       _isTitleEmpty = _titleController.text.trim().isEmpty;
       _isPriceEmpty = _priceController.text.trim().isEmpty;
@@ -100,16 +99,29 @@ class _NewserviceScreenState extends State<NewserviceScreen> {
       _isLongDescriptionEmpty = _longDescriptionController.text.trim().isEmpty;
       _isDurationEmpty = _durationController.text.trim().isEmpty;
       _isImageEmpty = _image == null;
-    });
 
+      _isPriceInvalidFormat = false;
+      _isDurationInvalidFormat = false;
+    });
+final enteredPrice = double.tryParse(_priceController.text);
+final duration = int.tryParse(_durationController.text);
+
+if (!_isPriceEmpty && enteredPrice == null) {
+  _isPriceInvalidFormat = true;
+}
+if (!_isDurationEmpty && duration == null) {
+  _isDurationInvalidFormat = true;
+}
     if (_isTitleEmpty ||
-        amountIsInvalid ||
         _isPriceEmpty ||
         _isShortDescriptionEmpty ||
         _isLongDescriptionEmpty ||
         _isDurationEmpty ||
-        _isImageEmpty ||
-        timeIsInvalid) {
+        _isImageEmpty || 
+        _isDurationInvalidFormat ||
+         _isPriceInvalidFormat
+       ) {
+      setState(() {});
       return;
     }
 
@@ -128,185 +140,206 @@ class _NewserviceScreenState extends State<NewserviceScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Expanded(
-              flex: 3,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const MainTitle(title: 'Adding new service'),
-                  const SizedBox(height: 20),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TextField(
-                          controller: _titleController,
-                          decoration: const InputDecoration(
-                            labelText: 'Name',
-                            border: OutlineInputBorder(),
-                          ),
-                        ),
-                        if (_isTitleEmpty)
-                          const Padding(
-                            padding: EdgeInsets.only(top: 5),
-                            child: Text(
-                              'The field is required.',
-                              style: TextStyle(color: Colors.red, fontSize: 12),
-                            ),
-                          ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TextField(
-                          controller: _priceController,
-                          decoration: const InputDecoration(
-                            labelText: 'Price',
-                            suffixText: 'BAM',
-                            border: OutlineInputBorder(),
-                          ),
-                        ),
-                        if (_isPriceEmpty)
-                          const Padding(
-                            padding: EdgeInsets.only(top: 5),
-                            child: Text(
-                              'The field is required.',
-                              style: TextStyle(color: Colors.red, fontSize: 12),
-                            ),
-                          ),
-                      ],
-                    ),
-                  ),
-                  // Short Description Field
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TextField(
-                          controller: _shortDescriptionController,
-                          maxLines: 2,
-                          decoration: const InputDecoration(
-                            labelText: 'Short description',
-                            border: OutlineInputBorder(),
-                          ),
-                        ),
-                        if (_isShortDescriptionEmpty)
-                          const Padding(
-                            padding: EdgeInsets.only(top: 5),
-                            child: Text(
-                              'The field is required.',
-                              style: TextStyle(color: Colors.red, fontSize: 12),
-                            ),
-                          ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TextField(
-                          controller: _longDescriptionController,
-                          maxLines: 3,
-                          decoration: const InputDecoration(
-                            labelText: 'Long description',
-                            border: OutlineInputBorder(),
-                          ),
-                        ),
-                        if (_isLongDescriptionEmpty)
-                          const Padding(
-                            padding: EdgeInsets.only(top: 5),
-                            child: Text(
-                              'The field is required.',
-                              style: TextStyle(color: Colors.red, fontSize: 12),
-                            ),
-                          ),
-                      ],
-                    ),
-                  ),
-                  // Duration Field
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TextField(
-                          controller: _durationController,
-                          decoration: const InputDecoration(
-                            labelText: 'Time',
-                            suffixText: 'min',
-                            border: OutlineInputBorder(),
-                          ),
-                        ),
-                        if (_isDurationEmpty)
-                          const Padding(
-                            padding: EdgeInsets.only(top: 5),
-                            child: Text(
-                              'The field is required.',
-                              style: TextStyle(color: Colors.red, fontSize: 12),
-                            ),
-                          ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              flex: 2,
-              child: Padding(
-                padding: const EdgeInsets.only(top: 40),
-                child: Column(
-                  children: [
-                    const Text('Image:', style: TextStyle(fontSize: 16)),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10),
-                      child: GestureDetector(
-                        onTap: _openFilePicker,
-                        child: _image != null
-                            ? Image.file(
-                                _image!,
-                                width: 350,
-                                height: 350,
-                                fit: BoxFit.cover,
-                              )
-                            : Image.asset(
-                                'assets/images/pravaslika.png',
-                                width: 350,
-                                height: 350,
-                                fit: BoxFit.cover,
+      resizeToAvoidBottomInset: true,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  flex: 3,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const MainTitle(title: 'Adding new service'),
+                      const SizedBox(height: 20),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            TextField(
+                              controller: _titleController,
+                              decoration: const InputDecoration(
+                                labelText: 'Name',
+                                border: OutlineInputBorder(),
                               ),
-                      ),
-                    ),
-                    if (_isImageEmpty)
-                      const Padding(
-                        padding: EdgeInsets.only(top: 10),
-                        child: Text(
-                          'The field is required.',
-                          style: TextStyle(color: Colors.red, fontSize: 12),
+                            ),
+                            if (_isTitleEmpty)
+                              const Padding(
+                                padding: EdgeInsets.only(top: 5),
+                                child: Text(
+                                  'The field is required.',
+                                  style: TextStyle(color: Colors.red, fontSize: 12),
+                                ),
+                              ),
+                          ],
                         ),
                       ),
-                  ],
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            TextField(
+                              controller: _priceController,
+                              decoration: const InputDecoration(
+                                labelText: 'Price',
+                                suffixText: 'BAM',
+                                border: OutlineInputBorder(),
+                              ),
+                            ),
+                            if (_isPriceEmpty)
+                              const Padding(
+                                padding: EdgeInsets.only(top: 5),
+                                child: Text(
+                                  'The field is required.',
+                                  style: TextStyle(color: Colors.red, fontSize: 12),
+                                ),
+                              ),
+                              if (_isPriceInvalidFormat)
+  const Padding(
+    padding: EdgeInsets.only(top: 5),
+    child: Text(
+      'Wrong format. Must be a number (e.g., 12.5).',
+      style: TextStyle(color: Colors.red, fontSize: 12),
+    ),
+  ),
+                          ],
+                        ),
+                      ),
+                 
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            TextField(
+                              controller: _shortDescriptionController,
+                              maxLines: 2,
+                              decoration: const InputDecoration(
+                                labelText: 'Short description',
+                                border: OutlineInputBorder(),
+                              ),
+                            ),
+                            if (_isShortDescriptionEmpty)
+                              const Padding(
+                                padding: EdgeInsets.only(top: 5),
+                                child: Text(
+                                  'The field is required.',
+                                  style: TextStyle(color: Colors.red, fontSize: 12),
+                                ),
+                              ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            TextField(
+                              controller: _longDescriptionController,
+                              maxLines: 3,
+                              decoration: const InputDecoration(
+                                labelText: 'Long description',
+                                border: OutlineInputBorder(),
+                              ),
+                            ),
+                            if (_isLongDescriptionEmpty)
+                              const Padding(
+                                padding: EdgeInsets.only(top: 5),
+                                child: Text(
+                                  'The field is required.',
+                                  style: TextStyle(color: Colors.red, fontSize: 12),
+                                ),
+                              ),
+                          ],
+                        ),
+                      ),
+                     
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            TextField(
+                              controller: _durationController,
+                              decoration: const InputDecoration(
+                                labelText: 'Time',
+                                suffixText: 'min',
+                                border: OutlineInputBorder(),
+                              ),
+                            ),
+                            if (_isDurationEmpty)
+                              const Padding(
+                                padding: EdgeInsets.only(top: 5),
+                                child: Text(
+                                  'The field is required.',
+                                  style: TextStyle(color: Colors.red, fontSize: 12),
+                                ),
+                              ),
+                              if (_isDurationInvalidFormat)
+  const Padding(
+    padding: EdgeInsets.only(top: 5),
+    child: Text(
+      'Wrong format. Must be an integer (e.g., 30).',
+      style: TextStyle(color: Colors.red, fontSize: 12),
+    ),
+  ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
+                Expanded(
+                  flex: 2,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 40),
+                    child: Column(
+                      children: [
+                        const Text('Image:', style: TextStyle(fontSize: 16)),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 10),
+                          child: GestureDetector(
+                            onTap: _openFilePicker,
+                            child: _image != null
+                                ? Image.file(
+                                    _image!,
+                                    width: 350,
+                                    height: 350,
+                                    fit: BoxFit.cover,
+                                  )
+                                : Image.asset(
+                                    'assets/images/pravaslika.png',
+                                    width: 350,
+                                    height: 350,
+                                    fit: BoxFit.cover,
+                                  ),
+                          ),
+                        ),
+                        if (_isImageEmpty)
+                          const Padding(
+                            padding: EdgeInsets.only(top: 10),
+                            child: Text(
+                              'The field is required.',
+                              style: TextStyle(color: Colors.red, fontSize: 12),
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(30),
         child: ElevatedButton(
           onPressed: _submitData,
           style: ButtonStyle(

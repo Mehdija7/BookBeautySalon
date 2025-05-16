@@ -103,6 +103,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
                               time: time,
                               isNew: isNew,
                               price: appointment.service!.price!.toString(),
+                            
                             );
                           },
                         ),

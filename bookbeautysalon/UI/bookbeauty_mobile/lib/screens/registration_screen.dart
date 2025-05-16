@@ -119,7 +119,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       _buildLabel('Email'),
                       _buildTextField(_emailController, isEmail: true),
                       _buildLabel('Telephone number'),
-                      _buildTextField(_phoneController),
+                      _buildTextField(_phoneController, isPhone: true),
                       _buildLabel('Username'),
                       _buildTextField(_usernameController),
                       _buildLabel('Password'),
@@ -192,37 +192,45 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     );
   }
 
-  Widget _buildTextField(TextEditingController controller, {bool obscureText = false, bool isEmail = false, bool isPassword = false, bool isPasswordConfirmed = false}) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 16),
-      child: TextFormField(
-        controller: controller,
-        obscureText: obscureText,
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return 'This field is required.';
-          }
-          if (isEmail && !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
-            return 'Wrong email format.';
-          }
-          if (isPassword && !RegExp(r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}\$').hasMatch(value)) {
-            return 'Password must contains at least 8 characters including number and letters';
-          }
-          if (isPasswordConfirmed && _confirmPasswordController.text != _passwordController.text) {
-            return 'Passwords are not the same.';
-          }
-          
-          return null;
-        },
-        decoration: InputDecoration(
-          fillColor: Colors.white,
-          filled: true,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide.none,
-          ),
+  Widget _buildTextField(TextEditingController controller, {
+  bool obscureText = false,
+  bool isEmail = false,
+  bool isPassword = false,
+  bool isPasswordConfirmed = false,
+  bool isPhone = false, // <-- NEW
+}) {
+  return Padding(
+    padding: const EdgeInsets.only(bottom: 16),
+    child: TextFormField(
+      controller: controller,
+      obscureText: obscureText,
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'This field is required.';
+        }
+        if (isEmail && !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
+          return 'Wrong email format.';
+        }
+        if (isPhone && !RegExp(r'^\+?\d{7,15}$').hasMatch(value)) {
+          return 'Invalid phone number format.';
+        }
+        if (isPassword && !RegExp(r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$').hasMatch(value)) {
+          return 'Password must contain at least 8 characters including numbers and letters.';
+        }
+        if (isPasswordConfirmed && _confirmPasswordController.text != _passwordController.text) {
+          return 'Passwords are not the same.';
+        }
+        return null;
+      },
+      decoration: InputDecoration(
+        fillColor: Colors.white,
+        filled: true,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide.none,
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 }

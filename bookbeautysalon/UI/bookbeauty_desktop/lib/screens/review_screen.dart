@@ -49,31 +49,41 @@ class _ReviewScreenState extends State<ReviewScreen> {
   }
 
   void _sortReviews(String option) {
+  setState(() {
     if (option == "From lowest mark") {
-      _filteredReviews
-          .sort((a, b) => a.mark!.compareTo(b.mark!)); 
-    } else if (option == "From hihghest mark") {
-      _filteredReviews
-          .sort((a, b) => b.mark!.compareTo(a.mark!)); 
+      _filteredReviews.sort((a, b) => a.mark!.compareTo(b.mark!));
+    } else if (option == "From highest mark") {
+      _filteredReviews.sort((a, b) => b.mark!.compareTo(a.mark!));
     }
-    setState(() {}); 
-  }
+  });
+}
+
 
   void _groupReviews(String option) {
-    if (option == "By user") {
-      _filteredReviews = _groupByUser(_reviews);
-      setState(() {
-        isGroupedByUser = true;
-        isGroupedByProduct = false;
-      });
-    } else if (option == "By product") {
-      _filteredReviews = _groupByProduct(_reviews);
-      setState(() {
-        isGroupedByUser = false;
-        isGroupedByProduct = true;
-      });
-    }
+  List<Review> base = List.from(_reviews); 
+
+  if (option == "By user") {
+    base = _groupByUser(base);
+    isGroupedByUser = true;
+    isGroupedByProduct = false;
+  } else if (option == "By product") {
+    base = _groupByProduct(base);
+    isGroupedByUser = false;
+    isGroupedByProduct = true;
   }
+
+  if (_searchController.text.isNotEmpty) {
+    base = base.where((review) {
+      final query = _searchController.text.toLowerCase();
+      return (review.user?.username?.toLowerCase().contains(query) ?? false) ||
+             (review.product?.name?.toLowerCase().contains(query) ?? false);
+    }).toList();
+  }
+
+  setState(() {
+    _filteredReviews = base;
+  });
+}
 
   List<Review> _groupByUser(List<Review> reviews) {
     Map<String, List<Review>> grouped = {};
@@ -119,13 +129,15 @@ class _ReviewScreenState extends State<ReviewScreen> {
     });
   }
 
-  void _clearFilters() {
-    setState(() {
-      bool isGroupedByUser = false;
-      bool isGroupedByProduct = false;
-      _filteredReviews = _reviews;
-    });
-  }
+void _clearFilters() {
+  setState(() {
+    isGroupedByUser = false;
+    isGroupedByProduct = false;
+    _filteredReviews = _reviews;
+    _searchController.clear();
+  });
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -239,7 +251,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
                             children: [
                               Text(_filteredReviews[index].user!.username!),
                               Text(_filteredReviews[index].product!.name!),
-                              Container(
+                              SizedBox(
                                 height: 50,
                                 width: 50,
                                 child: _filteredReviews[index].product!.image != null

@@ -40,7 +40,20 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       showDialog(
           context: context,
           builder: (context) {
-            return AlertDialog(
+            return  _product!.stateMachine == "hidden" ?
+            AlertDialog(
+                title: const Text('Warning'),
+                content: Text(
+                    'Editing is disabled for current state: ${_product!.stateMachine}, click on button Draft to change the state and then edit'),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text('OK'),
+                  ),
+                ])
+                : AlertDialog(
                 title: const Text('Warning'),
                 content: Text(
                     'Editing is disabled for current state: ${_product!.stateMachine}'),
@@ -85,7 +98,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         if (_image != null) {
           _product!.image = base64Encode(await _image!.readAsBytes());
         }
-
+   
         var product = await widget.updateProduct(_product!);
         setState(() {
           _product = product;

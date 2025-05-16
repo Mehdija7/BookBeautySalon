@@ -240,43 +240,45 @@ class _EditServiceScreenState extends State<EditServiceScreen> {
     }
   }
 
-  Future<void> _saveChanges() async {
-    final enteredPrice = double.tryParse(_priceController.text);
+ Future<void> _saveChanges() async {
+  final enteredPrice = double.tryParse(_priceController.text);
 
-    setState(() {
-      _isNameEmpty = _nameController.text.trim().isEmpty;
-      _isShortDescriptionEmpty =
-          _shortDescriptionController.text.trim().isEmpty;
-      _isLongDescriptionEmpty = _longDescriptionController.text.trim().isEmpty;
-      _isPriceEmpty = _priceController.text.trim().isEmpty;
-    });
+  setState(() {
+    _isNameEmpty = _nameController.text.trim().isEmpty;
+    _isShortDescriptionEmpty = _shortDescriptionController.text.trim().isEmpty;
+    _isLongDescriptionEmpty = _longDescriptionController.text.trim().isEmpty;
+    _isPriceEmpty = _priceController.text.trim().isEmpty;
+  });
 
-    if (_isNameEmpty ||
-        _isShortDescriptionEmpty ||
-        _isLongDescriptionEmpty ||
-        _isPriceEmpty ||
-        enteredPrice == null ||
-        enteredPrice <= 0) {
-      return;
-    }
-
-    widget.service.name = _nameController.text;
-    widget.service.shortDescription = _shortDescriptionController.text;
-    widget.service.longDescription = _longDescriptionController.text;
-    widget.service.price = double.parse(_priceController.text);
-
-    await serviceProvider.update(widget.service.serviceId!, widget.service);
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text(
-          'Service edited successfully.',
-        ),
-        backgroundColor: Colors.lightGreen,
-      ),
-    );
-    Navigator.pop(context, 'service_edited');
+  if (_isNameEmpty ||
+      _isShortDescriptionEmpty ||
+      _isLongDescriptionEmpty ||
+      _isPriceEmpty ||
+      enteredPrice == null ||
+      enteredPrice <= 0) {
+    return;
   }
+
+  widget.service.name = _nameController.text;
+  widget.service.shortDescription = _shortDescriptionController.text;
+  widget.service.longDescription = _longDescriptionController.text;
+  widget.service.price = enteredPrice;
+
+  if (_image != null) {
+    final imageBytes = await _image!.readAsBytes();
+    widget.service.image = base64Encode(imageBytes);
+  }
+
+  await serviceProvider.update(widget.service.serviceId!, widget.service);
+
+  ScaffoldMessenger.of(context).showSnackBar(
+    const SnackBar(
+      content: Text('Service edited successfully.'),
+      backgroundColor: Colors.lightGreen,
+    ),
+  );
+  Navigator.pop(context, 'service_edited');
+}
 
   @override
   Widget build(BuildContext context) {

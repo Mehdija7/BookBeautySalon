@@ -4,7 +4,7 @@ import 'package:bookbeauty_desktop/utils.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
-  LoginScreen({super.key});
+  const LoginScreen({super.key});
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -105,7 +105,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         }
                       } on Exception catch (e) {
                         setState(() {
-                          _generalError = "Error while login.";
+                          _generalError = "Password or username was incorrect.";
                         });
                       }
                     },
@@ -116,7 +116,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       padding: const EdgeInsets.only(top: 10),
                       child: Text(
                         _generalError!,
-                        style: TextStyle(color: Colors.red),
+                        style: const TextStyle(color: Colors.red),
                       ),
                     ),
                 ],

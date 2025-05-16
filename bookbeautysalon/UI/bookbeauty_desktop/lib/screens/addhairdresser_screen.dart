@@ -48,8 +48,8 @@ class _AddHairdresserScreenState extends State<AddHairdresserScreen> {
       firstNameError = firstName.isEmpty ? 'Input field is required' : null;
       lastNameError = lastName.isEmpty ? 'Input field is required' : null;
       usernameError = username.isEmpty ? 'Input field is required' : null;
-      emailError = _validateEmail(email) ? null : 'Wrong format for email';
-      phoneError = _validatePhone(phone) ? null : 'Wrong telephone number';
+      emailError = _validateEmail(email) ? null : 'Wrong format for email (e.g. example@gmail.com)';
+      phoneError = _validatePhone(phone) ? null : 'Wrong telephone number (e.g. 060 123 4567)';
       passwordError = _validatePassword(password) ? null : 'Password must contain at least 6 characters including letters and numbers';
     });
 
@@ -114,7 +114,7 @@ class _AddHairdresserScreenState extends State<AddHairdresserScreen> {
           "Successfully added a hairdresser", const Color.fromARGB(255, 95, 167, 97));
       Navigator.pop(context, true);
     } catch (e) {
-      _showSnackBar('Adding a hairdresser was unsuccessfully',
+      _showSnackBar('Adding a hairdresser was unsuccessfully, server side error',
           const Color.fromARGB(255, 226, 98, 75));
     }
   }

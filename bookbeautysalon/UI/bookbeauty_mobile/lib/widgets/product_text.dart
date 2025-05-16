@@ -57,7 +57,7 @@ class _ProductTextState extends State<ProductText> {
                     pagination: SwiperPagination(
                       builder: DotSwiperPaginationBuilder(
                         activeColor: Colors.blueGrey,
-                        color: Colors.blueGrey.withOpacity(0.5),
+                        color: Colors.blueGrey,
                       ),
                     ),
                     control: const SwiperControl(

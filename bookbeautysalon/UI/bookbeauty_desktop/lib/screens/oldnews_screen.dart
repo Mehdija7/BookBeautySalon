@@ -64,7 +64,6 @@ class _OldnewsScreenState extends State<OldnewsScreen> {
                               textAlign: TextAlign.center,
                             ),
                             const SizedBox(height: 10),
-                            if (currentNews.newsImage != null && currentNews.newsImage!.isNotEmpty)
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(10),
                                 child:  currentNews.newsImage != null

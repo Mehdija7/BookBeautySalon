@@ -18,18 +18,29 @@ class NewProductScreen extends StatefulWidget {
 }
 
 class _NewProductScreenState extends State<NewProductScreen> {
-  String? selectedValue;
-  late List<Category> _registeredCategories = [];
-  CategoryProvider categoryProvider = CategoryProvider();
+  // Controllers
   final _titleController = TextEditingController();
   final _priceController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _categoryController = TextEditingController();
+
+  // Providers
+  final CategoryProvider categoryProvider = CategoryProvider();
+  final ProductProvider productProvider = ProductProvider();
+
+  // UI State
+  String? selectedValue;
+  late List<Category> _registeredCategories = [];
   File? _image;
   String? fileUrl;
-  ProductProvider productProvider = ProductProvider();
   String? base64Image;
   late ImageProvider _productImage;
+
+  // Validation Errors
+  String? _titleError;
+  String? _priceError;
+  String? _descriptionError;
+  String? _imageError;
 
   @override
   void initState() {
@@ -40,7 +51,6 @@ class _NewProductScreenState extends State<NewProductScreen> {
   Future<void> _fetchCategories() async {
     try {
       var result = await categoryProvider.get();
-
       setState(() {
         _registeredCategories = result.result;
         if (_registeredCategories.isNotEmpty) {
@@ -48,16 +58,12 @@ class _NewProductScreenState extends State<NewProductScreen> {
         }
       });
     } catch (e) {
-      print(
-          "*****************************ERROR MESSAGE $e ***********************************");
+      print("ERROR MESSAGE $e");
     }
   }
 
   void _openFilePicker() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.image,
-    );
-
+    FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.image);
     if (result != null) {
       File file = File(result.files.single.path!);
       final bytes = file.readAsBytesSync();
@@ -70,77 +76,86 @@ class _NewProductScreenState extends State<NewProductScreen> {
     }
   }
 
-  void _showDialog() {
-    showDialog(
-        context: context,
-        builder: (ctx) => AlertDialog(
-              title: const Text('Error'),
-              content: const Text(
-                  'Molimo Vas unesite ispravan naziv, opis, cijenu, kategoriju i sliku proizvoda.'),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Text('OK'),
-                ),
-              ],
-            ));
-  }
+  bool _validateFields() {
+    bool isValid = true;
 
-  void _showSnackBar(String message, Color backgroundColor) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        backgroundColor: backgroundColor,
-      ),
-    );
+    setState(() {
+      _titleError = null;
+      _priceError = null;
+      _descriptionError = null;
+      _imageError = null;
+
+      if (_titleController.text.trim().isEmpty) {
+        _titleError = "This field is required.";
+        isValid = false;
+      }
+
+      if (_priceController.text.trim().isEmpty) {
+        _priceError = "This field is required.";
+        isValid = false;
+      } else if (double.tryParse(_priceController.text.trim()) == null) {
+        _priceError = "Wrong format. Use a valid number.";
+        isValid = false;
+      }
+
+      if (_descriptionController.text.trim().isEmpty) {
+        _descriptionError = "This field is required.";
+        isValid = false;
+      }
+
+      if (_image == null) {
+        _imageError = "Image is required.";
+        isValid = false;
+      }
+    });
+
+    return isValid;
   }
 
   void _submitData() {
-    final enteredPrice = double.tryParse(_priceController.text);
+    if (!_validateFields()) return;
+
+    final enteredPrice = double.parse(_priceController.text);
     final selectedCategoryId = int.tryParse(selectedValue!);
-    final amountIsInvalid = enteredPrice == null || enteredPrice <= 0;
-    String? imagePath = fileUrl;
-    if (_titleController.text.trim().isEmpty ||
-        amountIsInvalid ||
-        _titleController.text.trim().isEmpty ||
-        _descriptionController.text.trim().isEmpty ||
-        imagePath == '') {
-      _showDialog();
-      return;
-    }
     Product newproduct = Product(
-        name: _titleController.text,
-        price: enteredPrice,
-        categoryId: selectedCategoryId,
-        description: _descriptionController.text,
-        stateMachine: 'Draft',
-        image: base64Image);
+      name: _titleController.text.trim(),
+      price: enteredPrice,
+      categoryId: selectedCategoryId,
+      description: _descriptionController.text.trim(),
+      stateMachine: 'Draft',
+      image: base64Image,
+    );
+
     _addProduct(newproduct);
   }
 
   Future<void> _addProduct(Product newproduct) async {
     try {
-      var id = await productProvider.insert(newproduct);
+      await productProvider.insert(newproduct);
       setState(() {
-        _titleController.text = '';
-        _priceController.text = '';
+        _titleController.clear();
+        _priceController.clear();
+        _descriptionController.clear();
         _image = null;
-        _descriptionController.text = '';
       });
-      _showSnackBar(
-          "Product added successfully.", const Color.fromARGB(255, 95, 167, 97));
+      _showSnackBar("Product added successfully.", Colors.green);
     } catch (e) {
-      _showSnackBar('Adding product was unsuccessfully.',
-          const Color.fromARGB(255, 226, 98, 75));
+      _showSnackBar("Adding product was unsuccessful.", Colors.red);
     }
+  }
+
+  void _showSnackBar(String message, Color color) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(message),
+      backgroundColor: color,
+    ));
   }
 
   @override
   void dispose() {
     _titleController.dispose();
     _priceController.dispose();
+    _descriptionController.dispose();
     super.dispose();
   }
 
@@ -148,129 +163,96 @@ class _NewProductScreenState extends State<NewProductScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const MainTitle(title: 'Adding new product'),
-                Padding(
-                  padding:
-                      const EdgeInsets.only(right: 200, left: 20, bottom: 10),
-                  child: TextField(
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 40.0),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const MainTitle(title: 'Adding new product'),
+                  const SizedBox(height: 20),
+                  TextField(
                     controller: _titleController,
-                    decoration: const InputDecoration(
-                      hintText: 'Name',
-                    ),
+                    decoration: const InputDecoration(labelText: 'Name'),
                   ),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.only(right: 200, left: 20, bottom: 20),
-                  child: TextField(
+                  if (_titleError != null)
+                    Text(_titleError!, style: const TextStyle(color: Colors.red)),
+                  const SizedBox(height: 20),
+                  TextField(
                     controller: _priceController,
-                    decoration: const InputDecoration(
-                        hintText: 'Price', suffixText: 'BAM'),
+                    decoration: const InputDecoration(labelText: 'Price', suffixText: 'BAM'),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 200, left: 20),
-                  child: TextField(
+                  if (_priceError != null)
+                    Text(_priceError!, style: const TextStyle(color: Colors.red)),
+                  const SizedBox(height: 20),
+                  TextField(
                     controller: _descriptionController,
                     maxLines: 3,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
-                      hintText: 'Description',
+                      labelText: 'Description',
                     ),
                   ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(left: 20, top: 15),
-                  child: Text(
-                    'Category',
-                    style: TextStyle(
-                        fontSize: 18,
-                        color: Color.fromARGB(255, 114, 111, 111),
-                        fontWeight: FontWeight.w600),
-                  ),
-                ),
-                _registeredCategories.isEmpty
-                    ? const Text("Add categories")
-                    : Padding(
-                        padding: const EdgeInsets.only(left: 20, top: 15),
-                        child: DropdownButton<String>(
-                          focusColor: Colors.transparent,
+                  if (_descriptionError != null)
+                    Text(_descriptionError!, style: const TextStyle(color: Colors.red)),
+                  const SizedBox(height: 20),
+                  const Text('Category',
+                      style: TextStyle(fontSize: 18, color: Colors.grey, fontWeight: FontWeight.w600)),
+                  const SizedBox(height: 10),
+                  _registeredCategories.isEmpty
+                      ? const Text("Add categories")
+                      : DropdownButton<String>(
                           value: selectedValue,
                           onChanged: (String? newValue) {
                             setState(() {
                               selectedValue = newValue!;
                               _categoryController.text = selectedValue!;
-                              print(
-                                  "CATEGORY CONTROLLER: ${_categoryController.text}");
                             });
                           },
-                          items: _registeredCategories.map((Category category) {
-                            return DropdownMenuItem<String>(
-                              value: category.categoryId.toString(),
-                              child: Text(category.name!),
-                            );
-                          }).toList(),
+                          items: _registeredCategories
+                              .map((Category category) => DropdownMenuItem<String>(
+                                    value: category.categoryId.toString(),
+                                    child: Text(category.name!),
+                                  ))
+                              .toList(),
                         ),
-                      ),
-              ],
+                ],
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: 20),
-            child: Column(
+            const SizedBox(width: 40),
+            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text('Image: '),
-                Padding(
-                  padding: const EdgeInsets.only(top: 0, right: 0),
-                  child: GestureDetector(
-                    onTap: _openFilePicker,
-                    child: _image != null
-                        ? Image.file(
-                            _image!,
-                            width: 400,
-                            height: 400,
-                          )
-                        : Image.asset(
-                            'assets/images/pravaslika.png',
-                            width: 400,
-                            height: 400,
-                          ),
-                  ),
+                const Text('Image:'),
+                const SizedBox(height: 10),
+                GestureDetector(
+                  onTap: _openFilePicker,
+                  child: _image != null
+                      ? Image.file(_image!, width: 400, height: 400)
+                      : Image.asset('assets/images/pravaslika.png', width: 400, height: 400),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 500, top: 100),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      _submitData();
-                    },
-                    style: ButtonStyle(
-                      backgroundColor: WidgetStateProperty.resolveWith<Color?>(
-                        (Set<WidgetState> states) {
-                          if (states.contains(WidgetState.pressed)) {
-                            return const Color.fromARGB(255, 111, 160, 103);
-                          }
-                          return const Color.fromARGB(255, 150, 216, 156);
-                        },
-                      ),
-                      foregroundColor: WidgetStateProperty.all<Color>(
-                          const Color.fromARGB(255, 245, 245, 245)),
-                    ),
-                    child: const Text('Add product'),
+                if (_imageError != null)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Text(_imageError!, style: const TextStyle(color: Colors.red)),
                   ),
+                const SizedBox(height: 30),
+                ElevatedButton(
+                  onPressed: _submitData,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 150, 216, 156),
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  ),
+                  child: const Text('Add product'),
                 ),
               ],
             ),
-          )
-        ],
+          ],
+        ),
       ),
     );
   }

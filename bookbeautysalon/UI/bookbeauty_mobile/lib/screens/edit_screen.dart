@@ -16,11 +16,8 @@ class _EditScreenState extends State<EditScreen> {
   late TextEditingController _firstNameController;
   late TextEditingController _lastNameController;
   late TextEditingController _usernameController;
-  late TextEditingController _emailController;
   late TextEditingController _phoneController;
   late TextEditingController _addressController;
-  late TextEditingController _passwordController;
-  late TextEditingController _passwordConfirmedController;
 
   UserProvider userProvider = UserProvider();
 
@@ -30,12 +27,8 @@ class _EditScreenState extends State<EditScreen> {
     _firstNameController = TextEditingController(text: widget.user.firstName);
     _lastNameController = TextEditingController(text: widget.user.lastName);
     _usernameController = TextEditingController(text: widget.user.username);
-    _emailController = TextEditingController(text: widget.user.email);
     _phoneController = TextEditingController(text: widget.user.phone);
     _addressController = TextEditingController(text: widget.user.address);
-    _passwordController = TextEditingController(text: widget.user.password);
-    _passwordConfirmedController =
-        TextEditingController(text: widget.user.passwordConfirmed);
   }
 
   @override
@@ -43,11 +36,8 @@ class _EditScreenState extends State<EditScreen> {
     _firstNameController.dispose();
     _lastNameController.dispose();
     _usernameController.dispose();
-    _emailController.dispose();
     _phoneController.dispose();
     _addressController.dispose();
-    _passwordController.dispose();
-    _passwordConfirmedController.dispose();
     super.dispose();
   }
 
@@ -57,25 +47,22 @@ class _EditScreenState extends State<EditScreen> {
         widget.user.firstName = _firstNameController.text;
         widget.user.lastName = _lastNameController.text;
         widget.user.username = _usernameController.text;
-        widget.user.email = _emailController.text;
+        widget.user.email = widget.user.email;
         widget.user.phone = _phoneController.text;
         widget.user.address = _addressController.text;
-        widget.user.password = _passwordController.text == ""
-            ? widget.user.password
-            : _passwordController.text;
-        widget.user.passwordConfirmed = _passwordConfirmedController.text == ""
-            ? widget.user.password
-            : _passwordConfirmedController.text;
+        widget.user.password = widget.user.password;
+        widget.user.passwordConfirmed = widget.user.password;
       });
+
       try {
         var r = await userProvider.update(widget.user.userId!, widget.user);
         UserProvider.globaluser = r;
         UserProvider.globalUserId = r.userId;
         await userProvider.authenticate(r.username!, r.password!);
-        print(r);
       } catch (e) {
         print(e);
       }
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Data updated successfully.'),
@@ -85,8 +72,7 @@ class _EditScreenState extends State<EditScreen> {
       Navigator.pop(context, true);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-            content: Text('Updating was unsuccessfully.')),
+        const SnackBar(content: Text('Updating was unsuccessfully.')),
       );
     }
   }
@@ -105,12 +91,8 @@ class _EditScreenState extends State<EditScreen> {
               _buildTextField('First name', _firstNameController),
               _buildTextField('Last name', _lastNameController),
               _buildTextField('Username', _usernameController),
-              _buildTextField('Email', _emailController),
               _buildTextField('Telephone number:', _phoneController),
               _buildTextField('Address', _addressController),
-              _buildTextField('Password', _passwordController, isPassword: true),
-              _buildTextField('Confirm password', _passwordConfirmedController,
-                  isPassword: true),
               const SizedBox(height: 20),
               Center(
                 child: ElevatedButton(
@@ -120,12 +102,16 @@ class _EditScreenState extends State<EditScreen> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
-                    backgroundColor: const Color.fromARGB(255, 181, 186, 188)
+                    backgroundColor: const Color.fromARGB(255, 181, 186, 188),
                   ),
                   onPressed: _saveUser,
                   child: const Text(
                     'Save',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color: Color.fromARGB(255, 255, 255, 255)),
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 255, 255, 255),
+                    ),
                   ),
                 ),
               ),
@@ -152,6 +138,12 @@ class _EditScreenState extends State<EditScreen> {
               labelText: label,
               border: InputBorder.none,
             ),
+            validator: (value) {
+              if (value == null || value.trim().isEmpty) {
+                return 'This field is required';
+              }
+              return null;
+            },
           ),
         ),
       ),

@@ -1,6 +1,8 @@
 import 'package:bookbeauty_desktop/models/appointment.dart';
 import 'package:bookbeauty_desktop/models/event.dart';
+import 'package:bookbeauty_desktop/models/user.dart';
 import 'package:bookbeauty_desktop/providers/appointment_provider.dart';
+import 'package:bookbeauty_desktop/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -20,24 +22,23 @@ class _AppointmentScreen extends State<AppointmentScreen> {
   CalendarFormat format = CalendarFormat.month;
   DateTime selectedDay = DateTime.now();
   DateTime focusedDay = DateTime.now();
+  UserProvider userProvider = UserProvider();
 
   final TextEditingController _eventController = TextEditingController();
 
   @override
   void initState() {
-    appointmentProvider = context.read<AppointmentProvider>();
-    _fetchAppointments();
-    selectedEvents = {};
     super.initState();
+    appointmentProvider = context.read<AppointmentProvider>();
+    selectedEvents = {};
+    _fetchAppointments();
   }
 
   Future<void> _fetchAppointments() async {
     try {
-      print("Fetching appointments...");
       var result = await appointmentProvider.fetchAppointments();
-      List<Appointment> list = result;
       setState(() {
-        allAppointments = list;
+        allAppointments = result;
         _filterAppointments();
       });
     } catch (e) {
@@ -45,42 +46,37 @@ class _AppointmentScreen extends State<AppointmentScreen> {
     }
   }
 
-  void _filterAppointments() {
-    print("Filtering appointments...");
-    selectedEvents = {};
-    var helpList = allAppointments
-        .where((i) =>
-            (i.dateTime!.year == selectedDay.year) &&
-            (i.dateTime!.month == selectedDay.month) &&
-            (i.dateTime!.day == selectedDay.day))
-        .toList();
-    for (var appointment in helpList) {
-      print(
-          "Appointment found: ${appointment.service!.name} on ${appointment.dateTime}");
-      DateTime appointmentDate = DateTime(
-        appointment.dateTime!.year,
-        appointment.dateTime!.month,
-        appointment.dateTime!.day,
-      );
-      String formattedDate = DateFormat('HH:mm').format(appointment.dateTime!);
-      Event event =
-          Event(title: '${appointment.service!.name} u  $formattedDate');
 
-      if (selectedEvents[appointmentDate] == null) {
-        selectedEvents[appointmentDate] = [];
-      }
 
-      selectedEvents[appointmentDate]!.add(event);
-    }
-    setState(() {});
+    void _filterAppointments() async{
+  selectedEvents = {};
+  var helpList = allAppointments.where((i) =>
+      (i.dateTime!.year == selectedDay.year) &&
+      (i.dateTime!.month == selectedDay.month) &&
+      (i.dateTime!.day == selectedDay.day)).toList();
 
-    return;
+
+  helpList.sort((a, b) => a.dateTime!.compareTo(b.dateTime!));
+
+  for (var appointment in helpList) {
+    DateTime appointmentDate = DateTime(
+      appointment.dateTime!.year,
+      appointment.dateTime!.month,
+      appointment.dateTime!.day,
+    );
+    User u = await userProvider.getById(appointment.hairdresserId!);
+    String formattedDate = DateFormat('HH:mm').format(appointment.dateTime!);
+    Event event = Event(title: '${appointment.service!.name} at $formattedDate |note: ${appointment.note} |hairdresser: ${u.firstName} ${u.lastName} ');
+
+    selectedEvents.putIfAbsent(appointmentDate, () => []).add(event);
+  }
+
+  setState(() {});
   }
 
   List<Event> _getEventsfromDay(DateTime date) {
     DateTime normalizedDate = DateTime(date.year, date.month, date.day);
-    List<Event> events = selectedEvents[normalizedDate] ?? [];
-    return events;
+    return selectedEvents[normalizedDate] ?? [];
   }
 
   @override
@@ -100,14 +96,14 @@ class _AppointmentScreen extends State<AppointmentScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            TableCalendar(
+            TableCalendar<Event>(
               focusedDay: selectedDay,
               firstDay: DateTime(2020),
               lastDay: DateTime(2050),
               calendarFormat: format,
-              onFormatChanged: (CalendarFormat format) {
+              onFormatChanged: (CalendarFormat newFormat) {
                 setState(() {
-                  format = format;
+                  format = newFormat;
                 });
               },
               startingDayOfWeek: StartingDayOfWeek.monday,
@@ -123,27 +119,37 @@ class _AppointmentScreen extends State<AppointmentScreen> {
                 return isSameDay(selectedDay, date);
               },
               eventLoader: _getEventsfromDay,
-              calendarStyle: CalendarStyle(
-                isTodayHighlighted: true,
-                selectedDecoration: const BoxDecoration(
-                  color: Colors.blueGrey, 
-                  shape: BoxShape.circle, 
-                ),
-                selectedTextStyle: const TextStyle(color: Colors.white),
-                todayDecoration: const BoxDecoration(
-                  color: Color.fromARGB(255, 105, 108, 110),
-                  shape: BoxShape.circle, 
-                ),
-                defaultDecoration: const BoxDecoration(
-                  shape: BoxShape.circle, 
-                  color: Color.fromARGB(
-                      255, 179, 209, 216), 
-                ),
-                weekendDecoration: BoxDecoration(
-                  shape: BoxShape.rectangle,
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
-              ),
+       calendarStyle: const CalendarStyle(
+  isTodayHighlighted: true,
+
+  selectedDecoration: BoxDecoration(
+    color: Colors.blueGrey,
+    shape: BoxShape.circle,
+  ),
+  selectedTextStyle: TextStyle(color: Colors.white),
+
+  todayDecoration: BoxDecoration(
+    color: Color.fromARGB(255, 105, 108, 110),
+    shape: BoxShape.circle,
+  ),
+
+  defaultDecoration: BoxDecoration(
+    shape: BoxShape.circle,
+    color: Color.fromARGB(255, 179, 209, 216),
+  ),
+
+  weekendDecoration: BoxDecoration(
+    color: Color.fromARGB(255, 230, 230, 230),
+    shape: BoxShape.circle,
+  ),
+
+  outsideDecoration: BoxDecoration(
+    color: Colors.transparent,
+    shape: BoxShape.circle,
+  ),
+),
+
+
               headerStyle: HeaderStyle(
                 formatButtonVisible: true,
                 titleCentered: true,
@@ -162,7 +168,8 @@ class _AppointmentScreen extends State<AppointmentScreen> {
                 title: Card(
                   color: const Color.fromARGB(255, 235, 235, 235),
                   elevation: 3,
-                  margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                  margin: const EdgeInsets.symmetric(
+                      vertical: 10, horizontal: 15),
                   child: Padding(
                     padding: const EdgeInsets.all(15),
                     child: Column(

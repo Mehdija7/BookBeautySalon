@@ -1,7 +1,7 @@
 import 'package:bookbeauty_desktop/models/category.dart';
 import 'package:bookbeauty_desktop/models/product.dart';
 import 'package:flutter/material.dart';
-import 'productTest.dart';
+import 'product_bucket.dart';
 import './chart_bar.dart';
 
 class Chart extends StatelessWidget {
@@ -69,7 +69,6 @@ class Chart extends StatelessWidget {
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
                           ),
-                          //categoryName[bucket.category].toString(),
                         ),
                       ),
                     ),

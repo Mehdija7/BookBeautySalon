@@ -1,3 +1,4 @@
+import 'package:book_beauty/screens/orderdetail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:book_beauty/models/order.dart';
 import 'package:book_beauty/providers/order_provider.dart';
@@ -64,7 +65,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                           ],
                         ),
                         onTap: () {
-                          // Handle order tap, maybe show order details
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => OrderDetailScreen(order:order)));
                         },
                       ),
                     );
