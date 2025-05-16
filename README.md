@@ -6,7 +6,7 @@ This project is a Beauty Salon App developed for my university. It includes both
 
 * Desktop Application: Built with Flutter, developed for Windows, with Linux support available but not guaranteed. Designed for administrators and hairdressers, it includes functionalities such as: adding new hairdressers and deleting existing ones (admin only), viewing reports displayed as a graph of the best-selling products by category, with the ability to print, share, or save them, viewing reviews, orders, and products with filtering options. It also allows managing order details and status, editing services and products, adding new news, and viewing old news. Additionally, there is a screen displaying appointments in a calendar table format with the option to view reserved services for a selected day 
 
-* Technologies that is used: ASP.NET, SQL, Flutter, RabbitMQ, Docker.
+* Technologies that are used: ASP.NET, SQL, Flutter, RabbitMQ, Docker.
 
 __Setup Instructions__
 
