@@ -6,7 +6,7 @@ This project is a Beauty Salon App developed for my university. It includes both
 
 * Desktop Application: Built with Flutter, developed for Windows, with Linux support available but not guaranteed. Designed for administrators and hairdressers, it includes functionalities such as: adding new hairdressers and deleting existing ones (admin only), viewing reports displayed as a graph of the best-selling products by category, with the ability to print, share, or save them, viewing reviews, orders, and products with filtering options. It also allows managing order details and status, editing services and products, adding new news, and viewing old news. Additionally, there is a screen displaying appointments in a calendar table format with the option to view reserved services for a selected day 
 
-* Backend: Built with .NET, providing services for both the customer and salon staff (admins and hairdressers).
+* Technologies that is used: ASP.NET, SQL, Flutter, RabbitMQ, Docker.
 
 __Setup Instructions__
 
@@ -25,49 +25,39 @@ _Backend Setup_
 * Run the Backend Services
 	In your terminal, navigate to the project directory and execute:
 
-	docker compose up
+	 docker-compose up --build 
 
 	Wait for Docker to finish composing the services.
 
 _Frontend Setup (Mobile & Desktop)_
 
-* Install Dependencies
-	In the project directory, run the following commands:
+**Desktop application**
+  Run desktop_app.exe from Release folder in the zipped archive fit-build-2025-05-16.zip
 
-	flutter clean
-	flutter pub get
-
-* Run the Mobile Application
-	Choose your preferred Android emulator and run the application.
-
-Run both Android and Windows Simultaneously
-In the Run & Debug menu, select Android & Windows to run both platforms.
-
-**Important**: When running both, modify the emulator ID in the launch.json file located in the .vscode folder.
-
-__User Credentials__
-
-* Administrator
+ * Administrator
 	
-Username: admin | Password: admin
+Username: admin | Password: test
 
 
 * Hairdresser
   
-Username: frizer | Password: frizer
+Username: hairdresser | Password: test
 
-Username: melihakazic	| Password: frizer
+Username: melihakazic	| Password: hairdresser
 
+**Mobile Application**
+
+Open Android Studio and run Emulator
+Drag and drop the app-release.apk file (from flutter-apk folder in the zipped archive fit-build-2025-05-16.zip) into the Emulator, in order to install the application
+Manually run the application in the Emulator
 
 * User
   
-Username: korisnik | Password: korisnik
+Username: customer | Password: test
 
-Username: zehrasekic | Password: korisnik
+Username: zehrasekic | Password: customer
 
-Username: lejlakovacevic | Password: korisnik
-
-
+Username: lejlakovacevic | Password: customer
 
 __PayPal Credentials__
 
